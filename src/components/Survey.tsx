@@ -58,8 +58,8 @@ const Survey = ({}: ISurveyProps) => {
   };
 
   return (
-    <div className='flex flex-col items-center justify-center gap-2 p-10 max-w-md ml-auto mr-auto'>
-      <h3 className={'text-2xl font-bold'}>{filteredQuestion.question}</h3>
+    <>
+      <h1 className={'text-2xl font-bold'}>{filteredQuestion.question}</h1>
       {filteredQuestion.answers.map((answer) => (
         <p
           onClick={incrementCurrentQuestion}
@@ -69,7 +69,7 @@ const Survey = ({}: ISurveyProps) => {
           {answer.text}
         </p>
       ))}
-    </div>
+    </>
   );
 };
 
