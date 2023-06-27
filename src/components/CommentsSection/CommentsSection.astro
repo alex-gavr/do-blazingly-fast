@@ -1,0 +1,26 @@
+---
+import Comment from './Comment.astro';
+import comments from './CommentsData';
+---
+
+<section class='px-4'>
+  <div class='flex flex-row items-center justify-between font-bold'>
+    <h3>80 comments</h3>
+    <p class='text-xs'>Sort by: Top</p>
+  </div>
+  <hr class='my-3 h-[2px] bg-slate-50' />
+  <!-- Comment Render -->
+    {
+      comments.map((comment) => (
+        <Comment
+          id={comment.id}
+          name={comment.name}
+          comment={comment.comment}
+          likes={comment.likes}
+          time={comment.time}
+          isSubComment={comment.isSubComment}
+        />
+      ))
+    }
+  
+</section>
