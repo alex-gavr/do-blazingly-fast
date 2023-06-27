@@ -1,11 +1,18 @@
 ---
 import { cn } from 'src/utils/cn';
 
-const { id, name , comment, likes, time, isSubComment } = Astro.props;
+const { id, name, comment, likes, time, isSubComment } = Astro.props;
 ---
 
 <div class={cn('flex flex-row items-start justify-start gap-4 mt-2', isSubComment && 'w-10/12 ml-auto')}>
-  <img src=`/img/people/person-${id}.webp` alt='person' class='h-10 w-10 shrink-0 rounded-md' />
+  <img
+    src=`/img/people/person-${id}.webp`
+    width='40'
+    height='40'
+    alt='person'
+    class='h-10 w-10 shrink-0 rounded-md'
+    loading='lazy'
+  />
   <div class='flex w-full flex-col items-start justify-start gap-1'>
     <div class='flex w-full flex-1 flex-col items-start justify-start gap-2 rounded-sm bg-neutral-600 p-2'>
       <h4 class='text-sm font-bold'>{name}</h4>
