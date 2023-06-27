@@ -1,16 +1,16 @@
 ---
-import Counter from '@components/Counter';
+import Survey from '@components/Survey';
 import Layout from '@layouts/Layout.astro';
 ---
 
 <Layout title='Welcome to Astro.'>
   <main class='p-4'>
-    <h1 class='text-center text-lg font-bold sm:text-xl md:text-2xl'>
+    <h1 class='text-center text-lg font-bold sm:text-xl md:text-2xl lg:text-4xl tracking-wider'>
       Would You Make A Great Career Online And Become A Millionaire By 2023?
     </h1>
-    <p class='mt-4 text-center text-sm sm:text-base'>
+    <p class='mt-4 text-center text-sm sm:text-base md:text-lg lg:text-xl tracking-wider'>
       Take this FREE test and find out how you can make money on the Internet.
     </p>
-    <Counter client:load />
+    <Survey client:load />
   </main>
 </Layout>
