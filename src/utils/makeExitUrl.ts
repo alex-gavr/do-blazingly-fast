@@ -53,7 +53,7 @@ const makeExitUrl = (zone: number | string, type: ExitType) => {
       baseUrl = `${import.meta.env.PUBLIC_IPP_URL}`;
     }
     if (type === ExitType.vignette) {
-      baseUrl = `${import.meta.env.NEXT_PUBLIC_VIGNETTE_URL}${zone}`;
+      baseUrl = `${import.meta.env.PUBLIC_DATA_URL}/${zone}`;
     }
     if (type === ExitType.reverse) {
       baseUrl = `${import.meta.env.PUBLIC_DOMAIN_REVERSE}/cndi4858vmefovl/${zone}/`;

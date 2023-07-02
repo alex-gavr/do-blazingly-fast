@@ -26,7 +26,7 @@ export default function makeRequestUrlToMarker(searchParams: URL['searchParams']
     baseUrl = `${import.meta.env.PUBLIC_IPP_URL}`;
   }
   if (type === ExitType.vignette) {
-    baseUrl = `${import.meta.env.NEXT_PUBLIC_VIGNETTE_URL}${zone}`;
+    baseUrl = `${import.meta.env.PUBLIC_DATA_URL}/${zone}`;
   }
 
   const url = new URL(baseUrl);

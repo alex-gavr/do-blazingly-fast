@@ -9,9 +9,13 @@ type Ipp = {
 
 const getIppLink = async (zone: number) => {
   try {
-    const url = makeExitUrl(zone, ExitType.ipp) ?? '';
+    // IF ZONE IN SMART ROTATION WE CAN GET BACK IPP OR ONCLICK
+    //  I USE VIGNETTE HERE BECAUSE I WANT TO GET BACK DATA FOR IPP, NOT MEDIATION
+    const url = makeExitUrl(zone, ExitType.vignette) ?? '';
+    
     
     const data = await fetch(url).then((res) => res.json());
+    console.log('🚀 ~ data:', data)
     const res = data.ads[0] as Ipp;
     // const url = res.click.slice(15);
     if (production) {
@@ -25,7 +29,6 @@ const getIppLink = async (zone: number) => {
       const stringAfterDomain = res.click.substring(domain.length);
       const urlPending = `https://in-page-push.net/${stringAfterDomain}`;
       const url = makeExitUrlFromUrl(urlPending);
-      console.log(url);
       return url;
     }
   } catch (error) {

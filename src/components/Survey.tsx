@@ -197,7 +197,7 @@ const Survey = ({}: ISurveyProps) => {
     }
 
     if (leadsTo === LeadsTo.teenExit) {
-      if (production) {
+      
         const teenExitIpp = exitZones.ipp_teen[Math.floor(Math.random() * exitZones.ipp_teen.length)];
         const teenExitPopsIpp = exitZones.ipp_teen_pops;
 
@@ -206,13 +206,14 @@ const Survey = ({}: ISurveyProps) => {
         const main = getExitLinkWithMediation(teenExitIpp, teenExitOnclick);
         const pops = getExitLinkWithMediation(teenExitPopsIpp, teenExitPopsOnclick);
         const [mainUrl, popsUrl] = await Promise.all([main, pops]);
+        console.log('🚀 ~ popsUrl:', popsUrl)
+        console.log('🚀 ~ mainUrl:', mainUrl)
 
-        setCookie('nonUniqueTeen', '1', { expires: 7, path: '' });
-        window.open(mainUrl, '_blank');
-        window.location.replace(popsUrl);
-      } else {
-        console.log('You triggered teen exit');
-      }
+        // setCookie('nonUniqueTeen', '1', { expires: 7, path: '' });
+        // window.open(mainUrl, '_blank');
+        // window.location.replace(popsUrl);
+       
+      
     }
 
     if (leadsTo === LeadsTo.thankYouPage) {
