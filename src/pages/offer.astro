@@ -1,0 +1,30 @@
+---
+import MainExitButton from '@components/MainExitButton';
+import Layout from '@layouts/Layout.astro';
+---
+
+<Layout title='Welcome to Astro.'>
+  <main class='px-2 py-4'>
+    <div class={'flex min-h-[70vh] max-w-2xl flex-col items-center justify-center gap-4 md:gap-8 rounded-md bg-neutral-900 px-2 py-4'}>
+      <h1 class={'text-2xl font-bold uppercase tracking-widest md:text-4xl'}>Thank you!</h1>
+      <p class={' text-center text-sm sm:text-base md:text-xl'}>
+        Your Test Result: <span class={'uppercase text-emerald-400'}>excellent</span> (35 out of 35)
+      </p>
+      <div class={'flex flex-col items-start justify-start gap-4'}>
+        <p class={'text-sm sm:text-base md:text-lg'}>
+          You are an ideal person for making money online, you may have a chance to earn MUCH MORE THAN{' '}
+          <span class={'uppercase text-emerald-400'}>$5,000</span> daily!
+        </p>
+        <p class={' text-sm sm:text-base md:text-lg'}>
+          We have selected for you <span class={'text-emerald-400'}>4 offers</span> for fast online money making.
+        </p>
+        <p class={' text-sm sm:text-base md:text-lg'}>Follow the instructions below and get your personal offer.</p>
+        <p class={' text-sm sm:text-base md:text-lg'}>
+          In 40 seconds you will be redirected to the best (<span class={'text-emerald-400'}>most profitable for you</span>) offer.
+        </p>
+        <p class={' text-sm sm:text-base md:text-lg'}>Click the GET OFFER button to go to the best offer immediately!</p>
+      </div>
+      <MainExitButton client:load />
+    </div>
+  </main>
+</Layout>

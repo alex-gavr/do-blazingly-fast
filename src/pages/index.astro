@@ -1,17 +1,25 @@
 ---
 import Survey from '@components/Survey';
 import Layout from '@layouts/Layout.astro';
+
+// can get cookies
+// const searchParams = Astro.url.searchParams;
+// const url = makeRequestUrl(searchParams, ExitType.ipp, 5381235);
+// console.log('🚀 ~ url:', url);
+// const res = await fetch(url);
+// const nonUnique = await res.json();
+// console.log('✅ ~ nonUnique:', nonUnique)
 ---
 
 <Layout title='Welcome to Astro.'>
-  <main class='p-4'>
+  <main class='px-2 py-4'>
     <h1 class='text-center text-lg font-bold tracking-wider sm:text-xl md:text-2xl lg:text-4xl'>
       Would You Make A Great Career Online And Become A Millionaire By 2023?
     </h1>
     <p class='mt-4 text-center text-sm tracking-wider sm:text-base md:text-lg lg:text-xl'>
       Take this FREE test and find out how you can make money on the Internet.
     </p>
-    <section class="flex flex-col items-center justify-center gap-2 p-10 max-w-md ml-auto mr-auto">
+    <section class='ml-auto mr-auto flex max-w-xl flex-col items-center justify-center gap-4 px-2 py-10'>
       <Survey client:load />
     </section>
   </main>
