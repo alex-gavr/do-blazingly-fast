@@ -197,23 +197,18 @@ const Survey = ({}: ISurveyProps) => {
     }
 
     if (leadsTo === LeadsTo.teenExit) {
-      
-        const teenExitIpp = exitZones.ipp_teen[Math.floor(Math.random() * exitZones.ipp_teen.length)];
-        const teenExitPopsIpp = exitZones.ipp_teen_pops;
+      const teenExitIpp = exitZones.ipp_teen[Math.floor(Math.random() * exitZones.ipp_teen.length)];
+      const teenExitPopsIpp = exitZones.ipp_teen_pops;
 
-        const teenExitOnclick = exitZones.onclick_teen[Math.floor(Math.random() * exitZones.onclick_autoexit.length)];
-        const teenExitPopsOnclick = exitZones.onclick_teen_pops;
-        const main = getExitLinkWithMediation(teenExitIpp, teenExitOnclick);
-        const pops = getExitLinkWithMediation(teenExitPopsIpp, teenExitPopsOnclick);
-        const [mainUrl, popsUrl] = await Promise.all([main, pops]);
-        console.log('🚀 ~ popsUrl:', popsUrl)
-        console.log('🚀 ~ mainUrl:', mainUrl)
+      const teenExitOnclick = exitZones.onclick_teen[Math.floor(Math.random() * exitZones.onclick_autoexit.length)];
+      const teenExitPopsOnclick = exitZones.onclick_teen_pops;
+      const main = getExitLinkWithMediation(teenExitIpp, teenExitOnclick);
+      const pops = getExitLinkWithMediation(teenExitPopsIpp, teenExitPopsOnclick);
+      const [mainUrl, popsUrl] = await Promise.all([main, pops]);
 
-        // setCookie('nonUniqueTeen', '1', { expires: 7, path: '' });
-        // window.open(mainUrl, '_blank');
-        // window.location.replace(popsUrl);
-       
-      
+      setCookie('nonUniqueTeen', '1', { expires: 7, path: '' });
+      window.open(mainUrl, '_blank');
+      window.location.replace(popsUrl);
     }
 
     if (leadsTo === LeadsTo.thankYouPage) {

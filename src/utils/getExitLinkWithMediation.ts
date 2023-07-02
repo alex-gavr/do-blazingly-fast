@@ -9,6 +9,7 @@ type Ipp = {
 
 const getIppLink = async (zone: number) => {
   try {
+    // TODO: UNDERSTAND WHAT YOU ARE GETTING BACK FROM MARKER.
     // IF ZONE IN SMART ROTATION WE CAN GET BACK IPP OR ONCLICK
     //  I USE VIGNETTE HERE BECAUSE I WANT TO GET BACK DATA FOR IPP, NOT MEDIATION
     const url = makeExitUrl(zone, ExitType.vignette) ?? '';
