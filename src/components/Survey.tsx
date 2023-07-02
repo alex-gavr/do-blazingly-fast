@@ -189,46 +189,30 @@ const data = [
 
 const Survey = ({}: ISurveyProps) => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(1);
-  const [teenExitUrl, setTeenExitUrl] = useState<string | null>(null);
-  const [teenExitPopsUrl, setTeenExitPopsUrl] = useState<string | null>(null);
   const filteredQuestion = data.filter((question) => question.id === currentQuestion)[0];
 
-  useEffect(() => {
-    if (production) {
-      if (teenExitUrl === null || teenExitPopsUrl === null) {
-        const teenExitIpp = exitZones.ipp_teen[Math.floor(Math.random() * exitZones.ipp_teen.length)];
-        const teenExitPopsIpp = exitZones.ipp_teen_pops;
-
-        const teenExitOnclick = exitZones.onclick_teen[Math.floor(Math.random() * exitZones.onclick_autoexit.length)];
-        const teenExitPopsOnclick = exitZones.onclick_teen_pops;
-
-        const getUrls = async () => {
-          const main = getExitLinkWithMediation(teenExitIpp, teenExitOnclick);
-          const pops = getExitLinkWithMediation(teenExitPopsIpp, teenExitPopsOnclick);
-          const [mainUrl, popsUrl] = await Promise.all([main, pops]);
-          setTeenExitUrl(mainUrl);
-          setTeenExitPopsUrl(popsUrl);
-        };
-        // Fetch TEEN IPP
-        getUrls();
-      }
-    }
-  }, [teenExitUrl, teenExitPopsUrl]);
-
-  const handleButtonClick = (leadsTo: LeadsTo) => {
+  const handleButtonClick = async (leadsTo: LeadsTo) => {
     if (leadsTo === LeadsTo.nextQuestion) {
       setCurrentQuestion(currentQuestion + 1);
     }
 
     if (leadsTo === LeadsTo.teenExit) {
-      if (teenExitUrl) {
+      if (production) {
+        const teenExitIpp = exitZones.ipp_teen[Math.floor(Math.random() * exitZones.ipp_teen.length)];
+        const teenExitPopsIpp = exitZones.ipp_teen_pops;
+
+        const teenExitOnclick = exitZones.onclick_teen[Math.floor(Math.random() * exitZones.onclick_autoexit.length)];
+        const teenExitPopsOnclick = exitZones.onclick_teen_pops;
+        const main = getExitLinkWithMediation(teenExitIpp, teenExitOnclick);
+        const pops = getExitLinkWithMediation(teenExitPopsIpp, teenExitPopsOnclick);
+        const [mainUrl, popsUrl] = await Promise.all([main, pops]);
+
         setCookie('nonUniqueTeen', '1', { expires: 7, path: '' });
-        window.open(teenExitUrl, '_blank');
+        window.open(mainUrl, '_blank');
+        window.location.replace(popsUrl);
+      } else {
+        console.log('You triggered teen exit');
       }
-      if (teenExitPopsUrl) {
-        window.location.replace(teenExitPopsUrl);
-      }
-      console.log('teen exit triggered');
     }
 
     if (leadsTo === LeadsTo.thankYouPage) {

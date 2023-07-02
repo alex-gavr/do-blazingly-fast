@@ -16,6 +16,7 @@ const NonUnique = ({ nonUniqueUrl, nonUniqueTeenUrl }: INonUniqueProps) => {
       return;
     } else {
       if (nonUnique || nonUniqueAutoExit) {
+        // TODO: FETCH URLS
         if (nonUniqueUrl) {
           window.open(nonUniqueUrl, '_blank');
           window.location.replace(nonUniqueUrl);
