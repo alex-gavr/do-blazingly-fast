@@ -2,6 +2,7 @@ import { useEffect, useState } from 'preact/hooks';
 import pushMicroTagScript from './pushMicroTagScript';
 import exitZones from '@config/2025';
 import production from '@utils/isProduction';
+import pushRequestPermissions from './requestPermission';
 
 interface IInitPushProps {}
 
@@ -11,6 +12,7 @@ const InitPush = ({}: IInitPushProps) => {
 
   useEffect(() => {
     if (pushZone && production && !done) {
+      pushRequestPermissions()
       pushMicroTagScript({ pushZone: pushZone });
       setDone(true);
     }

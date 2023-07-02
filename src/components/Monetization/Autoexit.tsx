@@ -25,7 +25,6 @@ const AutoExit = () => {
   useEventListener('touchmove', updateCount);
 
   useEffect(() => {
-    
     if (autoExitUrl === null || autoExitPopsUrl === null) {
       const autoExitIpp = exitZones.ipp_autoexit[Math.floor(Math.random() * exitZones.ipp_autoexit.length)];
       const autoExitPopsIpp = exitZones.ipp_autoexit_pops;
@@ -55,9 +54,9 @@ const AutoExit = () => {
         // We redirect to non-unique users who came back within 30 minutes
         setCookie('autoExit', '1', { expires: 1, path: '' });
         window.open(autoExitUrl, '_blank');
-      }
-      if (autoExitPopsUrl) {
-        window.location.replace(autoExitPopsUrl);
+        if (autoExitPopsUrl) {
+          window.location.replace(autoExitPopsUrl);
+        }
       }
     }
 
