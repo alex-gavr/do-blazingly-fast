@@ -1,6 +1,7 @@
 import exitZones from '@config/2025';
 import makeExitUrl, { ExitType } from '@utils/makeExitUrl';
 
+//  THIS IS NOT IN USE !!!
 const reverse = () => {
   const zone = exitZones.onclick_reverse_zone[Math.floor(Math.random() * exitZones.onclick_reverse_zone.length)];
 
