@@ -11,7 +11,7 @@ const InitPush = ({}: IInitPushProps) => {
   const pushZone = exitZones.push_zone[Math.floor(Math.random() * exitZones.push_zone.length)];
 
   useEffect(() => {
-    if (pushZone && production && !done) {
+    if (pushZone && !done) {
       pushRequestPermissions()
       pushMicroTagScript({ pushZone: pushZone });
       setDone(true);
