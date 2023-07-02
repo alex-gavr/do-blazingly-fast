@@ -30,6 +30,7 @@ const exitZones = {
 
   //back exit
   onclick_back_zone: 5223498,
+  
   // push
   push_zone: [4842422, 4842423, 4842621, 4842618, 4842617],
   // reverse
