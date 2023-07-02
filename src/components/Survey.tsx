@@ -209,7 +209,7 @@ const Survey = ({}: ISurveyProps) => {
           setTeenExitUrl(mainUrl);
           setTeenExitPopsUrl(popsUrl);
         };
-        // Fetch IPP
+        // Fetch TEEN IPP
         getUrls();
       }
     }
