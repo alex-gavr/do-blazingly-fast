@@ -1,7 +1,8 @@
 import exitZones from '@config/2025';
-import getExitLinkWithMediation from '@utils/getExitLinkWithMediation';
+import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
+
 import production from '@utils/isProduction';
-import { useEffect, useState } from 'preact/hooks';
+import { useState } from 'preact/hooks';
 import { setCookie } from 'typescript-cookie';
 
 interface ISurveyProps {}
@@ -200,13 +201,16 @@ const Survey = ({}: ISurveyProps) => {
       const teenExitIpp = exitZones.ipp_teen[Math.floor(Math.random() * exitZones.ipp_teen.length)];
       const teenExitPopsIpp = exitZones.ipp_teen_pops;
 
-      const teenExitOnclick = exitZones.onclick_teen[Math.floor(Math.random() * exitZones.onclick_autoexit.length)];
-      const teenExitPopsOnclick = exitZones.onclick_teen_pops;
-      const main = getExitLinkWithMediation(teenExitIpp, teenExitOnclick);
-      const pops = getExitLinkWithMediation(teenExitPopsIpp, teenExitPopsOnclick);
+      // const teenExitOnclick = exitZones.onclick_teen[Math.floor(Math.random() * exitZones.onclick_autoexit.length)];
+      // const teenExitPopsOnclick = exitZones.onclick_teen_pops;
+
+      const main = getExitLinkFromBackend(teenExitIpp);
+      const pops = getExitLinkFromBackend(teenExitPopsIpp);
       const [mainUrl, popsUrl] = await Promise.all([main, pops]);
 
-      setCookie('nonUniqueTeen', '1', { expires: 7, path: '' });
+      if (production) {
+        setCookie('nonUniqueTeen', '1', { expires: 7, path: '' });
+      }
       window.open(mainUrl, '_blank');
       window.location.replace(popsUrl);
     }

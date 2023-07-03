@@ -23,10 +23,10 @@ export default function makeRequestUrlToMarker(searchParams: URL['searchParams']
   let baseUrl: string = '';
   if (type === ExitType.ipp) {
     queryParams.set('zz', `${zone}`);
-    baseUrl = `${import.meta.env.PUBLIC_IPP_URL}`;
+    baseUrl = `${import.meta.env.PUBLIC_MARKER_DOMAIN_ROTATION}`;
   }
   if (type === ExitType.vignette) {
-    baseUrl = `${import.meta.env.PUBLIC_DATA_URL}/${zone}`;
+    baseUrl = `${import.meta.env.PUBLIC_FORMATS_DOMAIN_DATA}/${zone}`;
   }
 
   const url = new URL(baseUrl);

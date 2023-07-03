@@ -1,8 +1,12 @@
-import { SearchParamsOptions } from "./makeExitUrl";
+import { SearchParamsOptions } from './makeExitUrl';
 
+export enum UrlType {
+  ipp = 'ipp',
+  onclick = 'onclick',
+}
 
 //  we receive zone if onclick and url if ipp or vignette
-const makeExitUrlFromUrl = (url: string) => {
+const makeExitUrlFromUrl = (url: string, urlType: UrlType) => {
   if (typeof window !== 'undefined') {
     const currentUrl = new URL(window.location.href);
     const zoneEntry = currentUrl.searchParams.get(SearchParamsOptions.zone) ?? '';
@@ -23,13 +27,20 @@ const makeExitUrlFromUrl = (url: string) => {
     queryParams.set('click_id', `${clickId}`);
     queryParams.set('ab2r', `${abTest}`);
 
-    const newExitUrl = new URL(url);
-    // params from backend
-    const zone = newExitUrl.searchParams.get('_z') ?? '';
-    const bannerId = newExitUrl.searchParams.get(SearchParamsOptions.bannerId) ?? '';
+    let newExitUrl = new URL(url);
+    if (urlType === UrlType.ipp) {
+      // params from backend
+      const zone = newExitUrl.searchParams.get('_z') ?? '';
+      const bannerId = newExitUrl.searchParams.get(SearchParamsOptions.bannerId) ?? '';
 
-    queryParams.set('_z', `${zone}`);
-    queryParams.set('b', `${bannerId}`);
+      queryParams.set('_z', `${zone}`);
+      queryParams.set('b', `${bannerId}`);
+    }
+    if (urlType === UrlType.onclick) {
+      const userId = newExitUrl.searchParams.get('userId') ?? '';
+      queryParams.set('userId', `${userId}`);
+    }
+
     newExitUrl.search = queryParams.toString();
     return newExitUrl.href;
   } else {
@@ -37,4 +48,3 @@ const makeExitUrlFromUrl = (url: string) => {
   }
 };
 export default makeExitUrlFromUrl;
-

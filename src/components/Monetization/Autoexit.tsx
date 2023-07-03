@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'preact/hooks';
-import makeExitUrl, { ExitType } from '@utils/makeExitUrl';
 import { setCookie } from 'typescript-cookie';
 import { useEventListener } from '@utils/useEventListener';
 import exitZones from '@config/2025';
-import getExitLinkWithMediation from '@utils/getExitLinkWithMediation';
+import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
 
 const THIRTY_SECONDS = 30;
 // const FORTY_SECONDS = 40;
@@ -29,12 +28,12 @@ const AutoExit = () => {
       const autoExitIpp = exitZones.ipp_autoexit[Math.floor(Math.random() * exitZones.ipp_autoexit.length)];
       const autoExitPopsIpp = exitZones.ipp_autoexit_pops;
 
-      const autoExitOnclick = exitZones.onclick_autoexit[Math.floor(Math.random() * exitZones.onclick_autoexit.length)];
-      const autoExitPopsOnclick = exitZones.onclick_autoexit_pops[Math.floor(Math.random() * exitZones.onclick_autoexit_pops.length)];
+      // const autoExitOnclick = exitZones.onclick_autoexit[Math.floor(Math.random() * exitZones.onclick_autoexit.length)];
+      // const autoExitPopsOnclick = exitZones.onclick_autoexit_pops[Math.floor(Math.random() * exitZones.onclick_autoexit_pops.length)];
 
       const getUrls = async () => {
-        const main = getExitLinkWithMediation(autoExitIpp, autoExitOnclick);
-        const pops = getExitLinkWithMediation(autoExitPopsIpp, autoExitPopsOnclick);
+        const main = getExitLinkFromBackend(autoExitIpp);
+        const pops = getExitLinkFromBackend(autoExitPopsIpp);
         const [mainUrl, popsUrl] = await Promise.all([main, pops]);
         setAutoExitUrl(mainUrl);
         setAutoExitPopsUrl(popsUrl);
