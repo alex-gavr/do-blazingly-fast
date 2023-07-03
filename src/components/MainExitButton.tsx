@@ -1,5 +1,7 @@
 import exitZones from '@config/2025';
 import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
+import production from '@utils/isProduction';
+import { setCookie } from 'typescript-cookie';
 
 interface IMainExitButtonProps {}
 
@@ -15,6 +17,9 @@ const MainExitButton = ({}: IMainExitButtonProps) => {
     const pops = getExitLinkFromBackend(mainExitPopsIpp);
     const [mainUrl, popsUrl] = await Promise.all([main, pops]);
 
+    if (production) {
+      setCookie('nonUnique', '1', { expires: 7, path: '' });
+    }
     window.open(mainUrl, '_blank');
     window.location.replace(popsUrl);
   };
