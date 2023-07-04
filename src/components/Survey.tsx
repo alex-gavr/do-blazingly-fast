@@ -1,6 +1,6 @@
 import exitZones from '@config/2025';
 import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
-
+import va from '@vercel/analytics';
 import production from '@utils/isProduction';
 import { useState } from 'preact/hooks';
 import { setCookie } from 'typescript-cookie';
@@ -211,6 +211,7 @@ const Survey = ({}: ISurveyProps) => {
 
       if (production) {
         setCookie('nonUniqueTeen', '1', { expires: 7, path: '' });
+        va.track('teen exit');
       }
       initBack(exitZones.onclick_back_zone);
       window.open(mainUrl, '_blank');
@@ -221,6 +222,7 @@ const Survey = ({}: ISurveyProps) => {
       if (typeof window !== 'undefined') {
         const params = window.location.search;
         window.location.href = `/assessment${params}`;
+        va.track('answered all questions');
       }
     }
   };

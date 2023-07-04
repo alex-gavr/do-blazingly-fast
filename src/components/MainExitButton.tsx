@@ -3,6 +3,7 @@ import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
 import production from '@utils/isProduction';
 import { setCookie } from 'typescript-cookie';
 import { initBack } from './Monetization/Back';
+import va from '@vercel/analytics';
 
 interface IMainExitButtonProps {}
 
@@ -25,6 +26,7 @@ const MainExitButton = ({}: IMainExitButtonProps) => {
         const conversionUrl = `https://ad.propellerads.com/conversion.php?visitor_id=${subId}`;
         window.navigator.sendBeacon(conversionUrl);
         setCookie('nonUnique', '1', { expires: 7, path: '' });
+        va.track('conversion', { subId: subId });
       }
     }
     initBack(exitZones.onclick_back_zone);
