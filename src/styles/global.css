@@ -7,8 +7,7 @@ html {
   background-color: #f6f6f6;
 }
 code {
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono,
-    Courier New, monospace;
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
 }
 
 h1,
@@ -22,4 +21,30 @@ h6 {
 
 p {
   @apply text-slate-300;
+}
+
+.rain {
+  background-image: url('/img/rain/dollars-1.png'), url('/img/rain/dollars-2.png'), url('/img/rain/dollars-3.png');
+  z-index: 1;
+  animation: snow 13s linear infinite;
+  transition: opacity 0.4s ease;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+@keyframes snow {
+  0% {
+    background-position: 0 0, 0 0, 0 0;
+  }
+
+  50% {
+    background-position: 500px 500px, 100px 400px, -200px 300px;
+  }
+
+  100% {
+    background-position: 500px 1000px, 200px 800px, -200px 600px;
+  }
 }
