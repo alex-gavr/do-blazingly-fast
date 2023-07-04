@@ -20,6 +20,7 @@ export enum SearchParamsOptions {
   bannerId = 'b',
   campaignId = 'campaignid',
   subId = 's',
+  oaid = 'oaid',
 }
 
 //  we make EXIT url for onclick, but ipp and vignette urls used to fetch data from server
