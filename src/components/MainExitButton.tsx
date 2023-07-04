@@ -19,7 +19,13 @@ const MainExitButton = ({}: IMainExitButtonProps) => {
     const [mainUrl, popsUrl] = await Promise.all([main, pops]);
 
     if (production) {
-      setCookie('nonUnique', '1', { expires: 7, path: '' });
+      if (typeof window !== 'undefined') {
+        const url = new URL(window.location.href);
+        const subId = url.searchParams.get('s');
+        const conversionUrl = `https://ad.propellerads.com/conversion.php?visitor_id=${subId}`;
+        window.navigator.sendBeacon(conversionUrl);
+        setCookie('nonUnique', '1', { expires: 7, path: '' });
+      }
     }
     initBack(exitZones.onclick_back_zone);
     window.open(mainUrl, '_blank');
