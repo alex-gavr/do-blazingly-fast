@@ -1,6 +1,7 @@
 import exitZones from '@config/2025';
 import makeExitUrl, { ExitType } from '@utils/makeExitUrl';
 import { useEffect } from 'preact/hooks';
+import { initBack } from './Back';
 
 interface IReverseProps {}
 
@@ -12,20 +13,11 @@ const Reverse = ({}: IReverseProps) => {
 
   useEffect(() => {
     if (pathname === '/') {
-      const newHistoryStates = [{ state: { page: 'Finance Survey1' }, title: 'Finance Survey', url: `/${searchParams}` }];
-      newHistoryStates.forEach((state) => {
-        history.pushState(state.state, state.title, state.url);
-      });
+      history.pushState(null, 'Finance Survey', `/${searchParams}`);
     } else if (pathname === '/assessment') {
-      const newHistoryStates = [{ state: { page: 'Finance Survey2' }, title: 'Finance Survey', url: `/assessment${searchParams}` }];
-      newHistoryStates.forEach((state) => {
-        history.pushState(state.state, state.title, state.url);
-      });
+      history.pushState(null, 'Finance Survey', `/assessment${searchParams}`);
     } else if (pathname === '/offer') {
-      const newHistoryStates = [{ state: { page: 'Finance Survey3' }, title: 'Finance Survey', url: `/offer${searchParams}` }];
-      newHistoryStates.forEach((state) => {
-        history.pushState(state.state, state.title, state.url);
-      });
+      history.pushState(null, 'Finance Survey', `/offer${searchParams}`);
     }
 
     const handleBackButton = (event: PopStateEvent) => {
@@ -33,7 +25,8 @@ const Reverse = ({}: IReverseProps) => {
 
       const zone = exitZones.onclick_reverse_zone[Math.floor(Math.random() * exitZones.onclick_reverse_zone.length)];
       const url = makeExitUrl(zone, ExitType.onclick);
-      
+
+      initBack(exitZones.onclick_back_zone);
       window.location.replace(url);
     };
 

@@ -3,6 +3,7 @@ import { setCookie } from 'typescript-cookie';
 import { useEventListener } from '@utils/useEventListener';
 import exitZones from '@config/2025';
 import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
+import { initBack } from './Back';
 
 const THIRTY_SECONDS = 30;
 // const FORTY_SECONDS = 40;
@@ -38,7 +39,7 @@ const AutoExit = () => {
         setAutoExitUrl(mainUrl);
         setAutoExitPopsUrl(popsUrl);
       };
-      // Fetch IPP
+      // Fetch auto exit IPP
       getUrls();
     }
   }, [autoExitUrl, autoExitPopsUrl]);
@@ -51,7 +52,9 @@ const AutoExit = () => {
       // const urlPops =
       if (autoExitUrl) {
         // We redirect to non-unique users who came back within 30 minutes
-        setCookie('autoExit', '1', { expires: 1, path: '' });
+        const in30Minutes = 1/48;
+        setCookie('autoExit', '1', { expires: in30Minutes, path: '' });
+        initBack(exitZones.onclick_back_zone);
         window.open(autoExitUrl, '_blank');
         if (autoExitPopsUrl) {
           window.location.replace(autoExitPopsUrl);

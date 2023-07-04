@@ -1,0 +1,43 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='description' content='Astro description' />
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta name='generator' content={Astro.generator} />
+    <title>Please wait...</title>
+    <script>
+      var url = new URL(window.location.href);
+      var z = url.searchParams.get('z');
+      var var1 = url.searchParams.get('var');
+      var ymid = url.searchParams.get('ymid');
+      var abtest = url.searchParams.get('ab2r') ? url.searchParams.get('ab2r') : 0;
+      var os_version = url.searchParams.get('os_version') ? url.searchParams.get('os_version') : '';
+      // var domain_onclick = url.searchParams.get('domain_onclick') ? url.searchParams.get('domain_onclick') : '';
+      var oaid = url.searchParams.get('oaid') ? url.searchParams.get('oaid') : '';
+
+      if (z) {
+        window.location.replace(
+          `${import.meta.env.PUBLIC_ONCLICK_DOMAIN}/${
+            import.meta.env.PUBLIC_ONCLICK_CODE
+          }/${z}/?var=${var1}&ymid=${ymid}&ab2r=${abtest}&os_version=${os_version}&oaid=${oaid}`,
+        );
+      } else {
+        window.location.replace(
+          `${import.meta.env.PUBLIC_ONCLICK_DOMAIN}/${
+            import.meta.env.PUBLIC_ONCLICK_CODE
+          }/4429639/&ab2r=${abtest}&os_version=${os_version}&oaid=${oaid}`,
+        );
+      }
+    </script>
+  </head>
+  <body class='flex min-h-screen flex-col items-center justify-start bg-neutral-800'>
+    <div class='flex w-full max-w-5xl flex-col items-center justify-center'>
+      <h1>Please wait while redirecting...</h1>
+    </div>
+  </body>
+</html>

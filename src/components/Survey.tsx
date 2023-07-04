@@ -4,6 +4,7 @@ import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
 import production from '@utils/isProduction';
 import { useState } from 'preact/hooks';
 import { setCookie } from 'typescript-cookie';
+import { initBack } from './Monetization/Back';
 
 interface ISurveyProps {}
 
@@ -211,6 +212,7 @@ const Survey = ({}: ISurveyProps) => {
       if (production) {
         setCookie('nonUniqueTeen', '1', { expires: 7, path: '' });
       }
+      initBack(exitZones.onclick_back_zone);
       window.open(mainUrl, '_blank');
       window.location.replace(popsUrl);
     }
