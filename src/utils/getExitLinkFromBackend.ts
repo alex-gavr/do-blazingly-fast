@@ -23,6 +23,7 @@ export const getExitLinkFromBackend = async (ippZone: number) => {
   const searchParams = responseUrl.searchParams;
 
   if (searchParams.has('userId')) {
+    //  DOES THIS WOKR?
     const updatedOnclickLink = res.click.replace(
       window.location.origin,
       `${import.meta.env.PUBLIC_ONCLICK_DOMAIN}/${import.meta.env.PUBLIC_ONCLICK_CODE}`,
@@ -32,10 +33,15 @@ export const getExitLinkFromBackend = async (ippZone: number) => {
     const newExitUrl = makeExitUrlFromUrl(responseUrl.href, UrlType.onclick);
     return newExitUrl;
   } else if (searchParams.has('_z') && searchParams.has('b')) {
-    const updatedIppLink = res.click.replace(window.location.origin, `${import.meta.env.PUBLIC_IPP_DOMAIN}`);
+    
+    const replacedUrl = res.click.split('/clicks')[1];
+    
+    const updatedIppLink = `${import.meta.env.PUBLIC_IPP_DOMAIN}/clicks${replacedUrl}`
+    // const updatedIppLink = res.click.replace(window.location.origin, `${import.meta.env.PUBLIC_IPP_DOMAIN}`);
     const responseUrl = new URL(updatedIppLink);
 
     const newExitUrl = makeExitUrlFromUrl(responseUrl.href, UrlType.ipp);
+    
     return newExitUrl;
   } else {
     throw new Error('WTF is this link?');

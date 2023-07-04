@@ -1,12 +1,12 @@
+import exitZones from '@config/2025';
 import { useEffect } from 'preact/hooks';
 import { getCookie } from 'typescript-cookie';
+import { initBack } from './Back';
+import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
 
-interface INonUniqueProps {
-  nonUniqueUrl?: string;
-  nonUniqueTeenUrl?: string;
-}
+interface INonUniqueProps {}
 
-const NonUnique = ({ nonUniqueUrl, nonUniqueTeenUrl }: INonUniqueProps) => {
+const NonUnique = ({}: INonUniqueProps) => {
   const nonUnique = getCookie('nonUnique') ?? false;
   const nonUniqueAutoExit = getCookie('autoExit') ?? false;
   const nonUniqueTeen = getCookie('nonUniqueTeen') ?? false;
@@ -15,18 +15,27 @@ const NonUnique = ({ nonUniqueUrl, nonUniqueTeenUrl }: INonUniqueProps) => {
     if (!nonUnique && !nonUniqueAutoExit && !nonUniqueTeen) {
       return;
     } else {
-      if (nonUnique || nonUniqueAutoExit) {
-        // TODO: FETCH URLS
-        if (nonUniqueUrl) {
-          window.open(nonUniqueUrl, '_blank');
-          window.location.replace(nonUniqueUrl);
-        }
-      } else if (nonUniqueTeen && nonUniqueTeenUrl) {
-        window.open(nonUniqueTeenUrl, '_blank');
-        window.location.replace(nonUniqueTeenUrl);
+      if (nonUniqueTeen) {
+        const initNonUniqueTeen = async () => {
+          const nonUniqueTeenIpp = exitZones.ipp_not_unique_teen;
+          const url = await getExitLinkFromBackend(nonUniqueTeenIpp);
+          initBack(exitZones.onclick_back_zone);
+          window.open(url, '_blank');
+          window.location.replace(url);
+        };
+        initNonUniqueTeen();
+      } else {
+        const initNonUnique = async () => {
+          const nonUniqueIpp = exitZones.ipp_not_unique[Math.floor(Math.random() * exitZones.ipp_not_unique.length)];
+          const url = await getExitLinkFromBackend(nonUniqueIpp);
+          initBack(exitZones.onclick_back_zone);
+          window.open(url, '_blank');
+          window.location.replace(url);
+        };
+        initNonUnique();
       }
     }
-  }, [nonUnique, nonUniqueAutoExit, nonUniqueTeen]);
+  }, []);
 
   return null;
 };
