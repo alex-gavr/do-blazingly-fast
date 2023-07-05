@@ -14,7 +14,7 @@ const exitZones = {
   onclick_teen_pops: 4292859,
 
   // auto exit IPP
-  ipp_autoexit: [5381339, 5381332, 5381330],
+  ipp_autoexit: [5381339, 5381330],
   ipp_autoexit_pops: 5381332,
 
   //auto exit onclick. User does nothing and on the first question, I open that.
