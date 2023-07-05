@@ -10,9 +10,4 @@ export default defineConfig({
   adapter: vercel({
     analytics: true,
   }),
-  vite: {
-    define: {
-      'import.meta.env.PUBLIC_VERCEL_ANALYTICS_ID': JSON.stringify(process.env.VERCEL_ANALYTICS_ID),
-    },
-  },
 });
