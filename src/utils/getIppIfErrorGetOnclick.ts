@@ -20,7 +20,7 @@ const getIppLink = async (zone: number) => {
     const url = makeExitUrl(zone, ExitType.ipp) ?? '';
 
     // zone example 6020461
-    const data = await fetch(url).then((res) => res.json());
+    const data = await fetch(url).then((res) => res.json()).catch((error) => console.log(error));
     const res = data.ads[0] as IppData;
     const exitUrl = makeExitUrlFromUrl(res.click, UrlType.ipp);
 

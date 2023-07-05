@@ -13,7 +13,7 @@ export type Onclick = {
 export const getExitLinkFromBackend = async (ippZone: number) => {
   const url = makeExitUrl(ippZone, ExitType.ippWithRotationOnBackend) ?? '';
 
-  const data = await fetch(url).then((res) => res.json());
+  const data = await fetch(url).then((res) => res.json()).catch((error) => console.log(error));
   const res = data.ads[0] as Ipp | Onclick;
 
   // onclick response: https://localhost/4292859/?var=&ymid=&b=&campaignid=&osversion=&click_id=&ab2r=&userId=d1c5e65eb3ce42efba09129a5f8567d6
