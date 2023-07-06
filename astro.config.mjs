@@ -7,12 +7,5 @@ import vercel from '@astrojs/vercel/edge';
 export default defineConfig({
   integrations: [preact(), tailwind()],
   output: 'server',
-  adapter: vercel({
-    analytics: true,
-  }),
-  vite: {
-    define: {
-      'import.meta.env.VERCEL_ANALYTICS_ID': JSON.stringify(process.env.VERCEL_ANALYTICS_ID),
-    },
-  },
+  adapter: vercel(),
 });

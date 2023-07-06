@@ -26,7 +26,9 @@ const { title } = Astro.props;
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
     <script>
+      import { replaceMacrosWithEmptyString } from '@utils/replaceMacros';
       import * as Sentry from '@sentry/browser';
+      replaceMacrosWithEmptyString(window.location.href);
       Sentry.init({
         dsn: 'https://8f42fb7fc8954337bd9e7944b7235535@o4504255785992192.ingest.sentry.io/4505476836884480',
         integrations: [
@@ -55,9 +57,3 @@ const { title } = Astro.props;
     </div>
   </body>
 </html>
-
-<script>
-  import { replaceMacrosWithEmptyString } from '@utils/replaceMacros';
-
-  replaceMacrosWithEmptyString(window.location.href);
-</script>
