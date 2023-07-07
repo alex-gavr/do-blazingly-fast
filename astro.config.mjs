@@ -7,5 +7,7 @@ import vercel from '@astrojs/vercel/static';
 export default defineConfig({
   integrations: [preact(), tailwind()],
   output: 'static',
-  adapter: vercel(),
+  adapter: vercel({
+    analytics: true,
+  }),
 });
