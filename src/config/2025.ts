@@ -1,7 +1,8 @@
 const exitZones = {
   // main exit IPP
   ipp_main_exit: [4292523, 4292518, 4292525, 4292526, 4292527],
-  ipp_main_exit_pops: [5128285, 5368781, 5368782, 5368783, 5368785],
+  // ipp_main_exit_pops: [5128285, 5368781, 5368782, 5368783, 5368785],
+  ipp_main_exit_pops: 5128285,
   // main exits onclick
   onclick_main_exit: [3746391, 3746371, 3746380, 4209942, 4209943],
   onclick_main_exit_pops: [4292607, 5368774, 5368775, 5368776, 5368777],

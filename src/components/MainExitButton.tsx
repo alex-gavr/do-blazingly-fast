@@ -17,7 +17,7 @@ const MainExitButton = ({}: IMainExitButtonProps) => {
         setCookie('nonUnique', '1', { expires: 7, path: '' });
       }
       const mainZone = exitZones.ipp_main_exit[Math.floor(Math.random() * exitZones.ipp_main_exit.length)];
-      const mainPops = exitZones.ipp_main_exit_pops[Math.floor(Math.random() * exitZones.ipp_main_exit_pops.length)];
+      const mainPops = exitZones.ipp_main_exit_pops;
 
       const main = getExitLinkFromBackend(mainZone);
       const pops = getExitLinkFromBackend(mainPops);
