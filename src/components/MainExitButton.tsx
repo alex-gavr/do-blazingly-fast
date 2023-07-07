@@ -1,35 +1,40 @@
 import exitZones from '@config/2025';
-import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
 import production from '@utils/isProduction';
 import { setCookie } from 'typescript-cookie';
 import { initBack } from './Monetization/Back';
+import makeExitUrl, { ExitType } from '@utils/makeExitUrl';
 
-interface IMainExitButtonProps {}
+interface IMainExitButtonProps {
+  mainUrl: string;
+  popsUrl: string;
+}
 
-const MainExitButton = ({}: IMainExitButtonProps) => {
-  const handleClick = async () => {
-    const mainExitIpp = exitZones.ipp_main_exit[Math.floor(Math.random() * exitZones.ipp_main_exit.length)];
-    const mainExitPopsIpp = exitZones.ipp_main_exit_pops[Math.floor(Math.random() * exitZones.ipp_main_exit_pops.length)];
-
-    // const mainExitOnclick = exitZones.onclick_main_exit[Math.floor(Math.random() * exitZones.onclick_main_exit.length)];
-    // const mainExitPopsOnclick = exitZones.onclick_main_exit_pops[Math.floor(Math.random() * exitZones.onclick_main_exit_pops.length)];
-
-    const main = getExitLinkFromBackend(mainExitIpp);
-    const pops = getExitLinkFromBackend(mainExitPopsIpp);
-    const [mainUrl, popsUrl] = await Promise.all([main, pops]);
-
-    if (production) {
-      if (typeof window !== 'undefined') {
-        const url = new URL(window.location.href);
-        const subId = url.searchParams.get('s');
-        const conversionUrl = `https://ad.propellerads.com/conversion.php?visitor_id=${subId}`;
-        window.navigator.sendBeacon(conversionUrl);
-        setCookie('nonUnique', '1', { expires: 7, path: '' });
+const MainExitButton = ({ mainUrl, popsUrl }: IMainExitButtonProps) => {
+  const handleClick = () => {
+    if (mainUrl.length > 1) {
+      if (production) {
+        if (typeof window !== 'undefined') {
+          const url = new URL(window.location.href);
+          const subId = url.searchParams.get('s');
+          const conversionUrl = `https://ad.propellerads.com/conversion.php?visitor_id=${subId}`;
+          window.navigator.sendBeacon(conversionUrl);
+          setCookie('nonUnique', '1', { expires: 7, path: '' });
+        }
+        initBack(exitZones.onclick_back_zone);
+        window.open(mainUrl, '_blank');
+        window.location.replace(popsUrl);
+      } else {
+        console.log('button click with conversion');
+        console.log(`mainUrl = `, mainUrl);
+        console.log(`popsUrl = `, popsUrl);
       }
+    } else {
+      console.error('Main url is empty, fallback on onclick');
+      const url = makeExitUrl(exitZones.onclick_main_exit[0], ExitType.onclick);
+      initBack(exitZones.onclick_back_zone);
+      window.open(url, '_blank');
+      window.location.replace(url);
     }
-    initBack(exitZones.onclick_back_zone);
-    window.open(mainUrl, '_blank');
-    window.location.replace(popsUrl);
   };
 
   return (
