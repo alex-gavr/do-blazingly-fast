@@ -1,6 +1,6 @@
 ---
-
-import Main from '@components/Main';
+// import Main from '@components/Main';
+import Survey from '@components/Survey';
 import Layout from '@layouts/Layout.astro';
 
 // can get cookies
@@ -14,6 +14,14 @@ import Layout from '@layouts/Layout.astro';
 
 <Layout title='Welcome to Astro.'>
   <main class='px-2 py-4'>
-    <Main client:only />
+    <h1 class='text-center text-lg font-bold tracking-wider sm:text-xl md:text-2xl lg:text-4xl'>
+      Would You Make A Great Career Online And Become A Millionaire By 2023?
+    </h1>
+    <p class='mt-4 text-center text-sm tracking-wider sm:text-base md:text-lg lg:text-xl'>
+      Take this FREE test and find out how you can make money on the Internet.
+    </p>
+    <section class='ml-auto mr-auto flex max-w-xl flex-col items-center justify-center gap-4 px-2 py-10'>
+      <Survey client:load />
+    </section>
   </main>
 </Layout>
