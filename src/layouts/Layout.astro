@@ -27,21 +27,7 @@ const { title } = Astro.props;
     <title>{title}</title>
     <script>
       import { replaceMacrosWithEmptyString } from '@utils/replaceMacros';
-      import * as Sentry from '@sentry/browser';
       replaceMacrosWithEmptyString(window.location.href);
-      Sentry.init({
-        dsn: 'https://8f42fb7fc8954337bd9e7944b7235535@o4504255785992192.ingest.sentry.io/4505476836884480',
-        integrations: [
-          new Sentry.BrowserTracing({
-            // Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
-            tracePropagationTargets: ['localhost', /^https:\/\/yourserver\.io\/api/],
-          }),
-          new Sentry.Replay(),
-        ],
-        // Performance Monitoring
-        tracesSampleRate: 1.0, // Capture 100% of the transactions, reduce in production!
-        replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
-      });
     </script>
   </head>
   <body class='flex min-h-screen flex-col items-center justify-start bg-neutral-800'>
