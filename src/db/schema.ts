@@ -1,4 +1,4 @@
-import { char, int, mysqlEnum, mysqlTable, serial, smallint, uniqueIndex, varchar } from 'drizzle-orm/mysql-core';
+import { char, mysqlEnum, mysqlTable, smallint, varchar } from 'drizzle-orm/mysql-core';
 
 export const webVitals = mysqlTable('web_vitals', {
   id: varchar('id', { length: 50 }).primaryKey(),
