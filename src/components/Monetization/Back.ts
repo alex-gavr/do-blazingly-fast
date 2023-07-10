@@ -25,7 +25,8 @@ export const initBack = (backZone: number) => {
 
   const queryParamString = queryParams.toString();
 
-  for (let i = 0; i < 5; i += 1) {
+  //TODO: it was 5 here before
+  for (let i = 0; i < 2; i += 1) {
     window.history.pushState(null, 'Please wait...', `/back?${queryParamString}`);
   }
 };
