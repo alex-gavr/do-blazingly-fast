@@ -11,6 +11,7 @@
       "@styles/*": ["src/styles/*"],
       "@config/*": ["src/config/*"],
       "@utils/*": ["src/utils/*"],
+      "@db/*": ["src/db/*"]
     }
   }
 }

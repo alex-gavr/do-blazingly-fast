@@ -31,15 +31,62 @@ const { title } = Astro.props;
     </script>
   </head>
   <body class='flex min-h-screen flex-col items-center justify-start bg-neutral-800'>
-    {production && <NonUnique client:only="preact" />}
+    {production && <NonUnique client:only='preact' />}
     <div class='flex w-full max-w-5xl flex-col items-center justify-center'>
       <Header />
       <slot />
       <CommentsSection />
       <Footer />
-      {production && <Reverse client:only="preact" />}
-      {production && <AutoExit client:only="preact" />}
-      {production && <InitPush client:only="preact" />}
+      {production && <Reverse client:only='preact' />}
+      {production && <AutoExit client:only='preact' />}
+      {production && <InitPush client:only='preact' />}
     </div>
   </body>
 </html>
+
+<script>
+  import { Metric, onLCP, onFCP, onTTFB } from 'web-vitals';
+  import { db } from '@db/db';
+  import { webVitals } from '@db/schema';
+  import production from '@utils/isProduction';
+
+  if (typeof window !== 'undefined') {
+    const url = new URL(window.location.href);
+    const geo = url.searchParams.get('geo') ?? '??';
+    const pathname = url.pathname;
+    async function sendToAnalytics(metric: Metric) {
+      try {
+        const res = await db.insert(webVitals).values({
+          id: metric.id,
+          geo: geo,
+          pathname: pathname,
+          name: metric.name,
+          value: Math.round(metric.value),
+          rating: metric.rating,
+          delta: metric.delta,
+          navigationType: metric.navigationType,
+        });
+        console.log(`res = `, res);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    // Cumulative Layout Shift (CLS) | IDC
+    // onCLS(sendToAnalytics);
+    // First Input Delay (FID) | IDC
+    // onFID(sendToAnalytics);
+    // Interaction to next Paint (INP) | IDC
+    // onINP(sendToAnalytics);
+
+    if (production) {
+      // Largest Contentful Paint (LCP)
+      onLCP(sendToAnalytics);
+      // First Contentful Paint (FCP)
+      onFCP(sendToAnalytics);
+
+      // Time to First Byte (TTFB)
+      onTTFB(sendToAnalytics);
+    }
+  }
+</script>
