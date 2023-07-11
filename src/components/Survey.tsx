@@ -5,12 +5,16 @@ import { setCookie } from 'typescript-cookie';
 import { initBack } from './Monetization/Back';
 import { LeadsTo, financeSurveyData } from '@config/FinanceSurvey';
 import { useState } from 'preact/hooks';
+import type { TSurveyTexts } from '@i18n/2025/en';
 
-interface ISurveyProps {}
+interface ISurveyProps {
+  texts: TSurveyTexts;
+}
 
-const Survey = ({}: ISurveyProps) => {
+const Survey = ({texts}: ISurveyProps) => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(1);
-  const filteredQuestion = financeSurveyData.filter((question) => question.id === currentQuestion)[0];
+  const surveyData = financeSurveyData(texts)
+  const filteredQuestion = surveyData.filter((question) => question.id === currentQuestion)[0];
 
   const handleButtonClick = async (leadsTo: LeadsTo) => {
     if (leadsTo === LeadsTo.nextQuestion) {

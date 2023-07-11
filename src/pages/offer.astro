@@ -1,31 +1,47 @@
 ---
 import MainExitButton from '@components/MainExitButton';
+import { getDictionary } from '@i18n/getDictionary';
 import Layout from '@layouts/Layout.astro';
+import { findBestMatchingLocale } from '@utils/languageDetection';
+import { defaultLocale, type TValidLocale } from 'src/config';
+
+let locale: TValidLocale;
+
+const getLocale = () => {
+  const matchedLocale = findBestMatchingLocale(Astro.request.headers.get('Accept-Language') || defaultLocale);
+  return matchedLocale;
+};
+
+const sutableLocale = getLocale();
+
+locale = sutableLocale;
+
+const t = await getDictionary(locale);
 ---
 
-<Layout title='Welcome to Astro.'>
-  <main class='px-2 py-4 z-20'>
+<Layout title='Finance Survey'>
+  <main class='z-20 px-2 py-4'>
     <div class={'flex min-h-[70vh] max-w-2xl flex-col items-center justify-center gap-4 md:gap-8 rounded-md bg-neutral-900 px-2 py-4'}>
-      <h1 class={'text-2xl font-bold uppercase tracking-widest md:text-4xl'}>Thank you!</h1>
+      <h1 class={'text-2xl font-bold uppercase tracking-widest md:text-4xl'}>{t.Offer.Title}</h1>
       <p class={' text-center text-sm sm:text-base md:text-xl'}>
-        Your Test Result: <span class={'uppercase text-emerald-400'}>excellent</span> (35 out of 35)
+        {t.Offer.result.p1}<span class={'uppercase text-emerald-400'}> {t.Offer.result.p2} </span>{t.Offer.result.p3}
       </p>
       <div class={'flex flex-col items-start justify-start gap-4'}>
         <p class={'text-sm sm:text-base md:text-lg'}>
-          You are an ideal person for making money online, you may have a chance to earn MUCH MORE THAN{' '}
-          <span class={'uppercase text-emerald-400'}>$5,000</span> daily!
+          {t.Offer.p1.p1}
+          <span class={'uppercase text-emerald-400'}>{t.Offer.p1.p2} </span>{t.Offer.p1.p3}
         </p>
         <p class={' text-sm sm:text-base md:text-lg'}>
-          We have selected for you <span class={'text-emerald-400'}>4 offers</span> for fast online money making.
+          {t.Offer.p2.p1}<span class={'text-emerald-400'}> {t.Offer.p2.p2} </span>{t.Offer.p2.p3}
         </p>
-        <p class={' text-sm sm:text-base md:text-lg'}>Follow the instructions below and get your personal offer.</p>
+        <p class={' text-sm sm:text-base md:text-lg'}>{t.Offer.p3}</p>
         <p class={' text-sm sm:text-base md:text-lg'}>
-          In 40 seconds you will be redirected to the best (<span class={'text-emerald-400'}>most profitable for you</span>) offer.
+          I{t.Offer.p4.p1}<span class={'text-emerald-400'}>{t.Offer.p4.p2}</span>{t.Offer.p4.p3}
         </p>
-        <p class={' text-sm sm:text-base md:text-lg'}>Click the GET OFFER button to go to the best offer immediately!</p>
+        <p class={' text-sm sm:text-base md:text-lg'}>{t.Offer.p5}</p>
       </div>
-      <MainExitButton client:load />
+      <MainExitButton client:load text={t.Offer.button} />
     </div>
   </main>
-  <div class='rain' />
+  <div class='rain'></div>
 </Layout>

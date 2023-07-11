@@ -1,13 +1,41 @@
 ---
+import makeCommentsForFinanceSurvey from '@config/FinanceComments';
 import Comment from './Comment.astro';
-import comments from './CommentsData';
 import UserInput from './UserInput.astro';
+import { findBestMatchingLocale } from '@utils/languageDetection';
+import { TValidLocale, defaultLocale, locales } from 'src/config';
+import { getDictionary } from '@i18n/getDictionary';
+
+// const localeCookie = Astro.cookies.get('locale').value;
+let locale: TValidLocale;
+
+// function isValidLocale(locale: string): boolean {
+//   return locales.includes(locale as (typeof locales)[number]);
+// }
+
+// if (typeof localeCookie === 'string' && isValidLocale(localeCookie)) {
+//   console.log(`localeCookie = `, localeCookie);
+//   locale = localeCookie as TValidLocale;
+// }
+
+const getLocale = () => {
+  const matchedLocale = findBestMatchingLocale(Astro.request.headers.get('Accept-Language') || defaultLocale);
+  return matchedLocale;
+};
+
+const sutableLocale = getLocale();
+
+locale = sutableLocale;
+
+const t = await getDictionary(locale);
+
+const comments = makeCommentsForFinanceSurvey(t.CommentSection.Comments);
 ---
 
-<section class='px-4 w-full max-w-4xl'>
+<section class='w-full max-w-4xl px-4'>
   <div class='flex flex-row items-center justify-between font-bold'>
-    <h1>80 comments</h1>
-    <p class='text-xs'>Sort by: Top</p>
+    <h1>{t.CommentSection.title}</h1>
+    <p class='text-xs'>{t.CommentSection.sortBy}</p>
   </div>
   <hr class='my-3 h-[2px] bg-slate-50' />
   {
@@ -17,10 +45,11 @@ import UserInput from './UserInput.astro';
         name={comment.name}
         comment={comment.comment}
         likes={comment.likes}
-        time={comment.time}
+        timeAgo={comment.timeAgo}
         isSubComment={comment.isSubComment}
+        likeWord={comment.likeWord}
       />
     ))
   }
-  <UserInput />
+  <UserInput userInput={t.CommentSection.UserInput} />
 </section>

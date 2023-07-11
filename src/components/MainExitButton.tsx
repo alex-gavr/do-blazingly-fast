@@ -4,9 +4,11 @@ import { setCookie } from 'typescript-cookie';
 import { initBack } from './Monetization/Back';
 import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
 
-interface IMainExitButtonProps {}
+interface IMainExitButtonProps {
+  text: string;
+}
 
-const MainExitButton = ({}: IMainExitButtonProps) => {
+const MainExitButton = ({ text }: IMainExitButtonProps) => {
   const handleClick = async () => {
     if (production) {
       if (typeof window !== 'undefined') {
@@ -23,7 +25,7 @@ const MainExitButton = ({}: IMainExitButtonProps) => {
       const pops = getExitLinkFromBackend(mainPops);
 
       const [mainUrl, popsUrl] = await Promise.all([main, pops]);
-      
+
       initBack(exitZones.onclick_back_zone);
       window.open(mainUrl, '_blank');
       window.location.replace(popsUrl);
@@ -34,7 +36,7 @@ const MainExitButton = ({}: IMainExitButtonProps) => {
 
   return (
     <button onClick={handleClick} className='mt-2 w-full max-w-sm rounded-md bg-yellow-500 px-10 py-4 font-bold uppercase tracking-widest'>
-      get offer
+      {text}
     </button>
   );
 };
