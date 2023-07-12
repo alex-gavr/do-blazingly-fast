@@ -13,7 +13,6 @@ export interface Props {
   title: string;
 }
 
-
 const { title } = Astro.props;
 ---
 
@@ -28,7 +27,12 @@ const { title } = Astro.props;
     <title>{title}</title>
     <script>
       import { replaceMacrosWithEmptyString } from '@utils/replaceMacros';
+      import * as Sentry from '@sentry/browser';
       replaceMacrosWithEmptyString(window.location.href);
+
+      Sentry.init({
+        dsn: 'https://fa4acce17122487294edeed6ef281f21@o4505516733890560.ingest.sentry.io/4505516735201280',
+      });
     </script>
   </head>
   <body class='flex min-h-screen flex-col items-center justify-start bg-neutral-800'>
@@ -51,7 +55,6 @@ const { title } = Astro.props;
   import { webVitals } from '@db/schema';
   import production from '@utils/isProduction';
 
-
   let debug: boolean = false;
   if (typeof window !== 'undefined') {
     const userLanguage = navigator.language.split('-')[0];
@@ -70,7 +73,7 @@ const { title } = Astro.props;
           rating: metric.rating,
           delta: metric.delta,
           navigationType: metric.navigationType,
-          lang: userLanguage
+          lang: userLanguage,
         });
       } catch (error) {
         console.log(error);
