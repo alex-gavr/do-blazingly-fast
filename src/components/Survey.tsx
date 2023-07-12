@@ -11,9 +11,9 @@ interface ISurveyProps {
   texts: TSurveyTexts;
 }
 
-const Survey = ({texts}: ISurveyProps) => {
+const Survey = ({ texts }: ISurveyProps) => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(1);
-  const surveyData = financeSurveyData(texts)
+  const surveyData = financeSurveyData(texts);
   const filteredQuestion = surveyData.filter((question) => question.id === currentQuestion)[0];
 
   const handleButtonClick = async (leadsTo: LeadsTo) => {
