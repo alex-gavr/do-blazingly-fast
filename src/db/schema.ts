@@ -9,4 +9,5 @@ export const webVitals = mysqlTable('web_vitals', {
   rating: mysqlEnum('rating', ['good', 'needs-improvement', 'poor']),
   delta: smallint('delta'),
   navigationType: mysqlEnum('navigation_type', ['navigate', 'reload', 'back-forward', 'back-forward-cache', 'prerender', 'restore']),
+  lang: char('lang', { length: 2 }).default('??').notNull(),
 });
