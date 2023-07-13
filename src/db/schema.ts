@@ -10,4 +10,10 @@ export const webVitals = mysqlTable('web_vitals', {
   delta: smallint('delta'),
   navigationType: mysqlEnum('navigation_type', ['navigate', 'reload', 'back-forward', 'back-forward-cache', 'prerender', 'restore']),
   lang: char('lang', { length: 2 }).default('??').notNull(),
+  browserName: varchar('browser_name', { length: 100 }).notNull().default('??'),
+  browserVersion: varchar('browser_version', { length: 100 }).notNull().default('??'),
+  osName: varchar('os_name', { length: 100 }).notNull().default('??'),
+  osVersion: varchar('os_version', { length: 100 }).notNull().default('??'),
+  deviceVendor: varchar('device_vendor', { length: 100 }).notNull().default('??'),
+  deviceType: varchar('device_type', { length: 100 }).notNull().default('??'),
 });

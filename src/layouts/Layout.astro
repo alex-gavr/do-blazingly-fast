@@ -54,6 +54,9 @@ const { title } = Astro.props;
   import { db } from '@db/db';
   import { webVitals } from '@db/schema';
   import production from '@utils/isProduction';
+  import UAParser from 'ua-parser-js';
+  // UA Parsing
+  // const UA = navigator.userAgent;
 
   let debug: boolean = false;
   if (typeof window !== 'undefined') {
@@ -62,6 +65,17 @@ const { title } = Astro.props;
     const geo = url.searchParams.get('geo') ?? '??';
     const pathname = url.pathname;
     debug = url.searchParams.get('debug') ? true : false;
+
+    const parser = UAParser(navigator.userAgent);
+    console.log('🚀 ~ parser:', parser)
+
+    const browserName = parser.browser.name;
+    const browserVersion = parser.browser.version;
+    const osName = parser.os.name;
+    const osVersion = parser.os.version;
+    const deviceVendor = parser.device.vendor;
+    const deviceType = parser.device.type;
+
     async function sendToAnalytics(metric: Metric) {
       try {
         const res = await db.insert(webVitals).values({
@@ -74,6 +88,12 @@ const { title } = Astro.props;
           delta: metric.delta,
           navigationType: metric.navigationType,
           lang: userLanguage,
+          browserName,
+          browserVersion,
+          osName,
+          osVersion,
+          deviceVendor,
+          deviceType
         });
       } catch (error) {
         console.log(error);

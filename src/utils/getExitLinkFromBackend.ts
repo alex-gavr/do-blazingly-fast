@@ -1,4 +1,3 @@
-import production from './isProduction';
 import makeExitUrl, { ExitType } from './makeExitUrl';
 import makeExitUrlFromUrl, { UrlType } from './makeExitUrlFromUrl';
 
