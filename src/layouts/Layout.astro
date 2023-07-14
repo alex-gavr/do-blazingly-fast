@@ -50,7 +50,7 @@ const { title } = Astro.props;
 </html>
 
 <script>
-  import { Metric, onLCP, onFCP, onTTFB } from 'web-vitals';
+  import { Metric, onLCP, onFCP, onTTFB, onFID, onINP, onCLS } from 'web-vitals';
   import { db } from '@db/db';
   import { webVitals } from '@db/schema';
   import production from '@utils/isProduction';
@@ -67,7 +67,6 @@ const { title } = Astro.props;
     debug = url.searchParams.get('debug') ? true : false;
 
     const parser = UAParser(navigator.userAgent);
-    console.log('🚀 ~ parser:', parser)
 
     const browserName = parser.browser.name;
     const browserVersion = parser.browser.version;
@@ -93,28 +92,26 @@ const { title } = Astro.props;
           osName,
           osVersion,
           deviceVendor,
-          deviceType
+          deviceType,
         });
       } catch (error) {
         console.log(error);
       }
     }
 
-    // Cumulative Layout Shift (CLS) | IDC
-    // onCLS(sendToAnalytics);
-    // First Input Delay (FID) | IDC
-    // onFID(sendToAnalytics);
-    // Interaction to next Paint (INP) | IDC
-    // onINP(sendToAnalytics);
-
     if (production && !debug) {
       // Largest Contentful Paint (LCP)
       onLCP(sendToAnalytics);
       // First Contentful Paint (FCP)
       onFCP(sendToAnalytics);
-
       // Time to First Byte (TTFB)
       onTTFB(sendToAnalytics);
+      // Cumulative Layout Shift (CLS) | IDC
+      onCLS(sendToAnalytics);
+      // First Input Delay (FID) | IDC
+      onFID(sendToAnalytics);
+      // Interaction to next Paint (INP) | IDC
+      onINP(sendToAnalytics);
     }
   }
 </script>
