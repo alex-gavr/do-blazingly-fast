@@ -8,9 +8,10 @@ interface ImportMetaEnv {
   readonly PUBLIC_MARKER_DOMAIN_ROTATION: string;
   readonly PUBLIC_FORMATS_DOMAIN_DATA: string;
   readonly PUBLIC_ONCLICK_CODE: string;
-  readonly PUBLIC_DATABASE_HOST: string;
-  readonly PUBLIC_DATABASE_USERNAME: string;
-  readonly PUBLIC_DATABASE_PASSWORD: string;
+  readonly DATABASE_HOST: string;
+  readonly DATABASE_USERNAME: string;
+  readonly DATABASE_PASSWORD: string;
+  readonly PUBLIC_API_ROUTE_SECRET: string;
 }
 
 interface ImportMeta {
