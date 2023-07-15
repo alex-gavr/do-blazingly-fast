@@ -32,7 +32,7 @@ interface IProps {
   offer: string;
 }
 
-async function sendWebVitals({ metric, geo, pathname, offer }: IProps) {
+function sendWebVitals({ metric, geo, pathname, offer }: IProps) {
   const data = {
     id: metric.id,
     geo: geo,
@@ -53,9 +53,5 @@ async function sendWebVitals({ metric, geo, pathname, offer }: IProps) {
     body: JSON.stringify(data),
   };
 
-  const res = await fetch('/web-vitals', options)
-    .then((data) => data.json())
-    .catch((error) => console.error(error));
-
-  console.log('🚀 res:', res);
+  fetch('/web-vitals', options).catch((error) => console.error(error));
 }
