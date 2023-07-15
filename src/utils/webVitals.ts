@@ -57,5 +57,5 @@ async function sendWebVitals({ metric, geo, pathname, offer }: IProps) {
     .then((data) => data.json())
     .catch((error) => console.error(error));
 
-  console.log('🚀 ~ res:', res);
+  console.log('🚀 res:', res);
 }
