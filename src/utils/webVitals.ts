@@ -1,63 +1,61 @@
 import { Metric, onLCP, onFCP, onTTFB, onFID, onINP, onCLS } from 'web-vitals';
-import { db } from '@db/db';
-import { webVitals } from '@db/schema';
 import production from '@utils/isProduction';
-import UAParser from 'ua-parser-js';
 
 let debug: boolean = false;
 if (typeof window !== 'undefined') {
-  const userLanguage = navigator.language.split('-')[0];
   const url = new URL(window.location.href);
   const geo = url.searchParams.get('geo') ?? '??';
+  const offer = url.searchParams.get('offer_id') ?? '??';
   const pathname = url.pathname;
   debug = url.searchParams.get('debug') ? true : false;
 
-  const parser = UAParser(navigator.userAgent);
-  console.log('🚀 ~ parser:', parser)
-
-  const browserName = parser.browser.name;
-  const browserVersion = parser.browser.version;
-  const osName = parser.os.name;
-  const osVersion = parser.os.version;
-  const deviceVendor = parser.device.vendor;
-  const deviceType = parser.device.type;
-
-  function sendToAnalytics(metric: Metric) {
-    try {
-      db.insert(webVitals).values({
-        id: metric.id,
-        geo: geo,
-        pathname: pathname,
-        name: metric.name,
-        value: Math.round(metric.value),
-        rating: metric.rating,
-        delta: metric.delta,
-        navigationType: metric.navigationType,
-        lang: userLanguage,
-        browserName,
-        browserVersion,
-        osName,
-        osVersion,
-        deviceVendor,
-        deviceType,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   if (production && !debug) {
     // Largest Contentful Paint (LCP)
-    onLCP(sendToAnalytics);
+    onLCP((metric) => sendWebVitals({ metric, geo, pathname, offer }));
     // First Contentful Paint (FCP)
-    onFCP(sendToAnalytics);
+    onFCP((metric) => sendWebVitals({ metric, geo, pathname, offer }));
     // Time to First Byte (TTFB)
-    onTTFB(sendToAnalytics);
+    onTTFB((metric) => sendWebVitals({ metric, geo, pathname, offer }));
     // Cumulative Layout Shift (CLS) | IDC
-    onCLS(sendToAnalytics);
+    onCLS((metric) => sendWebVitals({ metric, geo, pathname, offer }));
     // First Input Delay (FID) | IDC
-    onFID(sendToAnalytics);
+    onFID((metric) => sendWebVitals({ metric, geo, pathname, offer }));
     // Interaction to next Paint (INP) | IDC
-    onINP(sendToAnalytics);
+    onINP((metric) => sendWebVitals({ metric, geo, pathname, offer }));
   }
+}
+
+interface IProps {
+  metric: Metric;
+  geo: string;
+  pathname: string;
+  offer: string;
+}
+
+async function sendWebVitals({ metric, geo, pathname, offer }: IProps) {
+  const data = {
+    id: metric.id,
+    geo: geo,
+    pathname: pathname,
+    offer: offer,
+    name: metric.name,
+    value: Math.round(metric.value),
+    rating: metric.rating,
+    delta: Math.round(metric.delta),
+    navigationType: metric.navigationType,
+  };
+  const options = {
+    method: 'POST',
+    headers: {
+      Authorization: import.meta.env.PUBLIC_API_ROUTE_SECRET,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  };
+
+  const res = await fetch('/web-vitals', options)
+    .then((data) => data.json())
+    .catch((error) => console.error(error));
+
+  console.log('🚀 ~ res:', res);
 }

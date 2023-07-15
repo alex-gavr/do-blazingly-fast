@@ -1,9 +1,12 @@
+import type { InferModel } from 'drizzle-orm';
 import { char, mysqlEnum, mysqlTable, smallint, varchar } from 'drizzle-orm/mysql-core';
 
 export const webVitals = mysqlTable('web_vitals', {
   id: varchar('id', { length: 50 }).primaryKey(),
   geo: char('geo', { length: 2 }).default('??').notNull(),
   pathname: varchar('pathname', { length: 100 }).notNull(),
+  offer: varchar('offer', { length: 10 }).notNull().default('??'),
+  hosting: mysqlEnum('hosting', ['vercel', 'cloudflare']),
   name: mysqlEnum('vital_name', ['CLS', 'FCP', 'FID', 'INP', 'LCP', 'TTFB']),
   value: smallint('vital_value').notNull(),
   rating: mysqlEnum('rating', ['good', 'needs-improvement', 'poor']),
@@ -17,3 +20,5 @@ export const webVitals = mysqlTable('web_vitals', {
   deviceVendor: varchar('device_vendor', { length: 100 }).notNull().default('??'),
   deviceType: varchar('device_type', { length: 100 }).notNull().default('??'),
 });
+
+export type TWebVitals = InferModel<typeof webVitals>;
