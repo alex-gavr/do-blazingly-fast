@@ -6,6 +6,7 @@ import { initBack } from './Monetization/Back';
 import { LeadsTo, financeSurveyData } from '@config/FinanceSurvey';
 import { useState } from 'preact/hooks';
 import type { TSurveyTexts } from '@i18n/2025/en';
+import { getRandomZone } from '@utils/getRandomZone';
 
 interface ISurveyProps {
   texts: TSurveyTexts;
@@ -22,11 +23,9 @@ const Survey = ({ texts }: ISurveyProps) => {
     }
 
     if (leadsTo === LeadsTo.teenExit) {
-      const teenExitIpp = exitZones.ipp_teen[Math.floor(Math.random() * exitZones.ipp_teen.length)];
+      
+      const teenExitIpp = getRandomZone(exitZones.ipp_teen);
       const teenExitPopsIpp = exitZones.ipp_teen_pops;
-
-      // const teenExitOnclick = exitZones.onclick_teen[Math.floor(Math.random() * exitZones.onclick_autoexit.length)];
-      // const teenExitPopsOnclick = exitZones.onclick_teen_pops;
 
       const main = getExitLinkFromBackend(teenExitIpp);
       const pops = getExitLinkFromBackend(teenExitPopsIpp);

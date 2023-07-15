@@ -3,6 +3,7 @@ import production from '@utils/isProduction';
 import { setCookie } from 'typescript-cookie';
 import { initBack } from './Monetization/Back';
 import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
+import { getRandomZone } from '@utils/getRandomZone';
 
 interface IMainExitButtonProps {
   text: string;
@@ -18,7 +19,8 @@ const MainExitButton = ({ text }: IMainExitButtonProps) => {
         window.navigator.sendBeacon(conversionUrl);
         setCookie('nonUnique', '1', { expires: 7, path: '' });
       }
-      const mainZone = exitZones.ipp_main_exit[Math.floor(Math.random() * exitZones.ipp_main_exit.length)];
+      
+      const mainZone = getRandomZone(exitZones.ipp_main_exit);
       const mainPops = exitZones.ipp_main_exit_pops;
 
       const main = getExitLinkFromBackend(mainZone);

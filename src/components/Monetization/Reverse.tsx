@@ -2,6 +2,7 @@ import exitZones from '@config/2025';
 import makeExitUrl, { ExitType } from '@utils/makeExitUrl';
 import { useEffect } from 'preact/hooks';
 import { initBack } from './Back';
+import { getRandomZone } from '@utils/getRandomZone';
 
 interface IReverseProps {}
 
@@ -23,7 +24,7 @@ const Reverse = ({}: IReverseProps) => {
     const handleBackButton = (event: PopStateEvent) => {
       event.preventDefault();
 
-      const zone = exitZones.onclick_reverse_zone[Math.floor(Math.random() * exitZones.onclick_reverse_zone.length)];
+      const zone = getRandomZone(exitZones.onclick_reverse_zone);
       const url = makeExitUrl(zone, ExitType.onclick);
 
       initBack(exitZones.onclick_back_zone);

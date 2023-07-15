@@ -3,6 +3,7 @@ import { useEffect } from 'preact/hooks';
 import { getCookie } from 'typescript-cookie';
 import { initBack } from './Back';
 import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
+import { getRandomZone } from '@utils/getRandomZone';
 
 interface INonUniqueProps {}
 
@@ -26,7 +27,7 @@ const NonUnique = ({}: INonUniqueProps) => {
         initNonUniqueTeen();
       } else {
         const initNonUnique = async () => {
-          const nonUniqueIpp = exitZones.ipp_not_unique[Math.floor(Math.random() * exitZones.ipp_not_unique.length)];
+          const nonUniqueIpp = getRandomZone(exitZones.ipp_not_unique);
           const url = await getExitLinkFromBackend(nonUniqueIpp);
           initBack(exitZones.onclick_back_zone);
           window.open(url, '_blank');

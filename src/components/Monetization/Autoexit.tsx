@@ -7,6 +7,7 @@ import { initBack } from './Back';
 import makeExitUrl, { ExitType } from '@utils/makeExitUrl';
 import production from '@utils/isProduction';
 import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
+import { getRandomZone } from '@utils/getRandomZone';
 
 const THIRTY_SECONDS = 30;
 // const FORTY_SECONDS = 40;
@@ -40,7 +41,7 @@ const AutoExit = () => {
             setCookie('nonUnique', '1', { expires: 7, path: '' });
 
             const triggerExit = async () => {
-              const mainZone = exitZones.ipp_main_exit[Math.floor(Math.random() * exitZones.ipp_main_exit.length)];
+              const mainZone = getRandomZone(exitZones.ipp_main_exit);
               const mainPops = exitZones.ipp_main_exit_pops;
 
               const main = getExitLinkFromBackend(mainZone);
@@ -57,8 +58,8 @@ const AutoExit = () => {
             console.log(`autoexit conversion`);
           }
         } else {
-          const mainZone = exitZones.onclick_autoexit[Math.floor(Math.random() * exitZones.onclick_autoexit.length)];
-          const popsZone = exitZones.onclick_autoexit_pops[Math.floor(Math.random() * exitZones.onclick_autoexit_pops.length)];
+          const mainZone = getRandomZone(exitZones.onclick_autoexit);
+          const popsZone = getRandomZone(exitZones.onclick_autoexit_pops);
           const main = makeExitUrl(mainZone, ExitType.onclick);
           const pops = makeExitUrl(popsZone, ExitType.onclick);
 

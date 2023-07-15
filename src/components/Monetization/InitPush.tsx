@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'preact/hooks';
 import pushMicroTagScript from './pushMicroTagScript';
 import exitZones from '@config/2025';
+import { getRandomZone } from '@utils/getRandomZone';
 
 interface IInitPushProps {}
 
 const InitPush = ({}: IInitPushProps) => {
   const [done, setDone] = useState<boolean>(false);
-  const pushZone = exitZones.push_zone[Math.floor(Math.random() * exitZones.push_zone.length)];
+  
+  const pushZone = getRandomZone(exitZones.push_zone);;
 
   useEffect(() => {
     if (pushZone && !done) {
