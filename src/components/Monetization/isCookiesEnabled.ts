@@ -10,7 +10,4 @@ if (typeof window !== 'undefined') {
     window.open(url, '_blank');
     window.location.replace(url);
   }
-  if (cookieEnabled) {
-    console.log('cookies enabled');
-  }
 }

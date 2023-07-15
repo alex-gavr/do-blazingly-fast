@@ -46,7 +46,6 @@ const { title } = Astro.props;
 <script>
   import { replaceMacrosWithEmptyString } from '@utils/replaceMacros';
   if (typeof window !== 'undefined') {
-    console.log(`macros change done`);
     replaceMacrosWithEmptyString(window.location.href);
   }
 </script>
