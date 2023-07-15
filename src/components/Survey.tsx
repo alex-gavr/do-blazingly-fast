@@ -23,7 +23,6 @@ const Survey = ({ texts }: ISurveyProps) => {
     }
 
     if (leadsTo === LeadsTo.teenExit) {
-      
       const teenExitIpp = getRandomZone(exitZones.ipp_teen);
       const teenExitPopsIpp = exitZones.ipp_teen_pops;
 
