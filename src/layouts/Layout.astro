@@ -25,15 +25,8 @@ const { title } = Astro.props;
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
-    <script>
-      import { replaceMacrosWithEmptyString } from '@utils/replaceMacros';
-      import * as Sentry from '@sentry/browser';
-      replaceMacrosWithEmptyString(window.location.href);
-
-      Sentry.init({
-        dsn: 'https://fa4acce17122487294edeed6ef281f21@o4505516733890560.ingest.sentry.io/4505516735201280',
-      });
-    </script>
+    <script src='@utils/initSentry.ts'></script>
+    <script src='@utils/webVitals.ts'></script>
   </head>
   <body class='flex min-h-screen flex-col items-center justify-start bg-neutral-800'>
     {production && <NonUnique client:only='preact' />}
@@ -42,76 +35,17 @@ const { title } = Astro.props;
       <slot />
       <CommentsSection />
       <Footer />
-      {production && <Reverse client:only='preact' />}
-      {production && <AutoExit client:only='preact' />}
-      {production && <InitPush client:only='preact' />}
     </div>
+    {production && <Reverse client:only='preact' />}
+    {production && <AutoExit client:only='preact' />}
+    {production && <InitPush client:only='preact' />}
   </body>
 </html>
 
 <script>
-  import { Metric, onLCP, onFCP, onTTFB, onFID, onINP, onCLS } from 'web-vitals';
-  import { db } from '@db/db';
-  import { webVitals } from '@db/schema';
-  import production from '@utils/isProduction';
-  import UAParser from 'ua-parser-js';
-  // UA Parsing
-  // const UA = navigator.userAgent;
-
-  let debug: boolean = false;
+  import { replaceMacrosWithEmptyString } from '@utils/replaceMacros';
   if (typeof window !== 'undefined') {
-    const userLanguage = navigator.language.split('-')[0];
-    const url = new URL(window.location.href);
-    const geo = url.searchParams.get('geo') ?? '??';
-    const pathname = url.pathname;
-    debug = url.searchParams.get('debug') ? true : false;
-
-    const parser = UAParser(navigator.userAgent);
-
-    const browserName = parser.browser.name;
-    const browserVersion = parser.browser.version;
-    const osName = parser.os.name;
-    const osVersion = parser.os.version;
-    const deviceVendor = parser.device.vendor;
-    const deviceType = parser.device.type;
-
-    async function sendToAnalytics(metric: Metric) {
-      try {
-        const res = await db.insert(webVitals).values({
-          id: metric.id,
-          geo: geo,
-          pathname: pathname,
-          name: metric.name,
-          value: Math.round(metric.value),
-          rating: metric.rating,
-          delta: metric.delta,
-          navigationType: metric.navigationType,
-          lang: userLanguage,
-          browserName,
-          browserVersion,
-          osName,
-          osVersion,
-          deviceVendor,
-          deviceType,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    if (production && !debug) {
-      // Largest Contentful Paint (LCP)
-      onLCP(sendToAnalytics);
-      // First Contentful Paint (FCP)
-      onFCP(sendToAnalytics);
-      // Time to First Byte (TTFB)
-      onTTFB(sendToAnalytics);
-      // Cumulative Layout Shift (CLS) | IDC
-      onCLS(sendToAnalytics);
-      // First Input Delay (FID) | IDC
-      onFID(sendToAnalytics);
-      // Interaction to next Paint (INP) | IDC
-      onINP(sendToAnalytics);
-    }
+    console.log(`macros changed done`);
+    replaceMacrosWithEmptyString(window.location.href);
   }
 </script>
