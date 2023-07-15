@@ -16,9 +16,9 @@ export const getExitLinkFromBackend = async (ippZone: number) => {
     .then((res) => res.json())
     .catch((error) => console.log(error));
 
-  const empty = Object.keys(data).length === 0 ? true : false;
+  const emptyObject = Object.keys(data).length === 0 ? true : false;
 
-  if (empty) {
+  if (emptyObject) {
     throw new Error('no ad returned, means that user is a proxy');
   } else {
     const res = data.ads[0] as Ipp | Onclick;
