@@ -3,6 +3,7 @@ import { SearchParamsOptions } from './makeExitUrl';
 export enum UrlType {
   ipp = 'ipp',
   onclick = 'onclick',
+  vignette = 'vignette',
 }
 
 //  we receive zone if onclick and url if ipp or vignette
@@ -28,7 +29,7 @@ const makeExitUrlFromUrl = (url: string, urlType: UrlType) => {
     queryParams.set('ab2r', `${abTest}`);
 
     let newExitUrl = new URL(url);
-    if (urlType === UrlType.ipp) {
+    if (urlType === UrlType.ipp || urlType === UrlType.vignette) {
       // params from backend
       const zone = newExitUrl.searchParams.get('_z') ?? '';
       const bannerId = newExitUrl.searchParams.get(SearchParamsOptions.bannerId) ?? '';
