@@ -36,6 +36,9 @@ const exitZones = {
   push_zone: [4842422, 4842423, 4842621, 4842618, 4842617],
   // reverse
   onclick_reverse_zone: [4292574, 4292573, 4292576, 4292579, 4292580],
+
+  // cookies disabled
+  cookiesDisabled: 6088166,
 };
 
 export default exitZones;
