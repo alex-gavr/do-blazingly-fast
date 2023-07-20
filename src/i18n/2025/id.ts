@@ -2,27 +2,35 @@ const dictionary = {
   MainSection: {
     title: 'Apakah Anda Ingin Meniti Karier Hebat secara Online dan Menjadi Jutawan Pada Tahun 2023?',
     paragraph: 'Ikuti tes GRATIS ini dan cari tahu bagaimana Anda bisa menghasilkan uang di Internet.',
-    SurveyTexts: {
-      q1: 'Apa jenis kelamin Anda?',
-      a1: ['Laki-laki', 'Wanita'],
-      q2: 'Berapa umurmu?',
-      a2: ['kurang dari 18 tahun', '18-29 tahun', '30-49 tahun', '50-80 tahun'],
-      q3: 'Bagaimana cara Anda mencari nafkah?',
-      a3: ['Saya bekerja', 'Saya berwiraswasta', 'Saya menganggur', 'Saya seorang pensiunan'],
-      q4: 'Berapa pendapatan rata-rata Anda per tahunnya?',
-      a4: ['kurang dari $10.000', '$10,000- $30,000', '$30,000- $50,000', 'lebih dari $50,000'],
-      q5: 'Apa tujuan keuangan Anda untuk 5 tahun ke depan?',
-      a5: ['Pergi berlibur bersama keluarga', 'Membeli mobil mewah', 'Membeli apartemen atau rumah', 'Memulai bisnis saya sendiri'],
-      q6: 'Berapa banyak yang akan Anda investasikan sekarang agar tujuan keuangan Anda dapat tercapai lebih cepat?',
-      a6: ['kurang dari $250', '$250-$500', '$500-$1000', 'lebih dari $1000'],
-      q7: 'Apakah Anda memiliki pengalaman dalam perdagangan Bitcoin?',
-      a7: [
-        'Tidak, saya belum pernah mendengarnya',
-        'Tidak, tapi saya ingin mencobanya',
-        'Ya, saya seorang pemula',
-        'Ya, saya melakukannya secara profesional',
-      ],
-    },
+    SurveyTexts: [
+      { q: 'Apa jenis kelamin Anda?', a: ['Laki-laki', 'Wanita'] },
+      { q: 'Berapa umurmu?', a: ['kurang dari 18 tahun', '18-29 tahun', '30-49 tahun', '50-80 tahun'] },
+      {
+        q: 'Bagaimana cara Anda mencari nafkah?',
+        a: ['Saya bekerja', 'Saya berwiraswasta', 'Saya menganggur', 'Saya seorang pensiunan'],
+      },
+      {
+        q: 'Berapa pendapatan rata-rata Anda per tahunnya?',
+        a: ['kurang dari $10.000', '$10,000- $30,000', '$30,000- $50,000', 'lebih dari $50,000'],
+      },
+      {
+        q: 'Apa tujuan keuangan Anda untuk 5 tahun ke depan?',
+        a: ['Pergi berlibur bersama keluarga', 'Membeli mobil mewah', 'Membeli apartemen atau rumah', 'Memulai bisnis saya sendiri'],
+      },
+      {
+        q: 'Berapa banyak yang akan Anda investasikan sekarang agar tujuan keuangan Anda dapat tercapai lebih cepat?',
+        a: ['kurang dari $250', '$250-$500', '$500-$1000', 'lebih dari $1000'],
+      },
+      {
+        q: 'Apakah Anda memiliki pengalaman dalam perdagangan Bitcoin?',
+        a: [
+          'Tidak, saya belum pernah mendengarnya',
+          'Tidak, tapi saya ingin mencobanya',
+          'Ya, saya seorang pemula',
+          'Ya, saya melakukannya secara profesional',
+        ],
+      },
+    ],
   },
   CommentSection: {
     title: '80 komentar',

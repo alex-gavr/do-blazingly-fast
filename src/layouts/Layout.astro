@@ -1,10 +1,6 @@
 ---
-import CommentsSection from '@components/CommentsSection/CommentsSection.astro';
-import Footer from '@components/Footer.astro';
-import Header from '@components/Header.astro';
 import AutoExit from '@components/Monetization/Autoexit';
 import InitPush from '@components/Monetization/InitPush';
-import NonUnique from '@components/Monetization/NonUnique';
 import Reverse from '@components/Monetization/Reverse';
 import '@styles/global.css';
 import production from '@utils/isProduction';
@@ -26,20 +22,15 @@ const { title } = Astro.props;
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
     <script src='@utils/initSentry.ts'></script>
-    <script src='@utils/webVitals.ts'></script>
     <script src='@components/Monetization/isCookiesEnabled.ts'></script>
+    <script src='@components/Monetization/NonUnique.ts'></script>
+    <script src='@utils/ErrorFallback.ts'></script>
   </head>
-  <body class='flex min-h-screen flex-col items-center justify-start bg-neutral-800'>
-    {production && <NonUnique client:only='preact' />}
-    <div class='flex w-full max-w-5xl flex-col items-center justify-center'>
-      <Header />
-      <slot />
-      <CommentsSection />
-      <Footer />
-    </div>
+  <body>
     {production && <Reverse client:only='preact' />}
     {production && <AutoExit client:only='preact' />}
     {production && <InitPush client:only='preact' />}
+    <slot />
   </body>
 </html>
 
@@ -74,18 +65,4 @@ const { title } = Astro.props;
       onINP((metric) => sendWebVitals({ metric, geo, pathname, offer }));
     }
   }
-</script>
-
-<script>
-  import { initBack } from '@components/Monetization/Back';
-  import exitZones from '@config/2025';
-  import makeExitUrl, { ExitType } from '@utils/makeExitUrl';
-
-  window.onerror = (message, url, line, column, error) => {
-    console.error(error, message, url, line, column);
-    const FALLBACK = 5812355;
-    const fallbackUrl = makeExitUrl(FALLBACK, ExitType.onclick);
-    initBack(exitZones.onclick_back_zone);
-    window.location.replace(fallbackUrl);
-  };
 </script>

@@ -2,32 +2,40 @@ const dictionary = {
   MainSection: {
     title: 'Würden Sie online richtig Karriere machen und bis 2023 Millionär werden?',
     paragraph: 'Machen Sie diesen KOSTENLOSEN Test und erfahren Sie, wie Sie im Internet Geld verdienen können.',
-    SurveyTexts: {
-      q1: 'Was ist Ihr Geschlecht?',
-      a1: ['Mann', 'Frau'],
-      q2: 'Wie alt sind Sie?',
-      a2: ['unter 18 Jahre', '18-29 Jahre', '30-49 Jahre', '50-80 Jahre'],
-      q3: 'Wie verdienen Sie Ihren Lebensunterhalt?',
-      a3: ['Ich arbeite', 'Ich bin selbstständig', 'Ich bin arbeitslos', 'Ich bin Rentner'],
-      q4: 'Wie hoch ist Ihr durchschnittliches Einkommen pro Jahr?',
-      a4: ['unter $10.000', '$10.000-$30.000', '$30.000-$50.000', 'über 50.000$'],
-      q5: 'Was ist Ihr finanzielles Ziel für die nächsten 5 Jahre?',
-      a5: [
-        'Einen Familienurlaub machen',
-        'Einen Sportwagen kaufen',
-        'Eine Wohnung oder ein Haus kaufen',
-        'Ein eigenes Unternehmen gründen',
-      ],
-      q6: 'Wie viel würden Sie jetzt investieren, um Ihrem finanziellen Ziel viel schneller näher zu kommen?',
-      a6: ['weniger als $250', '$250-$500', '$500-$1000', 'mehr als $1000'],
-      q7: 'Haben Sie Erfahrung im Bitcoin-Handel?',
-      a7: [
-        'Nein, ich habe noch nie davon gehört',
-        'Nein, aber ich möchte es versuchen',
-        'Ja, ich bin Anfänger',
-        'Ja, ich handle professionell',
-      ],
-    },
+    SurveyTexts: [
+      { q: 'Was ist Ihr Geschlecht?', a: ['Mann', 'Frau'] },
+      { q: 'Wie alt sind Sie?', a: ['unter 18 Jahre', '18-29 Jahre', '30-49 Jahre', '50-80 Jahre'] },
+      {
+        q: 'Wie verdienen Sie Ihren Lebensunterhalt?',
+        a: ['Ich arbeite', 'Ich bin selbstständig', 'Ich bin arbeitslos', 'Ich bin Rentner'],
+      },
+      {
+        q: 'Wie hoch ist Ihr durchschnittliches Einkommen pro Jahr?',
+        a: ['unter $10.000', '$10.000-$30.000', '$30.000-$50.000', 'über 50.000$'],
+      },
+      {
+        q: 'Was ist Ihr finanzielles Ziel für die nächsten 5 Jahre?',
+        a: [
+          'Einen Familienurlaub machen',
+          'Einen Sportwagen kaufen',
+          'Eine Wohnung oder ein Haus kaufen',
+          'Ein eigenes Unternehmen gründen',
+        ],
+      },
+      {
+        q: 'Wie viel würden Sie jetzt investieren, um Ihrem finanziellen Ziel viel schneller näher zu kommen?',
+        a: ['weniger als $250', '$250-$500', '$500-$1000', 'mehr als $1000'],
+      },
+      {
+        q: 'Haben Sie Erfahrung im Bitcoin-Handel?',
+        a: [
+          'Nein, ich habe noch nie davon gehört',
+          'Nein, aber ich möchte es versuchen',
+          'Ja, ich bin Anfänger',
+          'Ja, ich handle professionell',
+        ],
+      },
+    ],
   },
   CommentSection: {
     title: '80 Kommentare',

@@ -48,3 +48,25 @@ p {
     background-position: 500px 1000px, 200px 800px, -200px 600px;
   }
 }
+
+::-webkit-scrollbar {
+  width: 0.2em;
+  height: 0.1em;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 1.5rem;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: blue;
+}
+@supports (scrollbar-color: green, pink) {
+  * {
+    scrollbar-color: green, pink;
+  }
+}

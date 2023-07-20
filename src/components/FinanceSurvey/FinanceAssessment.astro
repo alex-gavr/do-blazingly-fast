@@ -1,0 +1,42 @@
+---
+import { defaultLocale, type TValidLocale } from 'src/config';
+import FinanceSurveyLayout from './FinanceSurveyLayout.astro';
+import { findBestMatchingLocale } from '@utils/languageDetection';
+import { getDictionary } from '@i18n/getDictionary';
+import type { TFinanceDictionary } from '@src/i18n/2025/en';
+
+let locale: TValidLocale;
+
+const getLocale = () => {
+  const matchedLocale = findBestMatchingLocale(Astro.request.headers.get('Accept-Language') || defaultLocale);
+  return matchedLocale;
+};
+
+const suitableLocale = getLocale();
+
+locale = suitableLocale;
+
+const t = (await getDictionary(0, locale)) as TFinanceDictionary;
+---
+
+<FinanceSurveyLayout>
+  <section class='z-20 px-2 py-4'>
+    <div class='flex min-h-[70vh] flex-col items-start justify-center gap-6 rounded-md bg-neutral-900 px-4 py-6'>
+      <h1 class='animate-fade-up text-center text-3xl font-bold'>{t.Assessment.title}</h1>
+      <div class='flex flex-col gap-4'>
+        <div class='flex flex-row gap-2'>
+          <p class='animate-fade-up text-sm animate-delay-700 sm:text-base'>{t.Assessment.p1}</p>
+          <img src='/img/tick.svg' alt='tick' class='h-5 w-5 animate-fade-left animate-delay-1000' />
+        </div>
+        <div class='flex flex-row gap-2'>
+          <p class='animate-fade-up text-sm animate-delay-[1.5s] sm:text-base'>{t.Assessment.p2}</p>
+          <img src='/img/tick.svg' alt='tick' class='h-5 w-5 animate-fade-left animate-delay-[2s]' />
+        </div>
+      </div>
+      <div class='mb-4 h-2.5 w-full rounded-full bg-gray-700'>
+        <div class='h-2.5 animate-widthGrowth rounded-full bg-yellow-500 animate-duration-[3s] animate-ease-in-out'></div>
+      </div>
+    </div>
+  </section>
+  <div class='rain'></div>
+</FinanceSurveyLayout>

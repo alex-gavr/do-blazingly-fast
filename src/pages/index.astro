@@ -1,34 +1,12 @@
 ---
-import Survey from '@components/Survey';
-import { getDictionary } from '@i18n/getDictionary';
+import FinanceSurvey from '@components/FinanceSurvey/FinanceSurvey.astro';
 import Layout from '@layouts/Layout.astro';
-import { findBestMatchingLocale } from '@utils/languageDetection';
-import { defaultLocale, type TValidLocale } from 'src/config';
+import ShoppingSurvey from '@src/components/ShoppingSurvey/ShoppingSurvey.astro';
 
-let locale: TValidLocale;
-
-const getLocale = () => {
-  const matchedLocale = findBestMatchingLocale(Astro.request.headers.get('Accept-Language') || defaultLocale);
-  return matchedLocale;
-};
-
-const suitableLocale = getLocale();
-
-locale = suitableLocale;
-
-const t = await getDictionary(locale);
+const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '0');
 ---
 
-<Layout title='Finance Survey'>
-  <main class='px-2 py-4'>
-    <h1 class='text-center text-lg font-bold tracking-wider sm:text-xl md:text-2xl lg:text-4xl'>
-      {t.MainSection.title}
-    </h1>
-    <p class='mt-4 text-center text-sm tracking-wider sm:text-base md:text-lg lg:text-xl'>
-      {t.MainSection.paragraph}
-    </p>
-    <section class='ml-auto mr-auto flex max-w-xl flex-col items-center justify-center gap-4 px-2 py-10'>
-      <Survey client:load texts={t.MainSection.SurveyTexts} />
-    </section>
-  </main>
+<Layout title='Best Survey in the world'>
+  {offer === 0 || offer === 2025 ? <FinanceSurvey /> : null}
+  {offer === 10864 ? <ShoppingSurvey /> : null}
 </Layout>

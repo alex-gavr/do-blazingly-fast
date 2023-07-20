@@ -2,22 +2,30 @@ const dictionary = {
   MainSection: {
     title: 'Você faria uma ótima carreira on-line e se tornaria um milionário até 2023?',
     paragraph: 'Faça este teste GRATUITO e descubra como você pode ganhar dinheiro na Internet.',
-    SurveyTexts: {
-      q1: 'Qual é o seu gênero?',
-      a1: ['Homem', 'Mulher'],
-      q2: 'Quantos anos você tem?',
-      a2: ['menos de 18 anos', '18-29 anos', '30-49 anos', '50-80 anos'],
-      q3: 'Como você ganha a vida?',
-      a3: ['Eu trabalho', 'Eu sou autônomo', 'Estou desempregado', 'Eu sou um pensionista'],
-      q4: 'Qual é a sua renda média por ano?',
-      a4: ['menos de $10.000', '$10,000-$30,000', '$30,000-$50,000', 'mais de $50.000'],
-      q5: 'Qual é o seu objetivo financeiro para os próximos 5 anos?',
-      a5: ['Sair de férias com a família', 'Compre um supercarro', 'Compre um apartamento ou uma casa', 'Iniciar o próprio negócio'],
-      q6: 'Quanto você investiria agora para se aproximar do seu objetivo financeiro muito mais rápido?',
-      a6: ['menos de $250', '$250-$500', '$500-$1000', 'mais de $1000'],
-      q7: 'Você tem alguma experiência em negociação Bitcoin?',
-      a7: ['Não, eu nunca ouvi falar', 'Não, mas eu quero tentar', 'Sim, eu sou um novato', 'Sim, eu faço isso profissionalmente'],
-    },
+    SurveyTexts: [
+      { q: 'Qual é o seu gênero?', a: ['Homem', 'Mulher'] },
+      { q: 'Quantos anos você tem?', a: ['menos de 18 anos', '18-29 anos', '30-49 anos', '50-80 anos'] },
+      {
+        q: 'Como você ganha a vida?',
+        a: ['Eu trabalho', 'Eu sou autônomo', 'Estou desempregado', 'Eu sou um pensionista'],
+      },
+      {
+        q: 'Qual é a sua renda média por ano?',
+        a: ['menos de $10.000', '$10,000-$30,000', '$30,000-$50,000', 'mais de $50.000'],
+      },
+      {
+        q: 'Qual é o seu objetivo financeiro para os próximos 5 anos?',
+        a: ['Sair de férias com a família', 'Compre um supercarro', 'Compre um apartamento ou uma casa', 'Iniciar o próprio negócio'],
+      },
+      {
+        q: 'Quanto você investiria agora para se aproximar do seu objetivo financeiro muito mais rápido?',
+        a: ['menos de $250', '$250-$500', '$500-$1000', 'mais de $1000'],
+      },
+      {
+        q: 'Você tem alguma experiência em negociação Bitcoin?',
+        a: ['Não, eu nunca ouvi falar', 'Não, mas eu quero tentar', 'Sim, eu sou um novato', 'Sim, eu faço isso profissionalmente'],
+      },
+    ],
   },
   CommentSection: {
     title: '80 Comentários',

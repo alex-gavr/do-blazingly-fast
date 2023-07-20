@@ -3,10 +3,10 @@ import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
 import production from '@utils/isProduction';
 import { setCookie } from 'typescript-cookie';
 import { initBack } from './Monetization/Back';
-import { LeadsTo, financeSurveyData } from '@config/FinanceSurvey';
 import { useState } from 'preact/hooks';
 import type { TSurveyTexts } from '@i18n/2025/en';
 import { getRandomZone } from '@utils/getRandomZone';
+import { LeadsTo, getSurveyDataTexts } from '@src/utils/getSurveyDataTexts';
 
 interface ISurveyProps {
   texts: TSurveyTexts;
@@ -14,7 +14,7 @@ interface ISurveyProps {
 
 const Survey = ({ texts }: ISurveyProps) => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(1);
-  const surveyData = financeSurveyData(texts);
+  const surveyData = getSurveyDataTexts(texts);
   const filteredQuestion = surveyData.filter((question) => question.id === currentQuestion)[0];
 
   const handleButtonClick = async (leadsTo: LeadsTo) => {

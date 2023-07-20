@@ -1,10 +1,10 @@
 ---
 import MainExitButton from '@components/MainExitButton';
 import { getDictionary } from '@i18n/getDictionary';
-import Layout from '@layouts/Layout.astro';
 import { findBestMatchingLocale } from '@utils/languageDetection';
 import { defaultLocale, type TValidLocale } from 'src/config';
-
+import FinanceSurveyLayout from './FinanceSurveyLayout.astro';
+import type { TFinanceDictionary } from '@src/i18n/2025/en';
 let locale: TValidLocale;
 
 const getLocale = () => {
@@ -12,27 +12,27 @@ const getLocale = () => {
   return matchedLocale;
 };
 
-const sutableLocale = getLocale();
+const suitableLocale = getLocale();
 
-locale = sutableLocale;
+locale = suitableLocale;
 
-const t = await getDictionary(locale);
+const t = (await getDictionary(0, locale)) as TFinanceDictionary;
 ---
 
-<Layout title='Finance Survey'>
-  <main class='z-20 px-2 py-4'>
+<FinanceSurveyLayout>
+  <section class='z-20 px-2 py-4'>
     <div class={'flex min-h-[70vh] max-w-2xl flex-col items-center justify-center gap-4 md:gap-8 rounded-md bg-neutral-900 px-2 py-4'}>
       <h1 class={'text-2xl font-bold uppercase tracking-widest md:text-4xl'}>{t.Offer.Title}</h1>
       <p class={' text-center text-sm sm:text-base md:text-xl'}>
-        {t.Offer.result.p1}<span class={'uppercase text-emerald-400'}> {t.Offer.result.p2} </span>{t.Offer.result.p3}
+        {t.Offer.result.p1}<span class={'uppercase text-emerald-400'}> {t.Offer.result.p2}</span>{t.Offer.result.p3}
       </p>
       <div class={'flex flex-col items-start justify-start gap-4'}>
         <p class={'text-sm sm:text-base md:text-lg'}>
           {t.Offer.p1.p1}
-          <span class={'uppercase text-emerald-400'}>{t.Offer.p1.p2} </span>{t.Offer.p1.p3}
+          <span class={'uppercase text-emerald-400'}>{t.Offer.p1.p2}</span>{t.Offer.p1.p3}
         </p>
         <p class={' text-sm sm:text-base md:text-lg'}>
-          {t.Offer.p2.p1}<span class={'text-emerald-400'}> {t.Offer.p2.p2} </span>{t.Offer.p2.p3}
+          {t.Offer.p2.p1}<span class={'text-emerald-400'}> {t.Offer.p2.p2}</span>{t.Offer.p2.p3}
         </p>
         <p class={' text-sm sm:text-base md:text-lg'}>{t.Offer.p3}</p>
         <p class={' text-sm sm:text-base md:text-lg'}>
@@ -42,6 +42,6 @@ const t = await getDictionary(locale);
       </div>
       <MainExitButton client:load text={t.Offer.button} />
     </div>
-  </main>
+  </section>
   <div class='rain'></div>
-</Layout>
+</FinanceSurveyLayout>

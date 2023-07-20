@@ -27,7 +27,7 @@ const suitableLocale = getLocale();
 
 locale = suitableLocale;
 
-const t = await getDictionary(locale);
+const t = await getDictionary(0, locale);
 
 const comments = makeCommentsForFinanceSurvey(t.CommentSection.Comments);
 ---

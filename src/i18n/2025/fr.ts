@@ -2,27 +2,40 @@ const dictionary = {
   MainSection: {
     title: "Voulez-vous faire une grande carrière en ligne et devenir millionnaire d'ici 2023?",
     paragraph: "Faites ce test GRATUIT et découvrez comment vous pouvez gagner de l'argent sur Internet.",
-    SurveyTexts: {
-      q1: 'Quel est votre sexe?',
-      a1: ['Homme', 'Femme'],
-      q2: 'Quel âge avez-vous?',
-      a2: ['moins de 18 ans', '18-29 ans', '30-49 ans', '50-80 ans'],
-      q3: 'Comment tu peux gagner sa vie?',
-      a3: ['Je travaille', 'Je suis travailleur indépendant', 'Je suis au chômage', 'Je suis un retraité'],
-      q4: 'Quel est votre revenu moyen par année?',
-      a4: ['moins de $10 000', '$10 000 - $30 000', '$30 000 - $50 000', 'plus de $50 000'],
-      q5: 'Quel est votre objectif financier pour les 5 prochaines années?',
-      a5: ['Partez en vacances en famille', 'Acheter une supercar', 'Acheter un appartement ou une maison', 'Démarrer ma propre entreprise'],
-      q6: 'Combien investirez-vous maintenant pour vous rapprocher de votre objectif financier beaucoup plus rapidement ?',
-      a6: ['moins de 250 $', '$250 - $500', '$500 - $1000', 'plus de $1000'],
-      q7: 'Avez-vous une expérience dans le trading Bitcoin ?',
-      a7: [
-        'Non, je n\'en ai jamais entendu parler',
-        'Non, mais je veux essayer',
-        'Oui, je suis un débutant',
-        'Oui, je le fais professionnellement',
-      ],
-    },
+    SurveyTexts: [
+      { q: 'Quel est votre sexe?', a: ['Homme', 'Femme'] },
+      { q: 'Quel âge avez-vous?', a: ['moins de 18 ans', '18-29 ans', '30-49 ans', '50-80 ans'] },
+      {
+        q: 'Comment tu peux gagner sa vie?',
+        a: ['Je travaille', 'Je suis travailleur indépendant', 'Je suis au chômage', 'Je suis un retraité'],
+      },
+      {
+        q: 'Quel est votre revenu moyen par année?',
+        a: ['moins de $10 000', '$10 000 - $30 000', '$30 000 - $50 000', 'plus de $50 000'],
+      },
+      {
+        q: 'Quel est votre objectif financier pour les 5 prochaines années?',
+        a: [
+          'Partez en vacances en famille',
+          'Acheter une supercar',
+          'Acheter un appartement ou une maison',
+          'Démarrer ma propre entreprise',
+        ],
+      },
+      {
+        q: 'Combien investirez-vous maintenant pour vous rapprocher de votre objectif financier beaucoup plus rapidement ?',
+        a: ['moins de 250 $', '$250 - $500', '$500 - $1000', 'plus de $1000'],
+      },
+      {
+        q: 'Avez-vous une expérience dans le trading Bitcoin ?',
+        a: [
+          "Non, je n'en ai jamais entendu parler",
+          'Non, mais je veux essayer',
+          'Oui, je suis un débutant',
+          'Oui, je le fais professionnellement',
+        ],
+      },
+    ],
   },
   CommentSection: {
     title: '80 commentaires',

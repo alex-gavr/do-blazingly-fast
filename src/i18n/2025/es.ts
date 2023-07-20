@@ -2,27 +2,35 @@ const dictionary = {
   MainSection: {
     title: '¿Harás una gran carrera online y te convertirás en el millonario para el 2023?',
     paragraph: 'Realiza esta prueba GRATUITA y descubre cómo puedes ganar dinero en Internet.',
-    SurveyTexts: {
-      q1: '¿Cuál es tu género?',
-      a1: ['Hombre', 'Mujer'],
-      q2: '¿Cuántos años tienes?',
-      a2: ['menos de 18 años', '18-29 años', '30-49 años', '50-80 años'],
-      q3: '¿Cómo te ganas la vida?',
-      a3: ['Soy empleado', 'Soy autónomo', 'Estoy desempleado', 'Soy un pensionista'],
-      q4: '¿Cuál es tu ingreso promedio al año?',
-      a4: ['Menos de $10,000', '$10,000-$30,000', '$30,000-$50,000', 'más de $50,000'],
-      q5: '¿Cuál es tu objetivo financiero para los próximos 5 años?',
-      a5: [
-        'Ir de vacaciones con mi familia',
-        'Comprar un superdeportivo',
-        'Comprar un apartamento o una casa',
-        'Empezar mi propio negocio',
-      ],
-      q6: '¿Cuánto podrías invertir ahora mismo para acercarte a tu objetivo financiero mucho más rápido?',
-      a6: ['menos de $250', '$250-$500', '$500-$1000', 'más de $1000'],
-      q7: '¿Tienes alguna experiencia en Bitcoin trading?',
-      a7: ['No, nunca he oído hablar de él', 'No, pero quiero intentar', 'Sí, soy un principiante', 'Sí, lo hago profesionalmente'],
-    },
+    SurveyTexts: [
+      { q: '¿Cuál es tu género?', a: ['Hombre', 'Mujer'] },
+      { q: '¿Cuántos años tienes?', a: ['menos de 18 años', '18-29 años', '30-49 años', '50-80 años'] },
+      {
+        q: '¿Cómo te ganas la vida?',
+        a: ['Soy empleado', 'Soy autónomo', 'Estoy desempleado', 'Soy un pensionista'],
+      },
+      {
+        q: '¿Cuál es tu ingreso promedio al año?',
+        a: ['Menos de $10,000', '$10,000-$30,000', '$30,000-$50,000', 'más de $50,000'],
+      },
+      {
+        q: '¿Cuál es tu objetivo financiero para los próximos 5 años?',
+        a: [
+          'Ir de vacaciones con mi familia',
+          'Comprar un superdeportivo',
+          'Comprar un apartamento o una casa',
+          'Empezar mi propio negocio',
+        ],
+      },
+      {
+        q: '¿Cuánto podrías invertir ahora mismo para acercarte a tu objetivo financiero mucho más rápido?',
+        a: ['menos de $250', '$250-$500', '$500-$1000', 'más de $1000'],
+      },
+      {
+        q: '¿Tienes alguna experiencia en Bitcoin trading?',
+        a: ['No, nunca he oído hablar de él', 'No, pero quiero intentar', 'Sí, soy un principiante', 'Sí, lo hago profesionalmente'],
+      },
+    ],
   },
   CommentSection: {
     title: '80 comentarios',

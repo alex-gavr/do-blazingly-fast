@@ -2,22 +2,24 @@ const dictionary = {
   MainSection: {
     title: 'Would You Make A Great Career Online And Become A Millionaire By 2023?',
     paragraph: 'Take this FREE test and find out how you can make money on the Internet.',
-    SurveyTexts: {
-      q1: 'What is your gender?',
-      a1: ['Man', 'Woman'],
-      q2: 'How old are you?',
-      a2: ['less than 18 years', '18-29 years', '30-49 years', '50-80 years'],
-      q3: 'How do you make a living?',
-      a3: ['I work', 'I am self-employed', 'I am unemployed', 'I am a pensioner'],
-      q4: 'What is your average income per year?',
-      a4: ['Less than $10,000', '$10,000-$30,000', '$30,000-$50,000', 'more than $50,000'],
-      q5: 'What is your financial goal for the next 5 years?',
-      a5: ['Go on a family holiday', 'Buy a supercar', 'Buy an apartment or a house', 'Start my own business'],
-      q6: 'How much would you invest right now to get closer to your financial goal much faster?',
-      a6: ['less than $250', '$250-$500', '$500-$1000', 'more than $1000'],
-      q7: 'Do you have any experience in Bitcoin trading?',
-      a7: ['No, I have never heard of it', 'No, but I want to try', 'Yes, I am a beginner', 'Yes, I do it professionally'],
-    },
+    SurveyTexts: [
+      { q: 'What is your gender?', a: ['Man', 'Woman'] },
+      { q: 'How old are you?', a: ['less than 18 years', '18-29 years', '30-49 years', '50-80 years'] },
+      { q: 'How do you make a living?', a: ['I work', 'I am self-employed', 'I am unemployed', 'I am a pensioner'] },
+      { q: 'What is your average income per year?', a: ['Less than $10,000', '$10,000-$30,000', '$30,000-$50,000', 'more than $50,000'] },
+      {
+        q: 'What is your financial goal for the next 5 years?',
+        a: ['Go on a family holiday', 'Buy a supercar', 'Buy an apartment or a house', 'Start my own business'],
+      },
+      {
+        q: 'How much would you invest right now to get closer to your financial goal much faster?',
+        a: ['less than $250', '$250-$500', '$500-$1000', 'more than $1000'],
+      },
+      {
+        q: 'Do you have any experience in Bitcoin trading?',
+        a: ['No, I have never heard of it', 'No, but I want to try', 'Yes, I am a beginner', 'Yes, I do it professionally'],
+      },
+    ],
   },
   CommentSection: {
     title: '80 comments',
@@ -157,6 +159,6 @@ const dictionary = {
 };
 export default dictionary;
 
-export type TDefaultDictionary = typeof dictionary;
-export type TSurveyTexts = TDefaultDictionary['MainSection']['SurveyTexts'];
-export type TCommentsTexts = TDefaultDictionary['CommentSection']['Comments'];
+export type TFinanceDictionary = typeof dictionary;
+export type TSurveyTexts = TFinanceDictionary['MainSection']['SurveyTexts'];
+export type TCommentsTexts = TFinanceDictionary['CommentSection']['Comments'];

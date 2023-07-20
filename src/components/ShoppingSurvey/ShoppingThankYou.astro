@@ -1,0 +1,21 @@
+---
+import { defaultLocale, type TValidLocale } from '@src/config';
+import type { TShoppingSurveyDictionary } from '@src/i18n/10864/en';
+import { getDictionary } from '@src/i18n/getDictionary';
+import { findBestMatchingLocale } from '@src/utils/languageDetection';
+let locale: TValidLocale;
+const getLocale = () => {
+  const matchedLocale = findBestMatchingLocale(Astro.request.headers.get('Accept-Language') || defaultLocale);
+  return matchedLocale;
+};
+
+const suitableLocale = getLocale();
+
+locale = suitableLocale;
+
+const d = (await getDictionary(10864, locale)) as TShoppingSurveyDictionary;
+---
+
+<section class='flex min-h-screen flex-col items-center justify-center gap-2 px-2 pb-10 pt-20 sm:px-4'>
+  <h1>hello world</h1>
+</section>

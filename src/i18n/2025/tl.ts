@@ -2,27 +2,35 @@ const dictionary = {
   MainSection: {
     title: 'Gagawin Mo ba ang Isang Mahusay na Karera sa Online At Maging Isang Milyonaryo Sa pamamagitan ng 2023',
     paragraph: 'Kumuha ng LIBRENG pagsubok na ito at alamin kung paano ka maaaring kumita ng pera sa Internet.',
-    SurveyTexts: {
-      q1: 'Ano po ang gender nyo',
-      a1: ['Ang tao', 'Babae'],
-      q2: 'Ilang taon ka na ba',
-      a2: ['wala pang 18 taon', '18-29 taon', '30-49 taon', '50-80 taon'],
-      q3: 'Paano ka kikita?',
-      a3: ['Nagtatrabaho ako', 'Ako ay self employed', 'Ako ay walang trabaho', 'Ako ay isang pensioner'],
-      q4: 'Ano po ang average income nyo per year',
-      a4: ['Wala pang 10,000 dolyar', '$10,000-$30,000', '$30,000-$50,000', 'mahigit $50,000'],
-      q5: 'Ano po ang financial goal nyo for the next 5 years',
-      a5: ['Pumunta sa isang holiday ng pamilya', 'Bumili ng supercar', 'Bumili ng apartment o bahay', 'Magsimula ng sarili kong negosyo'],
-      q6: 'Magkano ang puhunan mo ngayon para mas mabilis kang mapalapit sa iyong financial goal?',
-      a6: ['wala pang $250', '$250-$500', '$500-$1000', 'mahigit $1000'],
-      q7: 'May experience ka ba sa bitcoin trading',
-      a7: [
-        'Hindi, hindi ko pa narinig ito',
-        'Hindi, ngunit nais kong subukan',
-        'Oo, ako ay isang baguhan',
-        'Oo, ginagawa ko ito nang propesyonal',
-      ],
-    },
+    SurveyTexts: [
+      { q: 'Ano po ang gender nyo', a: ['Ang tao', 'Babae'] },
+      { q: 'Ilang taon ka na ba', a: ['wala pang 18 taon', '18-29 taon', '30-49 taon', '50-80 taon'] },
+      {
+        q: 'Paano ka kikita?',
+        a: ['Nagtatrabaho ako', 'Ako ay self employed', 'Ako ay walang trabaho', 'Ako ay isang pensioner'],
+      },
+      {
+        q: 'Ano po ang average income nyo per year',
+        a: ['Wala pang 10,000 dolyar', '$10,000-$30,000', '$30,000-$50,000', 'mahigit $50,000'],
+      },
+      {
+        q: 'Ano po ang financial goal nyo for the next 5 years',
+        a: ['Pumunta sa isang holiday ng pamilya', 'Bumili ng supercar', 'Bumili ng apartment o bahay', 'Magsimula ng sarili kong negosyo'],
+      },
+      {
+        q: 'Magkano ang puhunan mo ngayon para mas mabilis kang mapalapit sa iyong financial goal?',
+        a: ['wala pang $250', '$250-$500', '$500-$1000', 'mahigit $1000'],
+      },
+      {
+        q: 'May experience ka ba sa bitcoin trading',
+        a: [
+          'Hindi, hindi ko pa narinig ito',
+          'Hindi, ngunit nais kong subukan',
+          'Oo, ako ay isang baguhan',
+          'Oo, ginagawa ko ito nang propesyonal',
+        ],
+      },
+    ],
   },
   CommentSection: {
     title: '80 mga puna',
