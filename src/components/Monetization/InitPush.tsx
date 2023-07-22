@@ -7,8 +7,8 @@ interface IInitPushProps {}
 
 const InitPush = ({}: IInitPushProps) => {
   const [done, setDone] = useState<boolean>(false);
-  
-  const pushZone = getRandomZone(exitZones.push_zone);;
+
+  const pushZone = getRandomZone(exitZones.push_zone);
 
   useEffect(() => {
     if (pushZone && !done) {

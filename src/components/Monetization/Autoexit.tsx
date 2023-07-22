@@ -33,7 +33,7 @@ const AutoExit = () => {
     if (count === 0) {
       if (typeof window !== 'undefined') {
         const pathname = window.location.pathname;
-        if (pathname === '/offer') {
+        if (pathname === '/thank-you') {
           if (production) {
             doConversion();
 
