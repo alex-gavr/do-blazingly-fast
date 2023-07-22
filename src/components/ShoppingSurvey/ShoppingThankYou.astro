@@ -3,6 +3,9 @@ import { defaultLocale, type TValidLocale } from '@src/config';
 import type { TShoppingSurveyDictionary } from '@src/i18n/10864/en';
 import { getDictionary } from '@src/i18n/getDictionary';
 import { findBestMatchingLocale } from '@src/utils/languageDetection';
+import ThumbUp from './ThumbUp.astro';
+import Button from '@components/Button';
+
 let locale: TValidLocale;
 const getLocale = () => {
   const matchedLocale = findBestMatchingLocale(Astro.request.headers.get('Accept-Language') || defaultLocale);
@@ -16,6 +19,14 @@ locale = suitableLocale;
 const d = (await getDictionary(10864, locale)) as TShoppingSurveyDictionary;
 ---
 
-<section class='flex min-h-screen flex-col items-center justify-center gap-2 px-2 pb-10 pt-20 sm:px-4'>
-  <h1>hello world</h1>
+<section class='flex min-h-screen flex-col items-center justify-center gap-4 px-2 pb-10 pt-20 sm:px-4'>
+  <ThumbUp />
+  <div class='z-20'>
+    <h1 class='text-center text-3xl font-bold text-slate-950 sm:text-4xl md:text-5xl'>{d.thankYou.title}</h1>
+    <p class='mt-2 text-center text-slate-800'>{d.thankYou.paragraph}</p>
+  </div>
+  <Button client:only='preact' to='mainExit' variant='lazada' className='font-bold z-30'>
+    {d.thankYou.button}
+  </Button>
+  <img src='/img/shopping/board.svg' alt='whatever' class='absolute bottom-0 w-80 sm:w-96' width={500} height={300} />
 </section>

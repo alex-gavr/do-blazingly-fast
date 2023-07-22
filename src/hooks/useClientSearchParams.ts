@@ -42,6 +42,6 @@ export const useClientSearchParams = () => {
       subId,
     };
   } else {
-    throw new Error('You cannot use this function on backend');
+    throw new Error('You cannot use useClientSearchParams function on backend');
   }
 };

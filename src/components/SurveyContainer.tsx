@@ -26,7 +26,7 @@ const SurveyContainer = ({ surveyData, buttonStyle }: IProps) => {
   return (
     <main className='flex min-h-screen flex-col items-center justify-center bg-orange-50'>
       <section className='flex w-full max-w-[600px] flex-col items-center justify-center gap-6 rounded-2xl border border-slate-200 bg-gray-100 px-4 py-6 shadow-2xl shadow-gray-300 sm:gap-8 sm:p-8'>
-        <h1 className={cn('px-4 text-center text-2xl text-slate-900 sm:text-3xl md:text-4xl')}>{currentQuestion?.question}</h1>
+        <h1 className={cn('px-4 text-center text-2xl font-bold text-slate-900 sm:text-3xl md:text-4xl')}>{currentQuestion?.question}</h1>
         <div className={className}>
           {currentQuestion.answers.map((answer) => (
             <Button to={answer.to} type='button' variant={buttonStyle} key={answer.id}>

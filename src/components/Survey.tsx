@@ -1,12 +1,12 @@
 import exitZones from '@config/2025';
 import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
 import production from '@utils/isProduction';
-import { setCookie } from 'typescript-cookie';
 import { initBack } from './Monetization/Back';
 import { useState } from 'preact/hooks';
 import type { TSurveyTexts } from '@i18n/2025/en';
 import { getRandomZone } from '@utils/getRandomZone';
 import { LeadsTo, getSurveyDataTexts } from '@src/utils/getSurveyDataTexts';
+import Cookies from 'js-cookie';
 
 interface ISurveyProps {
   texts: TSurveyTexts;
@@ -31,7 +31,7 @@ const Survey = ({ texts }: ISurveyProps) => {
       const [mainUrl, popsUrl] = await Promise.all([main, pops]);
 
       if (production) {
-        setCookie('nonUniqueTeen', '1', { expires: 7, path: '' });
+        Cookies.set('nonUniqueTeen', 'true', { expires: 7, path: '' });
         initBack(exitZones.onclick_back_zone);
         window.open(mainUrl, '_blank');
         window.location.replace(popsUrl);

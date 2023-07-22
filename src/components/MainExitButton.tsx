@@ -1,9 +1,9 @@
 import exitZones from '@config/2025';
 import production from '@utils/isProduction';
-import { setCookie } from 'typescript-cookie';
 import { initBack } from './Monetization/Back';
 import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
 import { getRandomZone } from '@utils/getRandomZone';
+import Cookies from 'js-cookie';
 
 interface IMainExitButtonProps {
   text: string;
@@ -17,9 +17,9 @@ const MainExitButton = ({ text }: IMainExitButtonProps) => {
         const subId = url.searchParams.get('s');
         const conversionUrl = `https://ad.propellerads.com/conversion.php?visitor_id=${subId}`;
         window.navigator.sendBeacon(conversionUrl);
-        setCookie('nonUnique', '1', { expires: 7, path: '' });
+        Cookies.set('nonUnique', 'true', { expires: 7, path: '' });
       }
-      
+
       const mainZone = getRandomZone(exitZones.ipp_main_exit);
       const mainPops = exitZones.ipp_main_exit_pops;
 

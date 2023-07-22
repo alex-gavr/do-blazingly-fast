@@ -11,7 +11,7 @@ import debug from '@src/utils/isDebug';
 import production from '@src/utils/isProduction';
 import { VariantProps, cva } from 'class-variance-authority';
 import type { JSX } from 'preact';
-import { setCookie } from 'typescript-cookie';
+import Cookies from 'js-cookie';
 
 export type IExitsTypes =
   | 'mainExit'
@@ -71,7 +71,7 @@ const Button = ({ children, type, variant, disabled, buttonSize, className, to, 
   const financeExits = useStore(financeExitsState);
   const doTestsExits = useStore(doTestsExitsState);
 
-  console.log('🚀 ~ financeExitsState:', financeExitsState);
+  // console.log('🚀 ~ financeExitsState:', financeExitsState);
   const { offerId } = useClientSearchParams();
   const oldSearchParams = getPrevParams();
 
@@ -128,7 +128,8 @@ const Button = ({ children, type, variant, disabled, buttonSize, className, to, 
         const [url, urlPops] = await Promise.all([mainExit, mainPops]);
 
         const WEEK = 60 * 60 * 24 * 7;
-        !debug && setCookie('nonUnique', 'true', { path: '/', maxAge: WEEK, secure: true });
+        !debug && Cookies.set('nonUnique', 'true', { path: '/', expires: WEEK, secure: true });
+
         window.open(url, '_blank');
         window.location.replace(urlPops);
       } else {
@@ -138,7 +139,7 @@ const Button = ({ children, type, variant, disabled, buttonSize, className, to, 
         const [url, urlPops] = await Promise.all([mainExit, mainPops]);
 
         const WEEK = 60 * 60 * 24 * 7;
-        !debug && setCookie('nonUnique', 'true', { path: '/', maxAge: WEEK, secure: true });
+        !debug && Cookies.set('nonUnique', 'true', { path: '/', expires: WEEK, secure: true });
         window.open(url, '_blank');
         window.location.replace(urlPops);
       }
