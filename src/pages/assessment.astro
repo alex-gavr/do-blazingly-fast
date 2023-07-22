@@ -1,12 +1,14 @@
 ---
 import FinanceAssessment from '@components/FinanceSurvey/FinanceAssessment.astro';
 import Layout from '@layouts/Layout.astro';
+import { offers } from '@src/config';
 
 const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '0');
+const offerExists = offers.includes(offer as (typeof offers)[number]);
 ---
 
 <Layout title='Finance Survey'>
-  {offer === 0 || offer === 2025 ? <FinanceAssessment /> : null}
+  {offer === 0 || offer === 2025 || !offer || !offerExists ? <FinanceAssessment /> : null}
 </Layout>
 
 <script>
