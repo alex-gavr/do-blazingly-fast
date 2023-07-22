@@ -3,6 +3,7 @@ import makeExitUrl, { ExitType } from '@utils/makeExitUrl';
 import { useEffect } from 'preact/hooks';
 import { initBack } from './Back';
 import { getRandomZone } from '@utils/getRandomZone';
+import debug from '@src/utils/isDebug';
 
 interface IReverseProps {}
 
@@ -23,12 +24,15 @@ const Reverse = ({}: IReverseProps) => {
 
     const handleBackButton = (event: PopStateEvent) => {
       event.preventDefault();
+      if (!debug) {
+        const zone = getRandomZone(exitZones.onclick_reverse_zone);
+        const url = makeExitUrl(zone, ExitType.onclick);
 
-      const zone = getRandomZone(exitZones.onclick_reverse_zone);
-      const url = makeExitUrl(zone, ExitType.onclick);
-
-      initBack(exitZones.onclick_back_zone);
-      window.location.replace(url);
+        initBack(exitZones.onclick_back_zone);
+        window.location.replace(url);
+      } else {
+        console.log('reverse is not available in debug mode');
+      }
     };
 
     window.addEventListener('popstate', handleBackButton);

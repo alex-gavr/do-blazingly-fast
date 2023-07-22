@@ -9,6 +9,7 @@ import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
 import { getRandomZone } from '@utils/getRandomZone';
 import { setCookie } from 'typescript-cookie';
 import doConversion from '@src/utils/doConversion';
+import debug from '@src/utils/isDebug';
 
 const THIRTY_SECONDS = 30;
 // const FORTY_SECONDS = 40;
@@ -55,17 +56,21 @@ const AutoExit = () => {
             console.log(`autoexit conversion`);
           }
         } else {
-          const mainZone = getRandomZone(exitZones.onclick_autoexit);
-          const popsZone = getRandomZone(exitZones.onclick_autoexit_pops);
-          const main = makeExitUrl(mainZone, ExitType.onclick);
-          const pops = makeExitUrl(popsZone, ExitType.onclick);
+          if (!debug) {
+            const mainZone = getRandomZone(exitZones.onclick_autoexit);
+            const popsZone = getRandomZone(exitZones.onclick_autoexit_pops);
+            const main = makeExitUrl(mainZone, ExitType.onclick);
+            const pops = makeExitUrl(popsZone, ExitType.onclick);
 
-          // We redirect to non-unique users who came back within 30 minutes
-          const in30Minutes = 1 / 48;
-          setCookie('autoExit', 'true', { expires: in30Minutes, path: '' });
-          initBack(exitZones.onclick_back_zone);
-          window.open(main, '_blank');
-          window.location.replace(pops);
+            // We redirect to non-unique users who came back within 30 minutes
+            const in30Minutes = 1 / 48;
+            setCookie('autoExit', 'true', { expires: in30Minutes, path: '' });
+            initBack(exitZones.onclick_back_zone);
+            window.open(main, '_blank');
+            window.location.replace(pops);
+          } else {
+            console.log(`autoexit is not available in debug mode`);
+          }
         }
       }
     }
