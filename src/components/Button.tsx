@@ -1,4 +1,5 @@
-// import { currentStepState, doTestsExitsState, financeExitsState } from '@src/context/state';
+import { useStore } from '@nanostores/preact';
+import { currentStepState, doTestsExitsState, financeExitsState } from '@src/context/state';
 import { useClientSearchParams } from '@src/hooks/useClientSearchParams';
 import { cn } from '@src/utils/cn';
 import doConversion from '@src/utils/doConversion';
@@ -67,83 +68,79 @@ interface IButtonProps extends JSX.HTMLAttributes<HTMLButtonElement>, VariantPro
 }
 
 const Button = ({ children, type, variant, disabled, buttonSize, className, to, ...props }: IButtonProps) => {
-  // const financeExits = useStore(financeExitsState);
-  // const doTestsExits = useStore(doTestsExitsState);
+  const financeExits = useStore(financeExitsState);
+  const doTestsExits = useStore(doTestsExitsState);
 
   // console.log('🚀 ~ financeExitsState:', financeExitsState);
   const { offerId } = useClientSearchParams();
   const oldSearchParams = getPrevParams();
 
-  const handleClick = () => {
-    console.log(`hello`);
+  const handleClick = async () => {
+    if (to === 'beginSurvey') {
+      window.location.replace(`/survey${oldSearchParams}`);
+    }
+    if (to === 'nextQuestion') {
+      currentStepState.set(currentStepState.get() + 1);
+      // dispatch({ type: ActionsType.incrementStep });
+    }
+    if (to === 'teenExit') {
+      // ONLY FOR SHOPPING SURVEY TESTING
+      if (offerId === 10864) {
+        if (production) {
+          const teenZoneMain = getRandomZone(financeExits.ipp_teen);
+
+          const teenExit = getExitLinkFromBackend(teenZoneMain);
+          const teenPops = getExitLinkFromBackend(financeExits.ipp_teen_pops);
+
+          const [url, urlPops] = await Promise.all([teenExit, teenPops]);
+
+          window.open(url, '_blank');
+          window.location.replace(urlPops);
+        } else {
+          console.log('shopping survey teen exit');
+        }
+      } else {
+        if (production) {
+          const teenExit = getIppIfErrorGetOnclick(doTestsExits.teenExitIpp, doTestsExits.teenExit);
+          const teenPops = getIppIfErrorGetOnclick(doTestsExits.teenPopsIpp, doTestsExits.teenPops);
+
+          const [url, urlPops] = await Promise.all([teenExit, teenPops]);
+
+          window.open(url, '_blank');
+          window.location.replace(urlPops);
+        } else {
+          console.log('teen exit');
+        }
+      }
+    }
+    if (to === 'thankYouPage') {
+      window.location.replace(`/thank-you${oldSearchParams}`);
+    }
+
+    if (to === 'mainExit') {
+      if (offerId === 10864) {
+        doConversion();
+        const mainExitZone = getRandomZone(financeExits.ipp_main_exit);
+
+        const mainExit = getExitLinkFromBackend(mainExitZone);
+        const mainPops = getExitLinkFromBackend(financeExits.ipp_main_exit_pops);
+
+        const [url, urlPops] = await Promise.all([mainExit, mainPops]);
+
+        window.open(url, '_blank');
+        window.location.replace(urlPops);
+      } else {
+        const mainExit = getIppIfErrorGetOnclick(doTestsExits.mainExitIpp, doTestsExits.mainExit);
+        const mainPops = getIppIfErrorGetOnclick(doTestsExits.mainPopsIpp, doTestsExits.mainPops);
+
+        const [url, urlPops] = await Promise.all([mainExit, mainPops]);
+
+        !debug && setCookie('nonUnique', 'true', { path: '/', expires: 7, secure: true });
+        window.open(url, '_blank');
+        window.location.replace(urlPops);
+      }
+    }
   };
-
-  // const handleClick = async () => {
-  //   if (to === 'beginSurvey') {
-  //     window.location.replace(`/survey${oldSearchParams}`);
-  //   }
-  //   if (to === 'nextQuestion') {
-  //     currentStepState.set(currentStepState.get() + 1);
-  //     // dispatch({ type: ActionsType.incrementStep });
-  //   }
-  //   if (to === 'teenExit') {
-  //     // ONLY FOR SHOPPING SURVEY TESTING
-  //     if (offerId === 10864) {
-  //       if (production) {
-  //         const teenZoneMain = getRandomZone(financeExits.ipp_teen);
-
-  //         const teenExit = getExitLinkFromBackend(teenZoneMain);
-  //         const teenPops = getExitLinkFromBackend(financeExits.ipp_teen_pops);
-
-  //         const [url, urlPops] = await Promise.all([teenExit, teenPops]);
-
-  //         window.open(url, '_blank');
-  //         window.location.replace(urlPops);
-  //       } else {
-  //         console.log('shopping survey teen exit');
-  //       }
-  //     } else {
-  //       if (production) {
-  //         const teenExit = getIppIfErrorGetOnclick(doTestsExits.teenExitIpp, doTestsExits.teenExit);
-  //         const teenPops = getIppIfErrorGetOnclick(doTestsExits.teenPopsIpp, doTestsExits.teenPops);
-
-  //         const [url, urlPops] = await Promise.all([teenExit, teenPops]);
-
-  //         window.open(url, '_blank');
-  //         window.location.replace(urlPops);
-  //       } else {
-  //         console.log('teen exit');
-  //       }
-  //     }
-  //   }
-  //   if (to === 'thankYouPage') {
-  //     window.location.replace(`/thank-you${oldSearchParams}`);
-  //   }
-
-  //   if (to === 'mainExit') {
-  //     if (offerId === 10864) {
-  //       doConversion();
-  //       const mainExitZone = getRandomZone(financeExits.ipp_main_exit);
-
-  //       const mainExit = getExitLinkFromBackend(mainExitZone);
-  //       const mainPops = getExitLinkFromBackend(financeExits.ipp_main_exit_pops);
-
-  //       const [url, urlPops] = await Promise.all([mainExit, mainPops]);
-
-  //       window.open(url, '_blank');
-  //       window.location.replace(urlPops);
-  //     } else {
-  //       const mainExit = getIppIfErrorGetOnclick(doTestsExits.mainExitIpp, doTestsExits.mainExit);
-  //       const mainPops = getIppIfErrorGetOnclick(doTestsExits.mainPopsIpp, doTestsExits.mainPops);
-
-  //       const [url, urlPops] = await Promise.all([mainExit, mainPops]);
-
-  //       !debug && setCookie('nonUnique', 'true', { path: '/', expires: 7, secure: true });
-  //       window.open(url, '_blank');
-  //       window.location.replace(urlPops);
-  //     }
-  //   }
-  // };
 
   return (
     <button

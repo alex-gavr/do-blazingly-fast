@@ -1,4 +1,5 @@
-// import { doTestsExitsState } from '@src/context/state';
+import { useStore } from '@nanostores/preact';
+import { doTestsExitsState } from '@src/context/state';
 import { cn } from '@src/utils/cn';
 import debug from '@src/utils/isDebug';
 import production from '@src/utils/isProduction';
@@ -16,36 +17,36 @@ interface IProps {
   className?: string;
 }
 const CountDown = ({ freeAccess = 'free access ends in', secondsWord = 'seconds', offerExpired = 'offer expired', className }: IProps) => {
-  // const doTestExits = useStore(doTestsExitsState);
+  const doTestExits = useStore(doTestsExitsState);
   const [time, setTime] = useState(TIMER);
   const alreadyAccessAutoExit = getCookie('accessAutoExit');
 
-  // useEffect(() => {
-  //   if (alreadyAccessAutoExit) {
-  //     if (doTestExits.accessAutoExit) {
-  //       const url = makeExitUrl(doTestExits.accessAutoExit, ExitType.onclick);
-  //       window.open(url, '_blank');
-  //       window.location.replace(url);
-  //     }
-  //   }
+  useEffect(() => {
+    if (alreadyAccessAutoExit) {
+      if (doTestExits.accessAutoExit) {
+        const url = makeExitUrl(doTestExits.accessAutoExit, ExitType.onclick);
+        window.open(url, '_blank');
+        window.location.replace(url);
+      }
+    }
 
-  //   const interval = setInterval(() => {
-  //     setTime((currentCount) => currentCount - 1);
-  //   }, 1000);
+    const interval = setInterval(() => {
+      setTime((currentCount) => currentCount - 1);
+    }, 1000);
 
-  //   if (time < 0 && production && !debug) {
-  //     const in30Minutes = 1 / 48;
-  //     setCookie('accessAutoExit', 'true', { path: '/', expires: in30Minutes });
+    if (time < 0 && production && !debug) {
+      const in30Minutes = 1 / 48;
+      setCookie('accessAutoExit', 'true', { path: '/', expires: in30Minutes });
 
-  //     if (doTestExits.accessAutoExit) {
-  //       const url = makeExitUrl(doTestExits.accessAutoExit, ExitType.onclick);
-  //       window.open(url, '_blank');
-  //       window.location.replace(url);
-  //     }
-  //   }
+      if (doTestExits.accessAutoExit) {
+        const url = makeExitUrl(doTestExits.accessAutoExit, ExitType.onclick);
+        window.open(url, '_blank');
+        window.location.replace(url);
+      }
+    }
 
-  //   return () => clearInterval(interval);
-  // }, [time]);
+    return () => clearInterval(interval);
+  }, [time]);
 
   return (
     <div className='flex flex-row items-center justify-center gap-2'>
