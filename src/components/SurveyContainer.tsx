@@ -3,8 +3,7 @@ import { cn } from '@src/utils/cn';
 import { getSurveyDataTexts } from '@src/utils/getSurveyDataTexts';
 import type { IButtonVariants } from './Button';
 import Button from './Button';
-import { currentStepState } from '@src/context/state';
-import { useStore } from '@nanostores/preact';
+// import { currentStepState } from '@src/context/state';
 
 interface IProps {
   surveyData: TSurveyTexts;
@@ -13,9 +12,9 @@ interface IProps {
 
 const SurveyContainer = ({ surveyData, buttonStyle }: IProps) => {
   const surveyDataTexts = getSurveyDataTexts(surveyData);
-  const currentStep = useStore(currentStepState);
+  // const currentStep = useStore(currentStepState);
 
-  const currentQuestion = surveyDataTexts.find((questions) => questions.id === currentStep);
+  const currentQuestion = surveyDataTexts.find((questions) => questions.id === 1);
   // const currentAnswers = answers.filter((answers) => answers.questionId === state.currentStep);
 
   if (currentQuestion === null || currentQuestion === undefined) {
