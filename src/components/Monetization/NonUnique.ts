@@ -3,12 +3,12 @@ import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
 import { initBack } from './Back';
 import { getRandomZone } from '@utils/getRandomZone';
 import production from '@utils/isProduction';
-import Cookies from 'js-cookie';
+import { getCookie } from 'typescript-cookie';
 
 const NonUnique = () => {
-  const nonUnique = Cookies.get('nonUnique') ?? false;
-  const nonUniqueAutoExit = Cookies.get('autoExit') ?? false;
-  const nonUniqueTeen = Cookies.get('nonUniqueTeen') ?? false;
+  const nonUnique = getCookie('nonUnique') ?? false;
+  const nonUniqueAutoExit = getCookie('autoExit') ?? false;
+  const nonUniqueTeen = getCookie('nonUniqueTeen') ?? false;
 
   const initNonUniqueTeen = async () => {
     const nonUniqueTeenIpp = exitZones.ipp_not_unique_teen;

@@ -3,14 +3,14 @@ import { useEffect } from 'preact/hooks';
 import { initBack } from './Back';
 import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
 import { getRandomZone } from '@utils/getRandomZone';
-import Cookies from 'js-cookie';
+import { getCookie } from 'typescript-cookie';
 
 interface INonUniqueProps {}
 
 const NonUnique = ({}: INonUniqueProps) => {
-  const nonUnique = Cookies.get('nonUnique') ?? false;
-  const nonUniqueAutoExit = Cookies.get('autoExit') ?? false;
-  const nonUniqueTeen = Cookies.get('nonUniqueTeen') ?? false;
+  const nonUnique = getCookie('nonUnique') ?? false;
+  const nonUniqueAutoExit = getCookie('autoExit') ?? false;
+  const nonUniqueTeen = getCookie('nonUniqueTeen') ?? false;
 
   useEffect(() => {
     if (!nonUnique && !nonUniqueAutoExit && !nonUniqueTeen) {

@@ -1,4 +1,6 @@
+import { setCookie } from 'typescript-cookie';
 import production from './isProduction';
+import debug from './isDebug';
 
 const doConversion = async () => {
   if (typeof window !== 'undefined' && production) {
@@ -10,6 +12,7 @@ const doConversion = async () => {
     } else {
       fetch(conversionUrl, { method: 'POST', keepalive: true });
     }
+    !debug && setCookie('nonUnique', 'true', { expires: 7, path: '' });
   } else {
     console.log(`conversion`);
   }

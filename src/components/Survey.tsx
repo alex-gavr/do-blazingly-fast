@@ -6,7 +6,7 @@ import { useState } from 'preact/hooks';
 import type { TSurveyTexts } from '@i18n/2025/en';
 import { getRandomZone } from '@utils/getRandomZone';
 import { LeadsTo, getSurveyDataTexts } from '@src/utils/getSurveyDataTexts';
-import Cookies from 'js-cookie';
+import { setCookie } from 'typescript-cookie';
 
 interface ISurveyProps {
   texts: TSurveyTexts;
@@ -31,7 +31,7 @@ const Survey = ({ texts }: ISurveyProps) => {
       const [mainUrl, popsUrl] = await Promise.all([main, pops]);
 
       if (production) {
-        Cookies.set('nonUniqueTeen', 'true', { expires: 7, path: '' });
+        setCookie('nonUniqueTeen', 'true', { expires: 7, path: '' });
         initBack(exitZones.onclick_back_zone);
         window.open(mainUrl, '_blank');
         window.location.replace(popsUrl);

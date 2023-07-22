@@ -3,7 +3,7 @@ import production from '@utils/isProduction';
 import { initBack } from './Monetization/Back';
 import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
 import { getRandomZone } from '@utils/getRandomZone';
-import Cookies from 'js-cookie';
+import doConversion from '@src/utils/doConversion';
 
 interface IMainExitButtonProps {
   text: string;
@@ -12,13 +12,7 @@ interface IMainExitButtonProps {
 const MainExitButton = ({ text }: IMainExitButtonProps) => {
   const handleClick = async () => {
     if (production) {
-      if (typeof window !== 'undefined') {
-        const url = new URL(window.location.href);
-        const subId = url.searchParams.get('s');
-        const conversionUrl = `https://ad.propellerads.com/conversion.php?visitor_id=${subId}`;
-        window.navigator.sendBeacon(conversionUrl);
-        Cookies.set('nonUnique', 'true', { expires: 7, path: '' });
-      }
+      doConversion();
 
       const mainZone = getRandomZone(exitZones.ipp_main_exit);
       const mainPops = exitZones.ipp_main_exit_pops;

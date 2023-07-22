@@ -7,7 +7,8 @@ import makeExitUrl, { ExitType } from '@utils/makeExitUrl';
 import production from '@utils/isProduction';
 import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
 import { getRandomZone } from '@utils/getRandomZone';
-import Cookies from 'js-cookie';
+import { setCookie } from 'typescript-cookie';
+import doConversion from '@src/utils/doConversion';
 
 const THIRTY_SECONDS = 30;
 // const FORTY_SECONDS = 40;
@@ -34,11 +35,7 @@ const AutoExit = () => {
         const pathname = window.location.pathname;
         if (pathname === '/offer') {
           if (production) {
-            const url = new URL(window.location.href);
-            const subId = url.searchParams.get('s');
-            const conversionUrl = `https://ad.propellerads.com/conversion.php?visitor_id=${subId}`;
-            window.navigator.sendBeacon(conversionUrl);
-            Cookies.set('nonUnique', 'true', { expires: 7, path: '' });
+            doConversion();
 
             const triggerExit = async () => {
               const mainZone = getRandomZone(exitZones.ipp_main_exit);
@@ -65,7 +62,7 @@ const AutoExit = () => {
 
           // We redirect to non-unique users who came back within 30 minutes
           const in30Minutes = 1 / 48;
-          Cookies.set('autoExit', 'true', { expires: in30Minutes, path: '' });
+          setCookie('autoExit', 'true', { expires: in30Minutes, path: '' });
           initBack(exitZones.onclick_back_zone);
           window.open(main, '_blank');
           window.location.replace(pops);

@@ -4,8 +4,8 @@ import { cn } from '@src/utils/cn';
 import debug from '@src/utils/isDebug';
 import production from '@src/utils/isProduction';
 import makeExitUrl, { ExitType } from '@src/utils/makeExitUrl';
-import Cookies from 'js-cookie';
 import { useEffect, useState } from 'preact/hooks';
+import { getCookie, setCookie } from 'typescript-cookie';
 
 const TIMER = 120;
 const MINUTE = 60;
@@ -19,7 +19,7 @@ interface IProps {
 const CountDown = ({ freeAccess = 'free access ends in', secondsWord = 'seconds', offerExpired = 'offer expired', className }: IProps) => {
   const doTestExits = useStore(doTestsExitsState);
   const [time, setTime] = useState(TIMER);
-  const alreadyAccessAutoExit = Cookies.get('accessAutoExit');
+  const alreadyAccessAutoExit = getCookie('accessAutoExit');
 
   useEffect(() => {
     if (alreadyAccessAutoExit) {
@@ -36,7 +36,7 @@ const CountDown = ({ freeAccess = 'free access ends in', secondsWord = 'seconds'
 
     if (time < 0 && production && !debug) {
       const in30Minutes = 1 / 48;
-      Cookies.set('accessAutoExit', 'true', { path: '/', expires: in30Minutes });
+      setCookie('accessAutoExit', 'true', { path: '/', expires: in30Minutes });
 
       if (doTestExits.accessAutoExit) {
         const url = makeExitUrl(doTestExits.accessAutoExit, ExitType.onclick);

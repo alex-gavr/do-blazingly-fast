@@ -11,7 +11,7 @@ import debug from '@src/utils/isDebug';
 import production from '@src/utils/isProduction';
 import { VariantProps, cva } from 'class-variance-authority';
 import type { JSX } from 'preact';
-import Cookies from 'js-cookie';
+import { setCookie } from 'typescript-cookie';
 
 export type IExitsTypes =
   | 'mainExit'
@@ -127,9 +127,6 @@ const Button = ({ children, type, variant, disabled, buttonSize, className, to, 
 
         const [url, urlPops] = await Promise.all([mainExit, mainPops]);
 
-        const WEEK = 60 * 60 * 24 * 7;
-        !debug && Cookies.set('nonUnique', 'true', { path: '/', expires: WEEK, secure: true });
-
         window.open(url, '_blank');
         window.location.replace(urlPops);
       } else {
@@ -138,8 +135,7 @@ const Button = ({ children, type, variant, disabled, buttonSize, className, to, 
 
         const [url, urlPops] = await Promise.all([mainExit, mainPops]);
 
-        const WEEK = 60 * 60 * 24 * 7;
-        !debug && Cookies.set('nonUnique', 'true', { path: '/', expires: WEEK, secure: true });
+        !debug && setCookie('nonUnique', 'true', { path: '/', expires: 7, secure: true });
         window.open(url, '_blank');
         window.location.replace(urlPops);
       }
