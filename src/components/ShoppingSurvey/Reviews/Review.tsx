@@ -26,6 +26,7 @@ const Review = ({ review }: IReviewProps) => {
           alt={`${review.personName}.`}
           width={600}
           height={600}
+          loading={'lazy'}
           className='h-12 w-12 rounded-full object-cover'
         />
 

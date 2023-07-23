@@ -14,7 +14,7 @@ const ReviewImages = ({ image }: IReviewImagesProps) => {
   // };
   return (
     <div className='relative w-10 cursor-pointer rounded-sm'>
-      <img src={image} alt={'whatever'} className='fill object-cover' />
+      <img src={image} alt={'whatever'} className='fill object-cover' loading={'lazy'} />
     </div>
   );
 };
