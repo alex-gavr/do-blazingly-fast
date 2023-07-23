@@ -1,8 +1,4 @@
-import exitZones from '@config/2025';
-import makeExitUrl, { ExitType } from '@utils/makeExitUrl';
 import { useEffect } from 'preact/hooks';
-import { initBack } from './Back';
-import { getRandomZone } from '@utils/getRandomZone';
 import debug from '@src/utils/isDebug';
 
 interface IReverseProps {}
@@ -22,13 +18,20 @@ const Reverse = ({}: IReverseProps) => {
       history.pushState(null, 'Finance Survey', `/offer${searchParams}`);
     }
 
-    const handleBackButton = (event: PopStateEvent) => {
+    const handleBackButton = async (event: PopStateEvent) => {
       event.preventDefault();
       if (!debug) {
-        const zone = getRandomZone(exitZones.onclick_reverse_zone);
+        const { financeExitsState } = await import('@context/state');
+        const { default: makeExitUrl, ExitType } = await import('@src/utils/makeExitUrl');
+        const { getRandomZone } = await import('@src/utils/getRandomZone');
+        const { initBack } = await import('./Back');
+
+        const financeExits = financeExitsState.get();
+
+        const zone = getRandomZone(financeExits.onclick_reverse_zone);
         const url = makeExitUrl(zone, ExitType.onclick);
 
-        initBack(exitZones.onclick_back_zone);
+        initBack(financeExits.onclick_back_zone);
         window.location.replace(url);
       } else {
         console.log('reverse is not available in debug mode');

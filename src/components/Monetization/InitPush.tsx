@@ -1,7 +1,4 @@
 import { useEffect, useState } from 'preact/hooks';
-import pushMicroTagScript from './pushMicroTagScript';
-import exitZones from '@config/2025';
-import { getRandomZone } from '@utils/getRandomZone';
 import debug from '@src/utils/isDebug';
 
 interface IInitPushProps {}
@@ -9,13 +6,22 @@ interface IInitPushProps {}
 const InitPush = ({}: IInitPushProps) => {
   const [done, setDone] = useState<boolean>(false);
 
-  const pushZone = getRandomZone(exitZones.push_zone);
+  const startPush = async () => {
+    const { getRandomZone } = await import('@utils/getRandomZone');
+    const { financeExitsState } = await import('@context/state');
+    const { default: pushMicroTagScript } = await import('./pushMicroTagScript');
+
+    const financeExits = financeExitsState.get();
+
+    const pushZone = getRandomZone(financeExits.push_zone);
+    pushMicroTagScript({ pushZone: pushZone });
+    setDone(true);
+  };
 
   useEffect(() => {
-    if (pushZone && !done) {
+    if (!done) {
       if (!debug) {
-        pushMicroTagScript({ pushZone: pushZone });
-        setDone(true);
+        startPush();
       } else {
         console.log('push disabled in debug mode');
       }

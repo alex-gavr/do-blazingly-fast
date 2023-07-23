@@ -4,12 +4,21 @@ import AutoExit from '@components/Monetization/Autoexit';
 import InitPush from '@components/Monetization/InitPush';
 import Reverse from '@components/Monetization/Reverse';
 import production from '@utils/isProduction';
+import { replaceMacrosWithEmptyString } from '@src/utils/replaceMacros';
 
 export interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
+
+// let url = Astro.url.href;
+// const regex = /{([^}]+)}/g;
+// const updatedURL = url.replace(regex, 'lul');
+// url = updatedURL;
+// console.log('🚀 ~ url:', url);
+
+// return Astro.redirect(`${url}`);
 ---
 
 <!DOCTYPE html>
@@ -21,10 +30,10 @@ const { title } = Astro.props;
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
-    <script src='@utils/initSentry.ts'></script>
-    <script src='@components/Monetization/isCookiesEnabled.ts'></script>
-    <script src='@components/Monetization/NonUnique.ts'></script>
     <script src='@utils/ErrorFallback.ts'></script>
+    <!-- <script src='@utils/initSentry.ts'></script> -->
+    <script src='@components/Monetization/isCookiesEnabled.ts'></script>
+    <script src='@components/Monetization/NonUniqueLazy.ts'></script>
   </head>
   <body>
     <slot />
@@ -32,39 +41,13 @@ const { title } = Astro.props;
     {production && <AutoExit client:only='preact' />}
     {production && <InitPush client:only='preact' />}
   </body>
+  <script src='@utils/webVitalsInit.ts'></script>
 </html>
 
 <script>
   import { replaceMacrosWithEmptyString } from '@utils/replaceMacros';
-  import { onLCP, onFCP, onTTFB } from 'web-vitals';
-  import production from '@utils/isProduction';
-  import sendWebVitals from '@utils/webVitals';
 
   if (typeof window !== 'undefined') {
     replaceMacrosWithEmptyString(window.location.href);
-  }
-
-  let debug: boolean = false;
-  if (typeof window !== 'undefined') {
-    const url = new URL(window.location.href);
-    const geo = url.searchParams.get('geo') ?? '??';
-    const offer = url.searchParams.get('offer_id') ?? '??';
-    const pathname = url.pathname;
-    debug = url.searchParams.get('debug') ? true : false;
-
-    if (production && !debug) {
-      // Largest Contentful Paint (LCP)
-      onLCP((metric) => sendWebVitals({ metric, geo, pathname, offer }));
-      // First Contentful Paint (FCP)
-      onFCP((metric) => sendWebVitals({ metric, geo, pathname, offer }));
-      // Time to First Byte (TTFB)
-      onTTFB((metric) => sendWebVitals({ metric, geo, pathname, offer }));
-      // Cumulative Layout Shift (CLS) | IDC
-      // onCLS((metric) => sendWebVitals({ metric, geo, pathname, offer }));
-      // First Input Delay (FID) | IDC
-      // onFID((metric) => sendWebVitals({ metric, geo, pathname, offer }));
-      // Interaction to next Paint (INP) | IDC
-      // onINP((metric) => sendWebVitals({ metric, geo, pathname, offer }));
-    }
   }
 </script>
