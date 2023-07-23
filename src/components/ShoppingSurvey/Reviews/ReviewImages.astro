@@ -1,0 +1,11 @@
+---
+interface Props {
+  image: string;
+}
+
+const { image } = Astro.props;
+---
+
+<div class='relative w-10 cursor-pointer rounded-sm'>
+  <img src={image} alt={'whatever'} class='fill object-cover' loading={'lazy'} />
+</div>

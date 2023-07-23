@@ -6,7 +6,7 @@ import { getDictionary } from '@src/i18n/getDictionary';
 import { findBestMatchingLocale } from '@src/utils/languageDetection';
 import Button from '../Button';
 import CountDown from '../Monetization/CountDown';
-import ReviewsContainer from './Reviews/ReviewsContainer';
+import ReviewsContainer from './Reviews/ReviewsContainer.astro';
 
 let locale: TValidLocale;
 const getLocale = () => {
@@ -70,6 +70,6 @@ const d = (await getDictionary(10864, locale)) as TShoppingSurveyDictionary;
     <img src='/img/shopping/discount.svg' alt='whatever' class='absolute bottom-5 w-24' width={40} height={40} />
   </div>
   <div class='z-10 bg-slate-50 bg-opacity-10 px-1 py-2 backdrop-blur-sm backdrop-filter'>
-    <ReviewsContainer client:only='preact' title={d.commentSection.title} comments={d.commentSection.shoppingReviews} />
+    <ReviewsContainer title={d.commentSection.title} comments={d.commentSection.shoppingReviews} />
   </div>
 </section>
