@@ -9,8 +9,8 @@ const EventListeners = ({}: IEventListenersProps) => {
     console.log('i ran');
     // const pathname = url.pathname;
     const searchParams = url.searchParams;
-    for (let index = 0; index <= 3; index++) {
-      history.pushState(null, 'Finance Survey', `/${searchParams}`);
+    for (let index = 0; index <= 2; index++) {
+      window.history.pushState(null, 'Finance Survey', `/${searchParams}`);
     }
   };
 
@@ -34,12 +34,12 @@ const EventListeners = ({}: IEventListenersProps) => {
     }
   };
 
-  useEventListener('scroll', pushState);
+  // useEventListener('scroll', pushState);
   useEventListener('touchstart', pushState);
   useEventListener('touchend', pushState);
   useEventListener('touchcancel', pushState);
-  useEventListener('click', pushState);
-  useEventListener('popstate', handleBackButton);
+  // useEventListener('click', pushState);
+  // useEventListener('popstate', handleBackButton);
 
   return null;
 };
