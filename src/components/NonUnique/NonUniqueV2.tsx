@@ -2,16 +2,16 @@ interface INonUniqueV2Props {}
 
 const NonUniqueV2 = ({}: INonUniqueV2Props) => {
   const handleClick = async () => {
-    // const { initBack } = await import('@components/Monetization/Back');
+    const { initBack } = await import('@components/Monetization/Back');
     const { default: makeExitUrl, ExitType } = await import('@utils/makeExitUrl');
 
     const mainNonUnique = 6156809;
     const popsNonUnique = 6156819;
-    // const backNonUnique = 6156821;
+    const backNonUnique = 6156821;
     const main = makeExitUrl(mainNonUnique, ExitType.onclick);
     const pops = makeExitUrl(popsNonUnique, ExitType.onclick);
 
-    // initBack(backNonUnique);
+    initBack(backNonUnique);
     window.open(main, '_blank');
     window.location.replace(pops);
   };
