@@ -6,7 +6,8 @@ import ShoppingSurvey from '@src/components/ShoppingSurvey/ShoppingSurvey.astro'
 import { offers } from '@src/config';
 
 const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '0');
-const nonUniqueTest = Astro.url.searchParams.get('abtest') ?? '0';
+const nonUniqueTest = Astro.url.searchParams.get('abtest');
+console.log('🚀 ~ nonUniqueTest:', nonUniqueTest);
 
 const offerExists = offers.includes(offer as (typeof offers)[number]);
 const nonUnique = Astro.cookies.get('nonUnique') ? true : false;
