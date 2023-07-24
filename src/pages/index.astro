@@ -10,14 +10,15 @@ const nonUniqueTest = Astro.url.searchParams.get('abtest');
 
 const offerExists = offers.includes(offer as (typeof offers)[number]);
 const nonUnique = Astro.cookies.get('nonUnique').value ?? false;
+console.log('🚀 ~ nonUnique:', nonUnique);
 const nonUniqueAutoExit = Astro.cookies.get('autoExit').value ?? false;
 const nonUniqueTeen = Astro.cookies.get('nonUniqueTeen').value ?? false;
 ---
 
 {
-  (nonUnique && nonUniqueTest === '2407111') ||
-  (nonUniqueAutoExit && nonUniqueTest === '2407111') ||
-  (nonUniqueTeen && nonUniqueTest === '2407111') ? (
+  (nonUnique && nonUniqueTest === '240769111') ||
+  (nonUniqueAutoExit && nonUniqueTest === '240769111') ||
+  (nonUniqueTeen && nonUniqueTest === '240769111') ? (
     <NonUniqueV2Test />
   ) : (
     <Layout title='Best Survey in the world'>
