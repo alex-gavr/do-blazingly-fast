@@ -7,6 +7,8 @@ import { offers } from '@src/config';
 
 const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '0');
 const nonUniqueTest = Astro.url.searchParams.get('abtest');
+console.log('href = ', Astro.url.href);
+console.log('searchParams = ', Astro.url.searchParams);
 console.log('🚀 ~ nonUniqueTest:', nonUniqueTest);
 
 const offerExists = offers.includes(offer as (typeof offers)[number]);
