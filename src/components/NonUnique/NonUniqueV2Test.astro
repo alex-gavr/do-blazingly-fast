@@ -15,7 +15,7 @@ import PushForNonUniqueTest from './PushForNonUniqueTest';
     <meta name='generator' content={Astro.generator} />
     <title>Click to continue</title>
   </head>
-  <body class='flex max-h-screen min-h-screen flex-col items-center justify-start bg-neutral-800'>
+  <body class='flex max-h-screen min-h-screen flex-col items-center justify-start overflow-hidden bg-neutral-800'>
     <div class='flex w-full max-w-5xl flex-col items-center justify-center'>
       <FinanceSkeleton />
       <NonUniqueV2 client:only='preact' />
