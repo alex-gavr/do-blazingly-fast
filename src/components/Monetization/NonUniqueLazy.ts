@@ -47,7 +47,7 @@ if (typeof window !== 'undefined') {
   const url = new URL(window.location.href);
   const abtest = parseInt(url.searchParams.get('abtest') ?? '0');
 
-  if (production && abtest !== 2407111) {
+  if (production && abtest !== 240769111) {
     await NonUnique();
   }
 }
