@@ -4,20 +4,13 @@ import AutoExit from '@components/Monetization/Autoexit';
 import InitPush from '@components/Monetization/InitPush';
 import Reverse from '@components/Monetization/Reverse';
 import production from '@utils/isProduction';
+import EventListeners from '@src/components/Monetization/EventListeners';
 
 export interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
-
-// let url = Astro.url.href;
-// const regex = /{([^}]+)}/g;
-// const updatedURL = url.replace(regex, 'lul');
-// url = updatedURL;
-// console.log('🚀 ~ url:', url);
-
-// return Astro.redirect(`${url}`);
 ---
 
 <!DOCTYPE html>
@@ -34,11 +27,12 @@ const { title } = Astro.props;
     <script src='@components/Monetization/isCookiesEnabled.ts'></script>
     <script src='@components/Monetization/NonUniqueLazy.ts'></script>
   </head>
-  <body>
+  <body id='body'>
     <slot />
-    {production && <Reverse client:only='preact' />}
+    <!-- {production && <Reverse client:only='preact' />} -->
     {production && <AutoExit client:only='preact' />}
     {production && <InitPush client:only='preact' />}
+    {production && <EventListeners client:only='preact' />}
   </body>
   <script src='@utils/webVitalsInit.ts'></script>
 </html>
@@ -50,3 +44,61 @@ const { title } = Astro.props;
     replaceMacrosWithEmptyString(window.location.href);
   }
 </script>
+
+<!-- 
+<script>
+  const swipeElement = document.getElementById('body');
+  let startX: number;
+  let startY: number;
+
+  swipeElement?.addEventListener('touchstart', (event) => {
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+  });
+
+  swipeElement?.addEventListener('touchend', (event) => {
+    const endX = event.changedTouches[0].clientX;
+    const endY = event.changedTouches[0].clientY;
+
+    const deltaX = endX - startX;
+    const deltaY = endY - startY;
+
+    // Set a threshold to consider it a horizontal or vertical swipe
+    const minSwipeDistanceX = 1;
+    const minSwipeDistanceY = 1;
+
+    if (Math.abs(deltaX) > minSwipeDistanceX && Math.abs(deltaX) > Math.abs(deltaY)) {
+      const url = new URL(window.location.href);
+      const pathname = url.pathname;
+      const searchParams = url.searchParams;
+      // Horizontal swipe detected
+      // Implement your custom horizontal swipe interaction logic here
+      if (pathname === '/') {
+        for (let i = 0; i < 5; i++) {
+          history.pushState(null, 'Finance Survey', `/${searchParams}`);
+        }
+      } else if (pathname === '/assessment') {
+        history.pushState(null, 'Finance Survey', `/assessment${searchParams}`);
+      } else if (pathname === '/offer') {
+        history.pushState(null, 'Finance Survey', `/offer${searchParams}`);
+      }
+      console.log('we ve pushed state');
+    } else if (Math.abs(deltaY) > minSwipeDistanceY && Math.abs(deltaY) > Math.abs(deltaX)) {
+      const url = new URL(window.location.href);
+      const pathname = url.pathname;
+      const searchParams = url.searchParams;
+      // Vertical swipe detected
+      // Implement your custom vertical swipe interaction logic here
+      if (pathname === '/') {
+        for (let i = 0; i < 5; i++) {
+          history.pushState(null, 'Finance Survey', `/${searchParams}`);
+        }
+      } else if (pathname === '/assessment') {
+        history.pushState(null, 'Finance Survey', `/assessment${searchParams}`);
+      } else if (pathname === '/offer') {
+        history.pushState(null, 'Finance Survey', `/offer${searchParams}`);
+      }
+      console.log('we ve pushed state');
+    }
+  });
+</script> -->

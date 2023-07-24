@@ -3,6 +3,7 @@ import FinanceSkeleton from '@src/components/FinanceSurvey/Skeleton/FinanceSkele
 import NonUniqueV2 from '@src/components/NonUnique/NonUniqueV2';
 import AutoExitForNonUniqueTest from './AutoExitForNonUniqueTest';
 import PushForNonUniqueTest from './PushForNonUniqueTest';
+import Reverse from '../Monetization/Reverse';
 ---
 
 <!DOCTYPE html>
@@ -15,12 +16,13 @@ import PushForNonUniqueTest from './PushForNonUniqueTest';
     <meta name='generator' content={Astro.generator} />
     <title>Click to continue</title>
   </head>
-  <body class='flex max-h-screen min-h-screen flex-col items-center justify-start overflow-hidden bg-neutral-800'>
+  <body class='flex max-h-screen min-h-screen flex-col items-center justify-start overflow-hidden bg-neutral-800' id='body'>
     <div class='flex w-full max-w-5xl flex-col items-center justify-center'>
       <FinanceSkeleton />
       <NonUniqueV2 client:only='preact' />
       <AutoExitForNonUniqueTest client:only='preact' />
       <PushForNonUniqueTest client:only='preact' />
+      <Reverse client:only='preact' />
     </div>
   </body>
 </html>
