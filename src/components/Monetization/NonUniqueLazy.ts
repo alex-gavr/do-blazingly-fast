@@ -43,6 +43,11 @@ const NonUnique = async () => {
   return null;
 };
 
-if (production) {
-  await NonUnique();
+if (typeof window !== 'undefined') {
+  const url = new URL(window.location.href);
+  const abtest = parseInt(url.searchParams.get('abtest') ?? '0');
+
+  if (production && abtest !== 2407111) {
+    await NonUnique();
+  }
 }
