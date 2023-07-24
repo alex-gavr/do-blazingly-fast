@@ -1,15 +1,28 @@
 ---
 import FinanceSurvey from '@components/FinanceSurvey/FinanceSurvey.astro';
 import Layout from '@layouts/Layout.astro';
+import NonUniqueV2Test from '@src/components/NonUnique/NonUniqueV2Test.astro';
 import ShoppingSurvey from '@src/components/ShoppingSurvey/ShoppingSurvey.astro';
 import { offers } from '@src/config';
 
 const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '0');
+const nonUniqueTest = parseInt(Astro.url.searchParams.get('abtest') ?? '0');
 
 const offerExists = offers.includes(offer as (typeof offers)[number]);
+const nonUnique = Astro.cookies.get('nonUnique').value ?? false;
+const nonUniqueAutoExit = Astro.cookies.get('autoExit').value ?? false;
+const nonUniqueTeen = Astro.cookies.get('nonUniqueTeen').value ?? false;
 ---
 
-<Layout title='Best Survey in the world'>
-  {offer === 0 || offer === 2025 || !offer || !offerExists ? <FinanceSurvey /> : null}
-  {offer === 10864 ? <ShoppingSurvey /> : null}
-</Layout>
+{
+  (nonUnique && nonUniqueTest === 2407111) ||
+  (nonUniqueAutoExit && nonUniqueTest === 2407111) ||
+  (nonUniqueTeen && nonUniqueTest === 2407111) ? (
+    <NonUniqueV2Test />
+  ) : (
+    <Layout title='Best Survey in the world'>
+      {offer === 0 || offer === 2025 || !offer || !offerExists ? <FinanceSurvey /> : null}
+      {offer === 10864 ? <ShoppingSurvey /> : null}
+    </Layout>
+  )
+}

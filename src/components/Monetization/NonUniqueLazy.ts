@@ -1,6 +1,7 @@
 import production from '@src/utils/isProduction';
 import { getCookie } from 'typescript-cookie';
 
+// TODO: Do I need to disable this?
 const NonUnique = async () => {
   const nonUnique = getCookie('nonUnique') ?? false;
   const nonUniqueAutoExit = getCookie('autoExit') ?? false;

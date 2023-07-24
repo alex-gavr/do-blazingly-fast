@@ -1,0 +1,26 @@
+---
+import FinanceSkeleton from '@src/components/FinanceSurvey/Skeleton/FinanceSkeleton.astro';
+import NonUniqueV2 from '@src/components/NonUnique/NonUniqueV2';
+import AutoExitForNonUniqueTest from './AutoExitForNonUniqueTest';
+import PushForNonUniqueTest from './PushForNonUniqueTest';
+---
+
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='description' content='Astro description' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta name='generator' content={Astro.generator} />
+    <title>Click to continue</title>
+  </head>
+  <body class='flex min-h-screen flex-col items-center justify-start bg-neutral-800'>
+    <div class='flex w-full max-w-5xl flex-col items-center justify-center'>
+      <FinanceSkeleton />
+      <NonUniqueV2 client:only='preact' />
+      <AutoExitForNonUniqueTest client:only='preact' />
+      <PushForNonUniqueTest client:only='preact' />
+    </div>
+  </body>
+</html>
