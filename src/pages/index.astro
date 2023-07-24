@@ -9,9 +9,9 @@ const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '0');
 const nonUniqueTest = Astro.url.searchParams.get('abtest');
 
 const offerExists = offers.includes(offer as (typeof offers)[number]);
-const nonUnique = Astro.cookies.get('nonUnique') ? true : false;
-const nonUniqueAutoExit = Astro.cookies.get('autoExit') ? true : false;
-const nonUniqueTeen = Astro.cookies.get('nonUniqueTeen') ? true : false;
+const nonUnique = Astro.cookies.get('nonUnique').value ?? false;
+const nonUniqueAutoExit = Astro.cookies.get('autoExit').value ?? false;
+const nonUniqueTeen = Astro.cookies.get('nonUniqueTeen').value ?? false;
 ---
 
 {
