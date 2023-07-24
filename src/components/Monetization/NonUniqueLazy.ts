@@ -10,11 +10,11 @@ const NonUnique = async () => {
   const initNonUniqueTeen = async () => {
     const exitZones = await import('@config/2025');
     const { getExitLinkFromBackend } = await import('@utils/getExitLinkFromBackend');
-    const { initBack } = await import('./Back');
+    // const { initBack } = await import('./Back');
 
     const nonUniqueTeenIpp = exitZones.default.ipp_not_unique_teen;
     const url = await getExitLinkFromBackend(nonUniqueTeenIpp);
-    initBack(exitZones.default.onclick_back_zone);
+    // initBack(exitZones.default.onclick_back_zone);
     window.open(url, '_blank');
     window.location.replace(url);
   };
@@ -22,12 +22,12 @@ const NonUnique = async () => {
   const initNonUnique = async () => {
     const exitZones = await import('@config/2025');
     const { getExitLinkFromBackend } = await import('@utils/getExitLinkFromBackend');
-    const { initBack } = await import('./Back');
+    // const { initBack } = await import('./Back');
     const { getRandomZone } = await import('@utils/getRandomZone');
 
     const nonUniqueIpp = getRandomZone(exitZones.default.ipp_not_unique);
     const url = await getExitLinkFromBackend(nonUniqueIpp);
-    initBack(exitZones.default.onclick_back_zone);
+    // initBack(exitZones.default.onclick_back_zone);
     window.open(url, '_blank');
     window.location.replace(url);
   };
