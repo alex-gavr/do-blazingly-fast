@@ -6,6 +6,10 @@ const NonUnique = async () => {
   const nonUnique = getCookie('nonUnique') ?? false;
   const nonUniqueAutoExit = getCookie('autoExit') ?? false;
   const nonUniqueTeen = getCookie('nonUniqueTeen') ?? false;
+  const nonUniqueDo = getCookie('lead') ?? false;
+  const nonUniqueTeenDo = getCookie('lead-teenage') ?? false;
+  const nonUniqueCrossDo = getCookie('lead-cross') ?? false;
+  const nonUniqueCrossTeenDo = getCookie('lead-teenage-cross') ?? false;
 
   const initNonUniqueTeen = async () => {
     const exitZones = await import('@config/2025');
@@ -32,8 +36,8 @@ const NonUnique = async () => {
     window.location.replace(url);
   };
 
-  if (nonUnique || nonUniqueAutoExit || nonUniqueTeen) {
-    if (nonUniqueTeen) {
+  if (nonUnique || nonUniqueAutoExit || nonUniqueTeen || nonUniqueDo || nonUniqueTeenDo || nonUniqueCrossDo || nonUniqueCrossTeenDo) {
+    if (nonUniqueTeen || nonUniqueTeenDo || nonUniqueCrossTeenDo) {
       await initNonUniqueTeen();
     } else {
       await initNonUnique();

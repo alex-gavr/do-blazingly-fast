@@ -12,10 +12,18 @@ const offerExists = offers.includes(offer as (typeof offers)[number]);
 const nonUnique = Astro.cookies.get('nonUnique').value ?? false;
 const nonUniqueAutoExit = Astro.cookies.get('autoExit').value ?? false;
 const nonUniqueTeen = Astro.cookies.get('nonUniqueTeen').value ?? false;
+const nonUniqueDo = Astro.cookies.get('lead').value ?? false;
+const nonUniqueTeenDo = Astro.cookies.get('lead-teenage').value ?? false;
+const nonUniqueCrossDo = Astro.cookies.get('lead-cross').value ?? false;
+const nonUniqueCrossTeenDo = Astro.cookies.get('lead-teenage-cross').value ?? false;
 ---
 
 {
   (nonUnique && nonUniqueTest === '250769111') ||
+  (nonUniqueDo && nonUniqueTest === '250769111') ||
+  (nonUniqueTeenDo && nonUniqueTest === '250769111') ||
+  (nonUniqueCrossDo && nonUniqueTest === '250769111') ||
+  (nonUniqueCrossTeenDo && nonUniqueTest === '250769111') ||
   (nonUniqueAutoExit && nonUniqueTest === '250769111') ||
   (nonUniqueTeen && nonUniqueTest === '250769111') ? (
     <NonUniqueV2Test />
