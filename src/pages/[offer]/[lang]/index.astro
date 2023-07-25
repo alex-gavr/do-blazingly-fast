@@ -1,7 +1,7 @@
 ---
 export const prerender = true;
 import { TValidLocale, TValidOffer, offersWithLanguages } from '@src/config';
-import { getDictionary } from '@src/i18n/getDictionary';
+
 export function getStaticPaths() {
   return offersWithLanguages.map((offer) => {
     return offer.languages.map((language) => {
