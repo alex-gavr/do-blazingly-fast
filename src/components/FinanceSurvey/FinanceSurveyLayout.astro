@@ -2,13 +2,15 @@
 import CommentsSection from '@components/CommentsSection/CommentsSection.astro';
 import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
+
+const { commentsData } = Astro.props;
 ---
 
 <main class='flex min-h-screen flex-col items-center justify-start bg-neutral-800'>
   <div class='flex w-full max-w-5xl flex-col items-center justify-center'>
     <Header />
     <slot />
-    <CommentsSection />
+    <CommentsSection commentsData={commentsData} />
     <Footer />
   </div>
 </main>

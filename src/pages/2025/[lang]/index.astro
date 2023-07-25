@@ -1,0 +1,49 @@
+---
+export const prerender = true;
+import FinanceSurveyLayout from '@src/components/FinanceSurvey/FinanceSurveyLayout.astro';
+import Survey from '@src/components/Survey';
+import { TValidLocale, locales } from '@src/config';
+import type { TFinanceDictionary } from '@src/i18n/2025/en';
+import { getDictionary } from '@src/i18n/getDictionary';
+import Layout from '@src/layouts/Layout.astro';
+
+export function getStaticPaths() {
+  return locales.map((locale) => {
+    return {
+      params: {
+        lang: locale as TValidLocale,
+      },
+    };
+  });
+}
+
+const { lang } = Astro.params;
+
+function getValidLocale(locale: string | undefined) {
+  if (!locale || !locales.includes(locale as (typeof locales)[number])) {
+    return 'en';
+  }
+
+  return locale as TValidLocale;
+}
+
+const local = getValidLocale(lang);
+
+const t = (await getDictionary(0, local)) as TFinanceDictionary;
+---
+
+<Layout title='Best Survey in the world'>
+  <FinanceSurveyLayout commentsData={t.CommentSection}>
+    <section class='px-2 py-4'>
+      <h1 class='text-center text-lg font-bold tracking-wider sm:text-xl md:text-2xl lg:text-4xl'>
+        {t.MainSection.title}
+      </h1>
+      <p class='mt-4 text-center text-sm tracking-wider sm:text-base md:text-lg lg:text-xl'>
+        {t.MainSection.paragraph}
+      </p>
+      <section class='ml-auto mr-auto flex max-w-xl flex-col items-center justify-center gap-4 px-2 py-10'>
+        <Survey client:load texts={t.MainSection.SurveyTexts} />
+      </section>
+    </section>
+  </FinanceSurveyLayout>
+</Layout>
