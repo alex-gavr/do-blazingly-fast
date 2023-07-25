@@ -1,3 +1,5 @@
+import traverseSearchParams from './traverseSearchParams';
+
 export enum ExitType {
   onclick = 'onclick',
   ipp = 'ipp',
@@ -26,25 +28,7 @@ export enum SearchParamsOptions {
 //  we make EXIT url for onclick, but ipp and vignette urls used to fetch data from server
 const makeExitUrl = (zone: number | string, type: ExitType) => {
   if (typeof window !== 'undefined') {
-    const currentUrl = new URL(window.location.href);
-    const zoneEntry = currentUrl.searchParams.get(SearchParamsOptions.zone) ?? '';
-    const requestVar = currentUrl.searchParams.get(SearchParamsOptions.requestVar) ?? '';
-    const bannerId = currentUrl.searchParams.get(SearchParamsOptions.bannerId) ?? '';
-    const campaignId = currentUrl.searchParams.get(SearchParamsOptions.campaignId) ?? '';
-    const osVersion = currentUrl.searchParams.get(SearchParamsOptions.osVersion) ?? '';
-    const clickId = currentUrl.searchParams.get(SearchParamsOptions.subId) ?? '';
-    const abTest = currentUrl.searchParams.get(SearchParamsOptions.abTest) ?? '';
-
-    const queryParams = new URLSearchParams();
-
-    // Adding search parameters
-    queryParams.set('var', `${zoneEntry}`);
-    queryParams.set('ymid', `${requestVar}`);
-    queryParams.set('b', `${bannerId}`);
-    queryParams.set('campaignid', `${campaignId}`);
-    queryParams.set('osversion', `${osVersion}`);
-    queryParams.set('click_id', `${clickId}`);
-    queryParams.set('ab2r', `${abTest}`);
+    const queryParams = traverseSearchParams();
 
     let baseUrl: string = '';
     if (type === ExitType.onclick) {
