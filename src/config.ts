@@ -11,3 +11,14 @@ export type TValidOffer = (typeof offers)[number];
 export type TLanguage = {
   language: TValidLocale;
 };
+
+export const offersWithLanguages = [
+  {
+    offer: 2025,
+    languages: ['en', 'id', 'th', 'tl', 'it', 'de', 'fr', 'pt', 'es'],
+  },
+  {
+    offer: 10864,
+    languages: ['en', 'id', 'th', 'tl', 'it', 'de', 'fr', 'pt', 'es'],
+  },
+];
