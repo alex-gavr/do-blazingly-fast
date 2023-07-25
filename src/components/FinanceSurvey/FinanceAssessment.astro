@@ -19,7 +19,7 @@ locale = suitableLocale;
 const t = (await getDictionary(0, locale)) as TFinanceDictionary;
 ---
 
-<FinanceSurveyLayout>
+<FinanceSurveyLayout commentsData={t.CommentSection}>
   <section class='z-20 px-2 py-4'>
     <div class='flex min-h-[70vh] flex-col items-start justify-center gap-6 rounded-md bg-neutral-900 px-4 py-6'>
       <h1 class='animate-fade-up text-center text-3xl font-bold'>{t.Assessment.title}</h1>
