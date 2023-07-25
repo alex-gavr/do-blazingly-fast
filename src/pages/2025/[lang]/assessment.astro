@@ -54,9 +54,10 @@ const t = (await getDictionary(0, local)) as TFinanceDictionary;
   </FinanceSurveyLayout>
 </Layout>
 
-<!-- <script>
+<script>
   setTimeout(() => {
-    const params = window.location.search;
-    window.location.href = `/thank-you${params}`;
+    const url = new URL(window.location.href);
+    const redirectUrl = url.href.replace('/assessment', '/thank-you');
+    window.location.href = redirectUrl;
   }, 3000);
-</script> -->
+</script>

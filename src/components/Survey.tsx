@@ -45,8 +45,13 @@ const Survey = ({ texts }: ISurveyProps) => {
     if (leadsTo === LeadsTo.thankYouPage) {
       // setAssessment(true);
       if (typeof window !== 'undefined') {
-        const params = window.location.search;
-        window.location.href = `/assessment${params}`;
+        const url = new URL(window.location.href);
+        if (url.pathname === '/') {
+          url.pathname += 'assessment';
+        } else {
+          url.pathname += '/assessment';
+        }
+        window.location.href = url.href;
       }
     }
   };
