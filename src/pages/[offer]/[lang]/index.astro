@@ -1,0 +1,38 @@
+---
+export const prerender = true;
+import { TValidLocale, TValidOffer, offersWithLanguages } from '@src/config';
+import { getDictionary } from '@src/i18n/getDictionary';
+export function getStaticPaths() {
+  return offersWithLanguages.map((offer) => {
+    return offer.languages.map((language) => {
+      return {
+        params: {
+          offer: offer.offer as TValidOffer,
+          lang: language as TValidLocale,
+        },
+      };
+    });
+  });
+}
+const result = getStaticPaths();
+console.log('🚀 ~ result:', result);
+
+const { offer, lang } = Astro.params;
+---
+
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='description' content='Astro description' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta name='generator' content={Astro.generator} />
+    <title>Click to continue</title>
+  </head>
+  <body class='flex max-h-screen min-h-screen flex-col items-center justify-start overflow-hidden bg-neutral-800' id='body'>
+    <div class='flex w-full max-w-5xl flex-col items-center justify-center gap-4'>
+      <h1 class='text-purple-500'>{offer}</h1>
+    </div>
+  </body>
+</html>
