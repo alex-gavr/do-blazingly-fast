@@ -30,5 +30,5 @@ export default async function sendWebVitalsAbTest({ metric, geo, pathname, offer
     body: JSON.stringify(data),
   };
 
-  fetch('/web-vitals-test', options).catch((error) => console.error(error));
+  fetch('/api/test', options).catch((error) => console.error(error));
 }
