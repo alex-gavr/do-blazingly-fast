@@ -9,11 +9,13 @@ if (typeof window !== 'undefined') {
   const geo = url.searchParams.get('geo') ?? '??';
   const offer = url.searchParams.get('offer_id') ?? '??';
   const abtest = url.searchParams.get('abtest') ?? '??';
+  console.log('🚀 ~ abtest:', abtest);
   const pathname = url.pathname;
   debug = url.searchParams.get('debug') ? true : false;
 
   if (production && !debug) {
     if (abtest === '260769000' || abtest === '260769222' || abtest === '260769444') {
+      console.log(`i ran`);
       onLCP((metric) => sendWebVitalsAbTest({ metric, geo, pathname, offer, output: 'edge' }));
       // First Contentful Paint (FCP)
       onFCP((metric) => sendWebVitalsAbTest({ metric, geo, pathname, offer, output: 'edge' }));

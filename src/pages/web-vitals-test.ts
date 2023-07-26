@@ -53,6 +53,7 @@ export const post: APIRoute = async ({ request }) => {
       deviceVendor,
       deviceType,
     });
+    console.log('🚀 ~ res:', res);
 
     return Response.json({ res: res });
   } catch (error) {
