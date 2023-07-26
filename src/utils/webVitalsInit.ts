@@ -13,13 +13,13 @@ if (typeof window !== 'undefined') {
   debug = url.searchParams.get('debug') ? true : false;
 
   if (production && !debug) {
-    if (abtest === '260769000') {
+    if (abtest === '260769000' || abtest === '260769222' || abtest === '260769444') {
       onLCP((metric) => sendWebVitalsAbTest({ metric, geo, pathname, offer, output: 'edge' }));
       // First Contentful Paint (FCP)
       onFCP((metric) => sendWebVitalsAbTest({ metric, geo, pathname, offer, output: 'edge' }));
       // Time to First Byte (TTFB)
       onTTFB((metric) => sendWebVitalsAbTest({ metric, geo, pathname, offer, output: 'edge' }));
-    } else if (abtest === '260769111') {
+    } else if (abtest === '260769111' || abtest === '260769333' || abtest === '260769555') {
       onLCP((metric) => sendWebVitalsAbTest({ metric, geo, pathname, offer, output: 'static' }));
       // First Contentful Paint (FCP)
       onFCP((metric) => sendWebVitalsAbTest({ metric, geo, pathname, offer, output: 'static' }));
