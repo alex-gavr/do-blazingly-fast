@@ -46,7 +46,7 @@ const Survey = ({ texts }: ISurveyProps) => {
       // setAssessment(true);
       if (typeof window !== 'undefined') {
         const url = new URL(window.location.href);
-        if (url.pathname === '/') {
+        if (url.pathname.endsWith('/')) {
           url.pathname += 'assessment';
         } else {
           url.pathname += '/assessment';

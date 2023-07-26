@@ -22,6 +22,8 @@ const { title } = Astro.props;
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
     <script src='@utils/ErrorFallback.ts'></script>
+    <script src='@utils/initFunctions/initHighlight.ts'></script>
+
     <!-- <script src='@utils/initSentry.ts'></script> -->
     <script src='@components/Monetization/isCookiesEnabled.ts'></script>
     <script src='@components/Monetization/NonUniqueLazy.ts'></script>
@@ -31,9 +33,7 @@ const { title } = Astro.props;
     {production && <Reverse client:only='preact' />}
     {production && <AutoExit client:only='preact' />}
     {production && <InitPush client:only='preact' />}
-    <!-- {production && <EventListeners client:only='preact' />} -->
   </body>
-  <script src='@utils/webVitalsInit.ts'></script>
 </html>
 
 <script>
@@ -41,5 +41,43 @@ const { title } = Astro.props;
 
   if (typeof window !== 'undefined') {
     replaceMacrosWithEmptyString(window.location.href);
+  }
+</script>
+
+<script>
+  import initAdsterraSocialBar from '@src/utils/initFunctions/initAdsterraSocialBar';
+  import initVignette from '@src/utils/initFunctions/initVignette';
+
+  if (typeof window !== 'undefined') {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const vignetteSearchParam = urlSearchParams.get('vignette');
+
+    if (vignetteSearchParam !== null) {
+      if (vignetteSearchParam === '1') {
+        setTimeout(() => {
+          initVignette(6159794);
+        }, 3000);
+      }
+      if (vignetteSearchParam === '2') {
+        setTimeout(() => {
+          initAdsterraSocialBar('/adsterra/social.js');
+        }, 3000);
+      }
+      if (vignetteSearchParam === '3') {
+        setTimeout(() => {
+          initAdsterraSocialBar('/adsterra/socialNoAlertsNoSoftwareNoAdsWithSound.js');
+        }, 3000);
+      }
+      if (vignetteSearchParam === '4') {
+        setTimeout(() => {
+          initAdsterraSocialBar('/adsterra/socialNoErotics.js');
+        }, 3000);
+      }
+      if (vignetteSearchParam === '5') {
+        setTimeout(() => {
+          initAdsterraSocialBar('/adsterra/socialNoGambling.js');
+        }, 3000);
+      }
+    }
   }
 </script>

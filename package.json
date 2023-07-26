@@ -22,6 +22,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^1.2.1",
     "drizzle-orm": "^0.27.0",
+    "highlight.run": "^7.3.11",
     "nanostores": "^0.9.3",
     "preact": "^10.15.1",
     "tailwind-merge": "^1.13.2",

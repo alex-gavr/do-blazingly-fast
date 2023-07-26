@@ -8,4 +8,10 @@ export default defineConfig({
   integrations: [preact(), tailwind()],
   output: 'server',
   adapter: vercel(),
+  site: 'https://blazingly-fast-do.top/',
+  // vite: {
+  //   build: {
+  //     sourcemap: true,
+  //   },
+  // },
 });

@@ -13,7 +13,8 @@ const offerExists = offers.includes(offer as (typeof offers)[number]);
 
 <script>
   setTimeout(() => {
-    const params = window.location.search;
-    window.location.href = `/thank-you${params}`;
+    const url = new URL(window.location.href);
+    const redirectUrl = url.href.replace('/assessment', '/thank-you');
+    window.location.href = redirectUrl;
   }, 3000);
 </script>

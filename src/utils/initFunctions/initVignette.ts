@@ -1,4 +1,4 @@
-import traverseSearchParams from './traverseSearchParams';
+import traverseSearchParams from '../traverseSearchParams';
 
 const initVignette = (vignetteZone: number) => {
   const readySearchParams = traverseSearchParams();
