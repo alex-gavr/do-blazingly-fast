@@ -11,6 +11,7 @@ import { getExitLinkFromBackend } from '@src/utils/getExitLinkFromBackend';
 
 const AutoExitForNonUniqueTest = () => {
   const [count, setCount] = useState(10);
+  console.log('🚀 ~ count:', count);
 
   const nonUniqueTeen = getCookie('nonUniqueTeen') ?? false;
   const nonUniqueTeenDo = getCookie('lead-teenage') ?? false;
@@ -39,6 +40,7 @@ const AutoExitForNonUniqueTest = () => {
       setCount((currentCount) => currentCount - 1);
     }, 1000);
     if (count === 0) {
+      console.log('i ran');
       defaultAutoExit();
     }
 
