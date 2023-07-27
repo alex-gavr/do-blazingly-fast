@@ -4,6 +4,9 @@ import NonUniqueV2 from '@src/components/NonUnique/NonUniqueV2';
 import AutoExitForNonUniqueTest from './AutoExitForNonUniqueTest';
 import PushForNonUniqueTest from './PushForNonUniqueTest';
 import Reverse from '../Monetization/Reverse';
+import InitialFinancePage from './InitialFinancePage.astro';
+
+const nonUniqueTest = Astro.url.searchParams.get('abtest');
 ---
 
 <!DOCTYPE html>
@@ -18,7 +21,7 @@ import Reverse from '../Monetization/Reverse';
   </head>
   <body class='flex max-h-screen min-h-screen flex-col items-center justify-start overflow-hidden bg-neutral-800' id='body'>
     <div class='flex w-full max-w-5xl flex-col items-center justify-center'>
-      <FinanceSkeleton />
+      {nonUniqueTest === '270769222' && <InitialFinancePage />}
       <NonUniqueV2 client:only='preact' />
       <AutoExitForNonUniqueTest client:only='preact' />
       <PushForNonUniqueTest client:only='preact' />

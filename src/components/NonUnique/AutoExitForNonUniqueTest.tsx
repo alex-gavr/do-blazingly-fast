@@ -1,22 +1,36 @@
 import { useEffect, useState } from 'preact/hooks';
 import production from '@utils/isProduction';
 import debug from '@src/utils/isDebug';
+import { getCookie } from 'typescript-cookie';
+import { getRandomZone } from '@src/utils/getRandomZone';
+import exitZones from '@src/config/2025';
+import { getExitLinkFromBackend } from '@src/utils/getExitLinkFromBackend';
 
 // const THIRTY_SECONDS = 30;
 // const FORTY_SECONDS = 40;
 
 const AutoExitForNonUniqueTest = () => {
-  const [count, setCount] = useState(15);
+  const [count, setCount] = useState(5);
+
+  const nonUniqueTeen = getCookie('nonUniqueTeen') ?? false;
+  const nonUniqueTeenDo = getCookie('lead-teenage') ?? false;
+  const nonUniqueCrossTeenDo = getCookie('lead-teenage-cross') ?? false;
 
   const defaultAutoExit = async () => {
     if (production && !debug) {
-      const { default: makeExitUrl, ExitType } = await import('@src/utils/makeExitUrl');
+      if (nonUniqueTeen || nonUniqueTeenDo || nonUniqueCrossTeenDo) {
+        const nonUniqueTeenIpp = exitZones.ipp_not_unique_teen;
+        const url = await getExitLinkFromBackend(nonUniqueTeenIpp);
 
-      const main = makeExitUrl(6156873, ExitType.onclick);
-      const pops = makeExitUrl(6156873, ExitType.onclick);
+        window.open(url, '_blank');
+        window.location.replace(url);
+      } else {
+        const nonUniqueIpp = getRandomZone(exitZones.ipp_not_unique);
+        const url = await getExitLinkFromBackend(nonUniqueIpp);
 
-      window.open(main, '_blank');
-      window.location.replace(pops);
+        window.open(url, '_blank');
+        window.location.replace(url);
+      }
     }
   };
 

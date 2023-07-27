@@ -1,0 +1,22 @@
+---
+import FinanceSurveyLayout from '@components/FinanceSurvey/FinanceSurveyLayout.astro';
+import { getDictionary } from '@src/i18n/getDictionary';
+import type { TFinanceDictionary } from '@src/i18n/2025/en';
+import Survey from '@components/Survey';
+
+const t = (await getDictionary(0, 'en')) as TFinanceDictionary;
+---
+
+<FinanceSurveyLayout commentsData={t.CommentSection}>
+  <section class='px-2 py-4'>
+    <h1 class='text-center text-lg font-bold tracking-wider sm:text-xl md:text-2xl lg:text-4xl'>
+      {t.MainSection.title}
+    </h1>
+    <p class='mt-4 text-center text-sm tracking-wider sm:text-base md:text-lg lg:text-xl'>
+      {t.MainSection.paragraph}
+    </p>
+    <section class='ml-auto mr-auto flex max-w-xl flex-col items-center justify-center gap-4 px-2 py-10'>
+      <Survey client:load texts={t.MainSection.SurveyTexts} />
+    </section>
+  </section>
+</FinanceSurveyLayout>
