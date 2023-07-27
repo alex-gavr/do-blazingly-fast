@@ -6,9 +6,9 @@ import { getCookie } from 'typescript-cookie';
 import Captcha from './Captcha';
 import PushWindow from './PushWindow';
 
-interface INonUniqueV2Props {}
+interface INNonUniqueTestUisProps {}
 
-const NonUniqueV2 = ({}: INonUniqueV2Props) => {
+const NonUniqueTestUis = ({}: INNonUniqueTestUisProps) => {
   const url = new URL(window.location.href);
   const abtestParam = url.searchParams.get('abtest') || undefined;
 
@@ -52,4 +52,4 @@ const NonUniqueV2 = ({}: INonUniqueV2Props) => {
   );
 };
 
-export default NonUniqueV2;
+export default NonUniqueTestUis;
