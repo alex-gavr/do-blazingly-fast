@@ -10,7 +10,6 @@ const nonUniqueTest = Astro.url.searchParams.get('abtest');
 
 const offerExists = offers.includes(offer as (typeof offers)[number]);
 const nonUnique = Astro.cookies.get('nonUnique').value ?? false;
-const nonUniqueAutoExit = Astro.cookies.get('autoExit').value ?? false;
 const nonUniqueTeen = Astro.cookies.get('nonUniqueTeen').value ?? false;
 const nonUniqueDo = Astro.cookies.get('lead').value ?? false;
 const nonUniqueTeenDo = Astro.cookies.get('lead-teenage').value ?? false;
@@ -24,14 +23,12 @@ const nonUniqueCrossTeenDo = Astro.cookies.get('lead-teenage-cross').value ?? fa
   (nonUniqueTeenDo && nonUniqueTest === '270769111') ||
   (nonUniqueCrossDo && nonUniqueTest === '270769111') ||
   (nonUniqueCrossTeenDo && nonUniqueTest === '270769111') ||
-  (nonUniqueAutoExit && nonUniqueTest === '270769111') ||
   (nonUniqueTeen && nonUniqueTest === '270769111') ||
   (nonUnique && nonUniqueTest === '270769222') ||
   (nonUniqueDo && nonUniqueTest === '270769222') ||
   (nonUniqueTeenDo && nonUniqueTest === '270769222') ||
   (nonUniqueCrossDo && nonUniqueTest === '270769222') ||
   (nonUniqueCrossTeenDo && nonUniqueTest === '270769222') ||
-  (nonUniqueAutoExit && nonUniqueTest === '270769222') ||
   (nonUniqueTeen && nonUniqueTest === '270769222') ? (
     <NonUniqueV2Test />
   ) : (

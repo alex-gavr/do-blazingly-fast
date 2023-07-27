@@ -46,7 +46,7 @@ const AutoExit = () => {
       const { default: makeExitUrl, ExitType } = await import('@src/utils/makeExitUrl');
       const { financeExitsState } = await import('@context/state');
       const { initBack } = await import('./Back');
-      const { setCookie } = await import('typescript-cookie');
+      // const { setCookie } = await import('typescript-cookie');
 
       const financeExits = financeExitsState.get();
 
@@ -56,8 +56,8 @@ const AutoExit = () => {
       const pops = makeExitUrl(popsZone, ExitType.onclick);
 
       // We redirect to non-unique users who came back within 30 minutes
-      const in30Minutes = 1 / 48;
-      setCookie('autoExit', 'true', { expires: in30Minutes, path: '' });
+      // const in30Minutes = 1 / 48;
+      // setCookie('autoExit', 'true', { expires: in30Minutes, path: '' });
       initBack(financeExits.onclick_back_zone);
       window.open(main, '_blank');
       window.location.replace(pops);

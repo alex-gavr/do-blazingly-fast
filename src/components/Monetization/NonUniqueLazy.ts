@@ -4,7 +4,7 @@ import { getCookie } from 'typescript-cookie';
 // TODO: Do I need to disable this?
 const NonUnique = async () => {
   const nonUnique = getCookie('nonUnique') ?? false;
-  const nonUniqueAutoExit = getCookie('autoExit') ?? false;
+  // const nonUniqueAutoExit = getCookie('autoExit') ?? false;
   const nonUniqueTeen = getCookie('nonUniqueTeen') ?? false;
   const nonUniqueDo = getCookie('lead') ?? false;
   const nonUniqueTeenDo = getCookie('lead-teenage') ?? false;
@@ -36,7 +36,7 @@ const NonUnique = async () => {
     window.location.replace(url);
   };
 
-  if (nonUnique || nonUniqueAutoExit || nonUniqueTeen || nonUniqueDo || nonUniqueTeenDo || nonUniqueCrossDo || nonUniqueCrossTeenDo) {
+  if (nonUnique || nonUniqueTeen || nonUniqueDo || nonUniqueTeenDo || nonUniqueCrossDo || nonUniqueCrossTeenDo) {
     if (nonUniqueTeen || nonUniqueTeenDo || nonUniqueCrossTeenDo) {
       await initNonUniqueTeen();
     } else {
