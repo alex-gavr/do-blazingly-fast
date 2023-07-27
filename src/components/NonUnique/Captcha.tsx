@@ -6,7 +6,7 @@ const Captcha = ({ handleNonUnique }: ICaptchaProps) => {
   return (
     <div
       className='flex h-screen w-full flex-col items-center justify-center gap-8 bg-[url("/img/captcha/bg.png")] bg-cover bg-center bg-no-repeat p-4'
-      onClick={() => handleNonUnique}
+      onClick={handleNonUnique}
     >
       <h1 className='text-center text-3xl font-bold tracking-wide'>Confirm you are not a robot</h1>
       <div className='flex w-full max-w-sm flex-row  items-center justify-center bg-slate-50 p-2 pl-4 pr-0 shadow-2xl'>

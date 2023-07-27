@@ -6,7 +6,7 @@ const PushWindow = ({ handleNonUnique }: IPushWindowProps) => {
   return (
     <div
       className='absolute top-0 z-20 flex h-screen w-screen flex-col items-center justify-center gap-2 bg-gray-950 bg-opacity-50 px-4'
-      onClick={() => handleNonUnique}
+      onClick={handleNonUnique}
     >
       <div className='w-full max-w-sm rounded-md bg-white px-6 py-4'>
         <div className='flex flex-col items-start justify-center gap-8'>
