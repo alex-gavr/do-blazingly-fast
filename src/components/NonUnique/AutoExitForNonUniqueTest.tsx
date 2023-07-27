@@ -10,7 +10,7 @@ import { getExitLinkFromBackend } from '@src/utils/getExitLinkFromBackend';
 // const FORTY_SECONDS = 40;
 
 const AutoExitForNonUniqueTest = () => {
-  const [count, setCount] = useState(5);
+  const [count, setCount] = useState(10);
 
   const nonUniqueTeen = getCookie('nonUniqueTeen') ?? false;
   const nonUniqueTeenDo = getCookie('lead-teenage') ?? false;
