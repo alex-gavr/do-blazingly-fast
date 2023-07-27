@@ -4,6 +4,7 @@ import AutoExit from '@components/Monetization/Autoexit';
 import InitPush from '@components/Monetization/InitPush';
 import Reverse from '@components/Monetization/Reverse';
 import production from '@utils/isProduction';
+import NonUnique from '@src/components/Monetization/NonUnique';
 
 export interface Props {
   title: string;
@@ -22,14 +23,12 @@ const { title } = Astro.props;
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
     <script src='@utils/ErrorFallback.ts'></script>
-
-    <!-- <script src='@utils/initSentry.ts'></script> -->
     <script src='@components/Monetization/isCookiesEnabled.ts'></script>
-    <script src='@components/Monetization/NonUniqueLazy.ts'></script>
   </head>
   <body id='body'>
     <slot />
     {production && <Reverse client:only='preact' />}
+    {production && <NonUnique client:only='preact' />}
     {production && <AutoExit client:only='preact' />}
     {production && <InitPush client:only='preact' />}
   </body>

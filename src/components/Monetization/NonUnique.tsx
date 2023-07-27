@@ -1,8 +1,12 @@
 import production from '@src/utils/isProduction';
+import { useEffect } from 'preact/hooks';
 import { getCookie } from 'typescript-cookie';
 
 // TODO: Do I need to disable this?
-const NonUnique = async () => {
+const NonUnique = () => {
+  const url = new URL(window.location.href);
+
+  const abtest = url.searchParams.get('abtest');
   const nonUnique = getCookie('nonUnique') ?? false;
   // const nonUniqueAutoExit = getCookie('autoExit') ?? false;
   const nonUniqueTeen = getCookie('nonUniqueTeen') ?? false;
@@ -36,23 +40,19 @@ const NonUnique = async () => {
     window.location.replace(url);
   };
 
-  if (nonUnique || nonUniqueTeen || nonUniqueDo || nonUniqueTeenDo || nonUniqueCrossDo || nonUniqueCrossTeenDo) {
-    if (nonUniqueTeen || nonUniqueTeenDo || nonUniqueCrossTeenDo) {
-      await initNonUniqueTeen();
-    } else {
-      await initNonUnique();
+  useEffect(() => {
+    if (abtest !== '270769111' && abtest !== '270769222') {
+      if (nonUnique || nonUniqueTeen || nonUniqueDo || nonUniqueTeenDo || nonUniqueCrossDo || nonUniqueCrossTeenDo) {
+        if (nonUniqueTeen || nonUniqueTeenDo || nonUniqueCrossTeenDo) {
+          initNonUniqueTeen();
+        } else {
+          initNonUnique();
+        }
+      }
     }
-  }
+  }, []);
 
   return null;
 };
 
-if (typeof window !== 'undefined') {
-  const url = new URL(window.location.href);
-  const abtest = parseInt(url.searchParams.get('abtest') ?? '0');
-
-  // YOU NEED TO TWEAK AB TEST HERE
-  if ((production && abtest !== 270769111) || (production && abtest !== 270769222)) {
-    await NonUnique();
-  }
-}
+export default NonUnique;
