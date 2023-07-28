@@ -32,7 +32,6 @@ const { title } = Astro.props;
     {production && <AutoExit client:only='preact' />}
     {production && <InitPush client:only='preact' />}
   </body>
-  <script src='@utils/webVitalsInit.ts'></script>
 </html>
 
 <script>
