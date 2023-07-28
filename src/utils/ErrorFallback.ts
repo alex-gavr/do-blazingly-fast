@@ -1,3 +1,4 @@
+import { BrowserTracing } from '@sentry/browser';
 import debug from './isDebug';
 import production from './isProduction';
 
@@ -22,6 +23,8 @@ if (production && !debug) {
 
       Sentry.init({
         dsn: 'https://fa4acce17122487294edeed6ef281f21@o4505516733890560.ingest.sentry.io/4505516735201280',
+        release: '1.0.0',
+        tracesSampleRate: 1.0,
       });
       Sentry.captureException(error);
 
