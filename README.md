@@ -37,4 +37,4 @@ https://blazingly-fast-do.top/
 
 # Lighthouse Score:
 
-https://gyazo.com/bf2cc767f60b73192491ef8bab5620f2
+https://gyazo.com/e7bfaeea8c3a3500f12a1687ff1cc2c9
