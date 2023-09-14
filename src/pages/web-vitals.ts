@@ -10,7 +10,7 @@ export const post: APIRoute = async ({ request }) => {
   const auth = headers.get('Authorization');
 
   if (auth !== import.meta.env.PUBLIC_API_ROUTE_SECRET) {
-    return Response.json({ response: 'Unauthorized, fuck off', status: 401 });
+    return Response.json({ response: 'Unauthorized', status: 401 });
   }
 
   const webVitalsData = (await request.json()) as TWebVitals;

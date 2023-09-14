@@ -76,6 +76,7 @@ const AutoExit = () => {
     if (count === 0) {
       if (typeof window !== 'undefined') {
         const pathname = window.location.pathname;
+        // Cos of pathname we lose conversions on static pages here
         if (pathname === '/thank-you') {
           autoExitWithConversion();
         } else {

@@ -1,55 +1,40 @@
-# Astro Starter Kit: Basics
+# Blazingly-Fast DO 😎
 
-```
-npm create astro@latest -- --template basics
-```
+https://blazingly-fast-do.top/
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+# Stack
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- Astro for SSR -- https://astro.build/
+- Preact for client side interactions -- https://preactjs.com/
+- Tailwind for css - faster to write and more optimized in the long run
+- Hosted on Vercel
 
-![basics](https://user-images.githubusercontent.com/4677417/186188965-73453154-fdec-4d6b-9c34-cb35c248ae5b.png)
+# Conducted AB tests:
 
+1. Vercel vs CloudFlare (https://gyazo.com/21a80c104df1832de3e496419583f862)
+2. Static vs Edge (https://gyazo.com/ee32489ff1a908fe7badd2361a10e7b5)
 
-## 🚀 Project Structure
+# Average LCP Per Geo on Mobile in ms:
 
-Inside of your Astro project, you'll see the following folders and files:
+- AU - 988.8
+- BD - 1159.2
+- BR - 1041.9
+- CA - 724.9
+- CO - 1289.1
+- CI - 1412.9
+- CL - 955.4
+- FR - 582.2
+- ID - 1180.5
+- KE - 1461.2
+- MX - 1015.3
+- MZ - 1793.2
+- NG - 1759.5
+- PH - 1214.9
+- PK - 1177.9
+- TH - 954.2
+- ZA - 1282
+- US - 809.0
 
-```
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+# Lighthouse Score:
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:3000`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+https://gyazo.com/bf2cc767f60b73192491ef8bab5620f2

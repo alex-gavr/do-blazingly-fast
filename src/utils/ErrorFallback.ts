@@ -1,4 +1,3 @@
-import { BrowserTracing } from '@sentry/browser';
 import debug from './isDebug';
 import production from './isProduction';
 

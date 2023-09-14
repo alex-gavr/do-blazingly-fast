@@ -10,6 +10,7 @@ const Reverse = ({}: IReverseProps) => {
   const searchParams = window.location.search;
 
   useEffect(() => {
+    // due to pathname below static finance survey doesn't have reverse
     if (pathname === '/') {
       history.pushState(null, 'Finance Survey', `/${searchParams}`);
     } else if (pathname === '/assessment') {

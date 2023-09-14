@@ -18,6 +18,7 @@ export default async function sendWebVitals({ metric, geo, pathname, offer }: IP
     delta: Math.round(metric.delta),
     navigationType: metric.navigationType,
   };
+
   const options = {
     method: 'POST',
     headers: {

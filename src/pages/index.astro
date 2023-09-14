@@ -10,7 +10,6 @@ const offerExists = offers.includes(offer as (typeof offers)[number]);
 
 const nonUniqueTest = Astro.url.searchParams.get('abtest');
 const nonUniqueTestParamExists = nonUniqueTest === '270769111' || nonUniqueTest === '270769222' ? true : false;
-console.log('🚀 ~ nonUniqueTestParamExists:', nonUniqueTestParamExists);
 
 const nonUnique = Astro.cookies.get('nonUnique').value ? true : false;
 const nonUniqueTeen = Astro.cookies.get('nonUniqueTeen').value ? true : false;
@@ -21,7 +20,6 @@ const nonUniqueCrossTeenDo = Astro.cookies.get('lead-teenage-cross').value ? tru
 
 const isUserNonUnique =
   nonUnique || nonUniqueTeen || nonUniqueDo || nonUniqueTeenDo || nonUniqueCrossDo || nonUniqueCrossTeenDo ? true : false;
-console.log('🚀 ~ isUserNonUnique:', isUserNonUnique);
 
 const showNonUniqueTest = nonUniqueTestParamExists && isUserNonUnique ? true : false;
 ---
