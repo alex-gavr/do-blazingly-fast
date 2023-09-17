@@ -2,24 +2,24 @@ import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
 
 type TJustLog = {
-  text: string;
+  somethingToLog: unknown;
   type: 'error' | 'info' | 'log' | 'warn';
 };
 
-const justLog = ({ text, type }: TJustLog) => {
-  if (!production && debug) {
+const justLog = ({ somethingToLog, type }: TJustLog) => {
+  if (!production || debug) {
     if (type === 'log') {
-      console.log(text);
+      console.log(somethingToLog);
     }
     if (type === 'info') {
-      console.info(text);
+      console.info(somethingToLog);
     }
     if (type === 'warn') {
-      console.warn(text);
+      console.warn(somethingToLog);
     }
   }
   if (type === 'error') {
-    console.error(text);
+    console.error(somethingToLog);
   }
 };
 

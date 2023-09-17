@@ -21,5 +21,7 @@ const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '0');
 ---
 
 <Layout title='Finance Survey'>
-  {offer === 10864 ? <SurveyContainer client:only='preact' surveyData={d.SurveyTexts} buttonStyle={'lazadaSecondary'} /> : <p>There was a problem</p>}
+  <section class='w-full flex max-w-xl bg-slate-800 flex-col items-center justify-center gap-8 px-4 py-10 rounded-xl'>
+    {offer === 10864 ? <SurveyContainer client:only='preact' offerId={10864} texts={d.SurveyTexts} /> : <p>There was a problem</p>}
+  </section>
 </Layout>

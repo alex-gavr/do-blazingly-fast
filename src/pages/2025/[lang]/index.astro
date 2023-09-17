@@ -1,7 +1,7 @@
 ---
 export const prerender = true;
 import FinanceSurveyLayout from '@components/FinanceSurvey/FinanceSurveyLayout.astro';
-import Survey from '@components/Survey';
+import SurveyContainer from '@components/SurveyContainer';
 import { locales } from '@config/globalConfig';
 import type { TValidLocale } from '@config/globalConfig';
 import type { TFinanceDictionary } from '@i18n/2025/en';
@@ -43,8 +43,9 @@ const t = (await getDictionary(0, local)) as TFinanceDictionary;
         {t.MainSection.paragraph}
       </p>
       <section class='ml-auto mr-auto flex max-w-xl flex-col items-center justify-center gap-4 px-2 py-10'>
-        <Survey client:only='preact' texts={t.MainSection.SurveyTexts} />
+        <SurveyContainer client:only='preact' texts={t.MainSection.SurveyTexts} offerId={0} />
       </section>
     </section>
   </FinanceSurveyLayout>
 </Layout>
+ @components/SurveyContainer

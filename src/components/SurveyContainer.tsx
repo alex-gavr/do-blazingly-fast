@@ -1,45 +1,36 @@
 import { useStore } from '@nanostores/preact';
 
+import type { TValidOffer } from '@config/globalConfig';
+
 import { currentStepState } from '@context/state';
 
 import type { TSurveyTexts } from '@i18n/2025/en';
 
-import { cn } from '@utils/cn';
 import { getSurveyDataTexts } from '@utils/getSurveyDataTexts';
 
-import type { IButtonVariants } from './Button';
-import Button from './Button';
+import Button from '@components/Button';
 
-interface IProps {
-  surveyData: TSurveyTexts;
-  buttonStyle: IButtonVariants;
+interface ISurveyProps {
+  texts: TSurveyTexts;
+  offerId: TValidOffer;
 }
 
-const SurveyContainer = ({ surveyData, buttonStyle }: IProps) => {
-  const surveyDataTexts = getSurveyDataTexts(surveyData);
+const SurveyContainer = ({ texts, offerId }: ISurveyProps) => {
+  const surveyData = getSurveyDataTexts(texts, offerId);
   const currentStep = useStore(currentStepState);
-
-  const currentQuestion = surveyDataTexts.find((questions) => questions.id === currentStep);
-  // const currentAnswers = answers.filter((answers) => answers.questionId === state.currentStep);
-
-  if (currentQuestion === null || currentQuestion === undefined) {
-    return null;
-  }
-  const className = 'flex flex-wrap w-full justify-center items-center gap-4';
+  const filteredQuestion = surveyData.filter((question) => question.id === currentStepState.value)[0];
 
   return (
-    <main className='flex min-h-screen flex-col items-center justify-center bg-orange-50'>
-      <section className='flex w-full max-w-[600px] flex-col items-center justify-center gap-6 rounded-2xl border border-slate-200 bg-gray-100 px-4 py-6 shadow-2xl shadow-gray-300 sm:gap-8 sm:p-8'>
-        <h1 className={cn('px-4 text-center text-2xl font-bold text-slate-900 sm:text-3xl md:text-4xl')}>{currentQuestion?.question}</h1>
-        <div className={className}>
-          {currentQuestion.answers.map((answer) => (
-            <Button to={answer.to} type='button' variant={buttonStyle} key={answer.id}>
-              {answer.text}
-            </Button>
-          ))}
-        </div>
-      </section>
-    </main>
+    <>
+      <h1 className={'text-center text-2xl font-bold'}>{filteredQuestion.question}</h1>
+      <div className={'grid w-full grid-cols-1 gap-2 sm:grid-cols-2'}>
+        {filteredQuestion.answers.map((answer) => (
+          <Button to={answer.to} type={'button'} key={answer.id} fontSize={'base'} padding={'wider'} rounded={'none'} variant={'finance'}>
+            {answer.text}
+          </Button>
+        ))}
+      </div>
+    </>
   );
 };
 

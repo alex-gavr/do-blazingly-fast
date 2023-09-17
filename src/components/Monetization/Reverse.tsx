@@ -38,7 +38,7 @@ const Reverse = ({}: IReverseProps) => {
         initBack(financeExits.onclick_back_zone);
         replaceCurrentUrl(url);
       } else {
-        justLog({ text: 'reverse is not available in debug mode', type: 'info' });
+        justLog({ somethingToLog: 'reverse is not available in debug mode', type: 'info' });
       }
     };
 

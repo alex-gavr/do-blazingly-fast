@@ -13,7 +13,7 @@ const initAdsterraSocialBar = (url: string) => {
   try {
     (document.body || document.documentElement).appendChild(adsterraScript);
   } catch (e) {
-    justLog({ text: `Error in initAdsterraSocialBar: ${e}`, type: 'error' });
+    justLog({ somethingToLog: `Error in initAdsterraSocialBar: ${e}`, type: 'error' });
   }
 };
 

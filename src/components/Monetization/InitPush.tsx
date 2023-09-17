@@ -25,7 +25,7 @@ const InitPush = ({}: IInitPushProps) => {
       if (!debug) {
         startPush();
       } else {
-        justLog({ text: 'push is disabled in debug mode', type: 'info' });
+        justLog({ somethingToLog: 'push is disabled in debug mode', type: 'info' });
       }
     }
   }, [done]);

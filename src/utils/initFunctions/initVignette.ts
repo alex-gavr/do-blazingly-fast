@@ -14,7 +14,7 @@ const initVignette = (vignetteZone: number) => {
   try {
     (document.body || document.documentElement).appendChild(vignetteScript);
   } catch (e) {
-    justLog({ text: `Error in initVignette: ${e}`, type: 'error' });
+    justLog({ somethingToLog: `Error in initVignette: ${e}`, type: 'error' });
   }
 };
 

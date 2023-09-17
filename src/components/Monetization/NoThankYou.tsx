@@ -1,8 +1,7 @@
 import type { ComponentChildren } from 'preact';
 
+import executeExitFlow from '@utils/executeExitFlow';
 import justLog from '@utils/justLog';
-import fetchAndOpenUrls from '@utils/linksHelpers/fetchAndOpenUrls';
-import { getIppIfErrorGetOnclick } from '@utils/linksHelpers/getIppIfErrorGetOnclick';
 import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
 
@@ -18,18 +17,18 @@ interface IProps {
 const NoThankYou = ({ children, className, variant }: IProps) => {
   const handleClick = async () => {
     if (production && !debug) {
-      const nonUniqueIpp = 5973160;
       const noThankYouIpp = 5973161;
 
       const noThankYouOnclick = 5892040;
       const noThankYouPopsOnclick = 5892041;
 
-      const noThankYouExit = getIppIfErrorGetOnclick(nonUniqueIpp, noThankYouOnclick);
-      const noThankYouPops = getIppIfErrorGetOnclick(noThankYouIpp, noThankYouPopsOnclick);
-
-      await fetchAndOpenUrls([noThankYouExit, noThankYouPops]);
+      await executeExitFlow({
+        type: 'noRotationInMarker',
+        ippZones: [noThankYouIpp, noThankYouIpp],
+        onclickZones: [noThankYouOnclick, noThankYouPopsOnclick],
+      });
     } else {
-      justLog({ text: 'not interested pressed', type: 'log' });
+      justLog({ somethingToLog: 'not interested pressed', type: 'log' });
     }
   };
 

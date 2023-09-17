@@ -26,7 +26,9 @@ const { title } = Astro.props;
     <script src='@components/Monetization/areCookiesEnabled.ts'></script>
   </head>
   <body id='body'>
-    <slot />
+    <main class='flex flex-col justify-center items-center min-h-screen'>
+      <slot />
+    </main>
     {production && <Reverse client:only='preact' />}
     {production && <NonUnique client:only='preact' />}
     {production && <AutoExit client:only='preact' />}

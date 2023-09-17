@@ -47,14 +47,14 @@ export const getExitLinkFromBackendWithRotationInMarker = async (ippZone: number
     }
 
     const res = data.ads[0];
-    justLog({ text: `Response from backend: ${res.click}`, type: 'log' });
+    justLog({ somethingToLog: `Response from backend: ${res.click}`, type: 'log' });
 
     if (!res) {
       return new Error('No ads found');
     }
 
     const resultFromRecursion = createExitUrl(res.click);
-    justLog({ text: `ResultFromRecursion: ${resultFromRecursion}`, type: 'log' });
+    justLog({ somethingToLog: `ResultFromRecursion: ${resultFromRecursion}`, type: 'log' });
 
     return resultFromRecursion;
   } catch (error: any) {

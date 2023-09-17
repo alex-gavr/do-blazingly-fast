@@ -114,7 +114,7 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
           ippZones: [getRandomZone(financeExits.ipp_teen), financeExits.ipp_teen_pops],
         });
       } else {
-        justLog({ text: 'teen exit', type: 'info' });
+        justLog({ somethingToLog: 'teen exit', type: 'info' });
       }
     }
     if (to === LeadsTo.thankYouPage) {
@@ -153,7 +153,7 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
   return (
     <button
       type={type}
-      onClick={back ? () => history.back() : handleClick}
+      onClick={back ? () => history.back() : onClick ? onClick : handleClick}
       disabled={disabled}
       className={cn(buttonVariants({ variant, padding, rounded, fontSize, className }))}
       {...props}

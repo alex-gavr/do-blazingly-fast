@@ -60,7 +60,7 @@ export const post: APIRoute = async ({ request }) => {
 
     return Response.json({ res: res });
   } catch (error) {
-    justLog({ text: `Error on '/web-vitals': ${error}`, type: 'error' });
+    justLog({ somethingToLog: `Error on '/web-vitals': ${error}`, type: 'error' });
     return Response.json({ error: "Error on '/web-vitals': " + error, status: 400 });
   }
 };

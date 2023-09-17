@@ -2,9 +2,9 @@
 import { defaultLocale, type TValidLocale } from '@config/globalConfig';
 import { findBestMatchingLocale } from '@utils/languageDetection/languageDetection';
 import { getDictionary } from '@i18n/getDictionary';
-import Survey from '../Survey';
-import FinanceSurveyLayout from './FinanceSurveyLayout.astro';
 import type { TFinanceDictionary } from '@i18n/2025/en';
+import SurveyContainer from '@components/SurveyContainer';
+import FinanceSurveyLayout from './FinanceSurveyLayout.astro';
 let locale: TValidLocale;
 
 const getLocale = () => {
@@ -20,7 +20,7 @@ const t = (await getDictionary(0, locale)) as TFinanceDictionary;
 ---
 
 <FinanceSurveyLayout commentsData={t.CommentSection}>
-  <section class='px-2 py-4'>
+  <main class='px-2 py-4'>
     <h1 class='text-center text-lg font-bold tracking-wider sm:text-xl md:text-2xl lg:text-4xl'>
       {t.MainSection.title}
     </h1>
@@ -28,7 +28,7 @@ const t = (await getDictionary(0, locale)) as TFinanceDictionary;
       {t.MainSection.paragraph}
     </p>
     <section class='ml-auto mr-auto flex max-w-xl flex-col items-center justify-center gap-4 px-2 py-10'>
-      <Survey client:only='preact' texts={t.MainSection.SurveyTexts} />
+      <SurveyContainer offerId={0} client:only='preact' texts={t.MainSection.SurveyTexts} />
     </section>
-  </section>
+  </main>
 </FinanceSurveyLayout>

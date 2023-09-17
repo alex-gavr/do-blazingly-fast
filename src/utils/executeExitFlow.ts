@@ -1,33 +1,35 @@
-import { setCookie } from 'typescript-cookie';
-
 import doConversion from '@utils/doConversion';
 import fetchAndOpenUrls from '@utils/linksHelpers/fetchAndOpenUrls';
 import { getExitLinkFromBackendWithRotationInMarker } from '@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker';
 import { getIppIfErrorGetOnclick } from '@utils/linksHelpers/getIppIfErrorGetOnclick';
-import debug from '@utils/simpleFunctions/isDebug';
 
 import justLog from './justLog';
+import makeExitUrl, { ExitType } from './linksHelpers/makeExitUrl';
+import openUrls from './linksHelpers/openUrls';
 
 type TMainExit = {
   executeConversion?: boolean;
 };
-type TZones = {
+
+type WithRotationInMarker = TMainExit & {
+  type: 'withRotationInMarker';
   ippZones: number[];
   onclickZones?: number[];
 };
 
-type WithRotationInMarker = TZones &
-  TMainExit & {
-    type: 'withRotationInMarker';
-  };
+type NoRotationInMarker = TMainExit & {
+  type: 'noRotationInMarker';
+  onclickZones: number[];
+  ippZones: number[];
+};
 
-type NoRotationInMarker = TZones &
-  TMainExit & {
-    type: 'noRotationInMarker';
-    onclickZones: number[];
-  };
+type JustOnclick = TMainExit & {
+  type: 'justOnclick';
+  onclickZones: number[];
+  ippZones?: number[];
+};
 
-type TExecuteExitFlow = WithRotationInMarker | NoRotationInMarker;
+type TExecuteExitFlow = WithRotationInMarker | NoRotationInMarker | JustOnclick;
 
 export default async function executeExitFlow({ type, ippZones, onclickZones, executeConversion = false }: TExecuteExitFlow) {
   if (executeConversion) {
@@ -40,6 +42,12 @@ export default async function executeExitFlow({ type, ippZones, onclickZones, ex
     await fetchAndOpenUrls(exitUrlPromises);
   }
 
+  if (type === 'justOnclick') {
+    const urls = onclickZones.map((zone) => makeExitUrl(zone, ExitType.onclick));
+
+    openUrls({ urls });
+  }
+
   if (type === 'noRotationInMarker') {
     if (onclickZones && ippZones.length === onclickZones.length) {
       const mergedZones = Array.from({ length: ippZones.length }, (_, index) => ({
@@ -47,7 +55,7 @@ export default async function executeExitFlow({ type, ippZones, onclickZones, ex
         onclick: onclickZones[index],
       }));
 
-      justLog({ text: `mergedZones: ${mergedZones}`, type: 'log' });
+      justLog({ somethingToLog: `mergedZones: ${mergedZones}`, type: 'log' });
 
       const exitUrlPromises = mergedZones.map((zone) => getIppIfErrorGetOnclick(zone.ipp, zone.onclick));
       await fetchAndOpenUrls(exitUrlPromises);

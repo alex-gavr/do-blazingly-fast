@@ -5,11 +5,9 @@ import { getCookie, setCookie } from 'typescript-cookie';
 import { doTestsExitsState } from '@context/state';
 
 import { cn } from '@utils/cn';
-import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
+import executeExitFlow from '@utils/executeExitFlow';
 import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
-import openUrlInNewTab from '@utils/simpleFunctions/openUrlInNewTab';
-import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
 
 const TIMER = 120;
 const MINUTE = 60;
@@ -28,9 +26,10 @@ const CountDown = ({ freeAccess = 'free access ends in', secondsWord = 'seconds'
   useEffect(() => {
     if (alreadyAccessAutoExit) {
       if (doTestExits.accessAutoExit) {
-        const url = makeExitUrl(doTestExits.accessAutoExit, ExitType.onclick);
-        window.open(url, '_blank');
-        window.location.replace(url);
+        executeExitFlow({
+          type: 'justOnclick',
+          onclickZones: [doTestExits.accessAutoExit, doTestExits.accessAutoExit],
+        });
       }
     }
 
@@ -43,9 +42,10 @@ const CountDown = ({ freeAccess = 'free access ends in', secondsWord = 'seconds'
       setCookie('accessAutoExit', 'true', { path: '/', expires: in30Minutes });
 
       if (doTestExits.accessAutoExit) {
-        const url = makeExitUrl(doTestExits.accessAutoExit, ExitType.onclick);
-        openUrlInNewTab(url);
-        replaceCurrentUrl(url);
+        executeExitFlow({
+          type: 'justOnclick',
+          onclickZones: [doTestExits.accessAutoExit, doTestExits.accessAutoExit],
+        });
       }
     }
 

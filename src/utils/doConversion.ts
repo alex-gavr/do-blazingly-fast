@@ -17,7 +17,7 @@ const doConversion = () => {
       }
       production && !debug && setCookie('nonUnique', 'true', { expires: 7, path: '' });
     } else {
-      justLog({ text: 'conversion is fired', type: 'log' });
+      justLog({ somethingToLog: 'conversion is fired', type: 'log' });
     }
   } else {
     throw new Error('window is undefined');
