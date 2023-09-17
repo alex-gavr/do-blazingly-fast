@@ -1,7 +1,7 @@
 ---
 import MainExitButton from '@components/MainExitButton';
 import { getDictionary } from '@i18n/getDictionary';
-import { findBestMatchingLocale } from '@utils/languageDetection';
+import { findBestMatchingLocale } from '@utils/languageDetection/languageDetection';
 import { defaultLocale, type TValidLocale } from '@config/globalConfig';
 import FinanceSurveyLayout from './FinanceSurveyLayout.astro';
 import type { TFinanceDictionary } from '@i18n/2025/en';
@@ -45,3 +45,4 @@ const t = (await getDictionary(0, locale)) as TFinanceDictionary;
   </section>
   <div class='rain'></div>
 </FinanceSurveyLayout>
+ @utils/languageDetection/languageDetection

@@ -4,7 +4,7 @@ import { defaultLocale } from '@config/globalConfig';
 import type { TValidLocale } from '@config/globalConfig';
 import type { TShoppingSurveyDictionary } from '@i18n/10864/en';
 import { getDictionary } from '@i18n/getDictionary';
-import { findBestMatchingLocale } from '@utils/languageDetection';
+import { findBestMatchingLocale } from '@utils/languageDetection/languageDetection';
 import Button from '../Button';
 import CountDown from '../Monetization/CountDown';
 import ReviewsContainer from './Reviews/ReviewsContainer.astro';
@@ -74,3 +74,4 @@ const d = (await getDictionary(10864, locale)) as TShoppingSurveyDictionary;
     <ReviewsContainer title={d.commentSection.title} comments={d.commentSection.shoppingReviews} />
   </div>
 </section>
+ @utils/languageDetection/languageDetection

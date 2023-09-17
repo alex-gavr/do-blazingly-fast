@@ -1,4 +1,3 @@
-import { useEffect, useLayoutEffect } from 'preact/hooks'
+import { useEffect, useLayoutEffect } from 'preact/hooks';
 
-export const useIsomorphicLayoutEffect =
-  typeof window !== 'undefined' ? useLayoutEffect : useEffect
+export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;

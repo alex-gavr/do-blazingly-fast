@@ -1,14 +1,14 @@
 import { setCookie } from 'typescript-cookie';
 
-import debug from './isDebug';
-import production from './isProduction';
+import debug from './simpleFunctions/isDebug';
+import production from './simpleFunctions/isProduction';
 
 const doConversion = () => {
   if (typeof window !== 'undefined') {
     if (production) {
       const url = new URL(window.location.href);
       const subId = url.searchParams.get('s');
-      const conversionUrl = `https://ad.propellerads.com/conversion.php?visitor_id=${subId}`;
+      const conversionUrl = `${import.meta.env.PUBLIC_CONVERSION_URL}${subId}`;
       if (navigator.sendBeacon) {
         navigator.sendBeacon(conversionUrl);
       } else {

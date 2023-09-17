@@ -2,9 +2,9 @@ import { useEffect, useState } from 'preact/hooks';
 
 import { useEventListener } from '@hooks/useEventListener';
 
-import fetchAndOpenUrls from '@utils/fetchAndOpenUrls';
-import debug from '@utils/isDebug';
-import production from '@utils/isProduction';
+import fetchAndOpenUrls from '@utils/linksHelpers/fetchAndOpenUrls';
+import debug from '@utils/simpleFunctions/isDebug';
+import production from '@utils/simpleFunctions/isProduction';
 
 const THIRTY_SECONDS = 30;
 // const FORTY_SECONDS = 40;
@@ -20,8 +20,8 @@ const AutoExit = () => {
   const autoExitWithConversion = async () => {
     if (production && !debug) {
       const { default: doConversion } = await import('@utils/doConversion');
-      const { getRandomZone } = await import('@utils/getRandomZone');
-      const { getExitLinkFromBackend } = await import('@utils/getExitLinkFromBackend');
+      const { getRandomZone } = await import('@utils/simpleFunctions/getRandomZone');
+      const { getExitLinkFromBackendWithRotationInMarker } = await import('@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker');
       const { initBack } = await import('./Back');
       const { financeExitsState } = await import('@context/state');
 
@@ -32,8 +32,8 @@ const AutoExit = () => {
       const mainZone = getRandomZone(financeExits.ipp_main_exit);
       const mainPops = financeExits.ipp_main_exit_pops;
 
-      const main = getExitLinkFromBackend(mainZone);
-      const pops = getExitLinkFromBackend(mainPops);
+      const main = getExitLinkFromBackendWithRotationInMarker(mainZone);
+      const pops = getExitLinkFromBackendWithRotationInMarker(mainPops);
 
       initBack(financeExits.onclick_back_zone);
       await fetchAndOpenUrls([main, pops]);
@@ -42,12 +42,12 @@ const AutoExit = () => {
 
   const defaultAutoExit = async () => {
     if (production && !debug) {
-      const { getRandomZone } = await import('@utils/getRandomZone');
-      const { default: makeExitUrl, ExitType } = await import('@utils/makeExitUrl');
+      const { getRandomZone } = await import('@utils/simpleFunctions/getRandomZone');
+      const { default: makeExitUrl, ExitType } = await import('@utils/linksHelpers/makeExitUrl');
       const { financeExitsState } = await import('@context/state');
       const { initBack } = await import('./Back');
-      const { default: openUrlInNewTab } = await import('@utils/openUrlInNewTab');
-      const { default: replaceCurrentUrl } = await import('@utils/replaceCurrentUrl');
+      const { default: openUrlInNewTab } = await import('@utils/simpleFunctions/openUrlInNewTab');
+      const { default: replaceCurrentUrl } = await import('@utils/simpleFunctions/replaceCurrentUrl');
       // const { setCookie } = await import('typescript-cookie');
 
       const financeExits = financeExitsState.get();

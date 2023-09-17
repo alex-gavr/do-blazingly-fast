@@ -1,11 +1,10 @@
 import exitZones from '@config/2025';
 
 import doConversion from '@utils/doConversion';
-import fetchAndOpenUrls from '@utils/fetchAndOpenUrls';
-import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
-import { getRandomZone } from '@utils/getRandomZone';
-import production from '@utils/isProduction';
-import openUrlInNewTab from '@utils/openUrlInNewTab';
+import fetchAndOpenUrls from '@utils/linksHelpers/fetchAndOpenUrls';
+import { getExitLinkFromBackendWithRotationInMarker } from '@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker';
+import { getRandomZone } from '@utils/simpleFunctions/getRandomZone';
+import production from '@utils/simpleFunctions/isProduction';
 
 import { initBack } from './Monetization/Back';
 
@@ -21,8 +20,8 @@ const MainExitButton = ({ text }: IMainExitButtonProps) => {
       const mainZone = getRandomZone(exitZones.ipp_main_exit);
       const mainPops = exitZones.ipp_main_exit_pops;
 
-      const main = getExitLinkFromBackend(mainZone);
-      const pops = getExitLinkFromBackend(mainPops);
+      const main = getExitLinkFromBackendWithRotationInMarker(mainZone);
+      const pops = getExitLinkFromBackendWithRotationInMarker(mainPops);
 
       initBack(exitZones.onclick_back_zone);
       await fetchAndOpenUrls([main, pops]);

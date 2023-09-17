@@ -1,6 +1,6 @@
 ---
 import { defaultLocale, type TValidLocale } from '@config/globalConfig';
-import { findBestMatchingLocale } from '@utils/languageDetection';
+import { findBestMatchingLocale } from '@utils/languageDetection/languageDetection';
 import { getDictionary } from '@i18n/getDictionary';
 import Survey from '../Survey';
 import FinanceSurveyLayout from './FinanceSurveyLayout.astro';
@@ -32,3 +32,4 @@ const t = (await getDictionary(0, locale)) as TFinanceDictionary;
     </section>
   </section>
 </FinanceSurveyLayout>
+ @utils/languageDetection/languageDetection

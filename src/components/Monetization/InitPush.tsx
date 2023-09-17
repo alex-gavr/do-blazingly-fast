@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'preact/hooks';
 
-import debug from '@utils/isDebug';
+import debug from '@utils/simpleFunctions/isDebug';
 
 interface IInitPushProps {}
 
@@ -8,7 +8,7 @@ const InitPush = ({}: IInitPushProps) => {
   const [done, setDone] = useState<boolean>(false);
 
   const startPush = async () => {
-    const { getRandomZone } = await import('@utils/getRandomZone');
+    const { getRandomZone } = await import('@utils/simpleFunctions/getRandomZone');
     const { financeExitsState } = await import('@context/state');
     const { default: pushMicroTagScript } = await import('./pushMicroTagScript');
 

@@ -1,5 +1,6 @@
 import langParser from 'accept-language-parser';
 import { defineMiddleware } from 'astro/middleware';
+
 import { defaultLocale, locales } from './config/globalConfig';
 import type { TValidLocale } from './config/globalConfig';
 

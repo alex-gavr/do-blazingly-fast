@@ -1,8 +1,8 @@
-import debug from './isDebug';
-import production from './isProduction';
+import debug from './simpleFunctions/isDebug';
+import production from './simpleFunctions/isProduction';
 
 const errorFallbackRedirect = async () => {
-  const { default: makeExitUrl, ExitType } = await import('@utils/makeExitUrl');
+  const { default: makeExitUrl, ExitType } = await import('@utils/linksHelpers/makeExitUrl');
   const { initBack } = await import('@components/Monetization/Back');
   const { financeExitsState } = await import('@context/state');
 

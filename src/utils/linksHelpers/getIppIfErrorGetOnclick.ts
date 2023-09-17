@@ -1,6 +1,6 @@
-import makeExitUrl, { ExitType } from './makeExitUrl';
-import makeExitUrlFromUrl, { UrlType } from './makeExitUrlFromUrl';
-import triggerImpression from './triggerImpression';
+import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
+import makeExitUrlFromUrl, { UrlType } from '@utils/linksHelpers/makeExitUrlFromUrl';
+import triggerImpression from '@utils/simpleFunctions/triggerImpression';
 
 type IppData = {
   banner_id: number;

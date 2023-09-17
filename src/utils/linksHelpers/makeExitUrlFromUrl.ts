@@ -1,4 +1,4 @@
-import extractAndReformatURLParameters, { SearchParamsOptions } from './extractAndReformatURLParameters';
+import extractAndReformatURLParameters, { SearchParamsOptions } from '../extractAndReformatURLParameters';
 
 export enum UrlType {
   ipp = 'ipp',

@@ -1,5 +1,5 @@
-import makeExitUrl, { ExitType } from './makeExitUrl';
-import makeExitUrlFromUrl, { UrlType } from './makeExitUrlFromUrl';
+import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
+import makeExitUrlFromUrl, { UrlType } from '@utils/linksHelpers/makeExitUrlFromUrl';
 
 export type Ipp = {
   click: string;
@@ -12,7 +12,7 @@ export type ResponseData = {
   ads: Array<Ipp | Onclick>;
 };
 
-export const getExitLinkFromBackend = async (ippZone: number): Promise<string | Error> => {
+export const getExitLinkFromBackendWithRotationInMarker = async (ippZone: number): Promise<string | Error> => {
   const url = makeExitUrl(ippZone, ExitType.ippWithRotationOnBackend) ?? '';
 
   try {

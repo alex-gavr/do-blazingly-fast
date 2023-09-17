@@ -5,11 +5,11 @@ import { getCookie, setCookie } from 'typescript-cookie';
 import { doTestsExitsState } from '@context/state';
 
 import { cn } from '@utils/cn';
-import debug from '@utils/isDebug';
-import production from '@utils/isProduction';
-import makeExitUrl, { ExitType } from '@utils/makeExitUrl';
-import openUrlInNewTab from '@utils/openUrlInNewTab';
-import replaceCurrentUrl from '@utils/replaceCurrentUrl';
+import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
+import debug from '@utils/simpleFunctions/isDebug';
+import production from '@utils/simpleFunctions/isProduction';
+import openUrlInNewTab from '@utils/simpleFunctions/openUrlInNewTab';
+import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
 
 const TIMER = 120;
 const MINUTE = 60;

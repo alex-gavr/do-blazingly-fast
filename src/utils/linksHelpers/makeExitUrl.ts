@@ -1,4 +1,4 @@
-import extractAndReformatURLParameters from './extractAndReformatURLParameters';
+import extractAndReformatURLParameters from '../extractAndReformatURLParameters';
 
 export enum ExitType {
   onclick = 'onclick',

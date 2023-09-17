@@ -6,7 +6,7 @@ import { type TWebVitals, webVitals } from '@db/schema';
 
 import { defaultLocale } from '@config/globalConfig';
 
-import { findBestMatchingLocale } from '@utils/languageDetection';
+import { findBestMatchingLocale } from '@utils/languageDetection/languageDetection';
 
 export const post: APIRoute = async ({ request }) => {
   const { headers } = request;

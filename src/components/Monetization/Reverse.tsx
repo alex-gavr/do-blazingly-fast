@@ -1,6 +1,6 @@
 import { useEffect } from 'preact/hooks';
 
-import debug from '@utils/isDebug';
+import debug from '@utils/simpleFunctions/isDebug';
 
 interface IReverseProps {}
 
@@ -24,10 +24,10 @@ const Reverse = ({}: IReverseProps) => {
       event.preventDefault();
       if (!debug) {
         const { financeExitsState } = await import('@context/state');
-        const { default: makeExitUrl, ExitType } = await import('@utils/makeExitUrl');
-        const { getRandomZone } = await import('@utils/getRandomZone');
+        const { default: makeExitUrl, ExitType } = await import('@utils/linksHelpers/makeExitUrl');
+        const { getRandomZone } = await import('@utils/simpleFunctions/getRandomZone');
         const { initBack } = await import('./Back');
-        const { default: replaceCurrentUrl } = await import('@utils/replaceCurrentUrl');
+        const { default: replaceCurrentUrl } = await import('@utils/simpleFunctions/replaceCurrentUrl');
 
         const financeExits = financeExitsState.get();
 

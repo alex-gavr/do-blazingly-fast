@@ -1,5 +1,5 @@
-import openUrlInNewTab from './openUrlInNewTab';
-import replaceCurrentUrl from './replaceCurrentUrl';
+import openUrlInNewTab from '../simpleFunctions/openUrlInNewTab';
+import replaceCurrentUrl from '../simpleFunctions/replaceCurrentUrl';
 
 export default async function fetchAndOpenUrls(exitUrlPromises: Promise<string | Error>[]) {
   try {

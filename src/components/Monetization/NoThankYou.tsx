@@ -1,9 +1,9 @@
 import type { ComponentChildren } from 'preact';
 
-import fetchAndOpenUrls from '@utils/fetchAndOpenUrls';
-import { getIppIfErrorGetOnclick } from '@utils/getIppIfErrorGetOnclick';
-import debug from '@utils/isDebug';
-import production from '@utils/isProduction';
+import fetchAndOpenUrls from '@utils/linksHelpers/fetchAndOpenUrls';
+import { getIppIfErrorGetOnclick } from '@utils/linksHelpers/getIppIfErrorGetOnclick';
+import debug from '@utils/simpleFunctions/isDebug';
+import production from '@utils/simpleFunctions/isProduction';
 
 import Button from '../Button';
 import type { IButtonVariants } from '../Button';

@@ -11,12 +11,12 @@ const NonUnique = () => {
 
   const initNonUniqueTeen = async () => {
     const exitZones = await import('@config/2025');
-    const { getExitLinkFromBackend } = await import('@utils/getExitLinkFromBackend');
-    const { default: openUrlInNewTab } = await import('@utils/openUrlInNewTab');
-    const { default: replaceCurrentUrl } = await import('@utils/replaceCurrentUrl');
+    const { getExitLinkFromBackendWithRotationInMarker } = await import('@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker');
+    const { default: openUrlInNewTab } = await import('@utils/simpleFunctions/openUrlInNewTab');
+    const { default: replaceCurrentUrl } = await import('@utils/simpleFunctions/replaceCurrentUrl');
 
     const nonUniqueTeenIpp = exitZones.default.ipp_not_unique_teen;
-    const url = await getExitLinkFromBackend(nonUniqueTeenIpp);
+    const url = await getExitLinkFromBackendWithRotationInMarker(nonUniqueTeenIpp);
 
     if (!(url instanceof Error)) {
       openUrlInNewTab(url);
@@ -26,13 +26,13 @@ const NonUnique = () => {
 
   const initNonUnique = async () => {
     const exitZones = await import('@config/2025');
-    const { getExitLinkFromBackend } = await import('@utils/getExitLinkFromBackend');
-    const { getRandomZone } = await import('@utils/getRandomZone');
-    const { default: openUrlInNewTab } = await import('@utils/openUrlInNewTab');
-    const { default: replaceCurrentUrl } = await import('@utils/replaceCurrentUrl');
+    const { getExitLinkFromBackendWithRotationInMarker } = await import('@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker');
+    const { getRandomZone } = await import('@utils/simpleFunctions/getRandomZone');
+    const { default: openUrlInNewTab } = await import('@utils/simpleFunctions/openUrlInNewTab');
+    const { default: replaceCurrentUrl } = await import('@utils/simpleFunctions/replaceCurrentUrl');
 
     const nonUniqueIpp = getRandomZone(exitZones.default.ipp_not_unique);
-    const url = await getExitLinkFromBackend(nonUniqueIpp);
+    const url = await getExitLinkFromBackendWithRotationInMarker(nonUniqueIpp);
 
     if (!(url instanceof Error)) {
       openUrlInNewTab(url);

@@ -5,11 +5,11 @@ import exitZones from '@config/2025';
 
 import type { TSurveyTexts } from '@i18n/2025/en';
 
-import fetchAndOpenUrls from '@utils/fetchAndOpenUrls';
-import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
-import { getRandomZone } from '@utils/getRandomZone';
 import { LeadsTo, getSurveyDataTexts } from '@utils/getSurveyDataTexts';
-import production from '@utils/isProduction';
+import fetchAndOpenUrls from '@utils/linksHelpers/fetchAndOpenUrls';
+import { getExitLinkFromBackendWithRotationInMarker } from '@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker';
+import { getRandomZone } from '@utils/simpleFunctions/getRandomZone';
+import production from '@utils/simpleFunctions/isProduction';
 
 import { initBack } from './Monetization/Back';
 
@@ -31,8 +31,8 @@ const Survey = ({ texts }: ISurveyProps) => {
       const teenExitIpp = getRandomZone(exitZones.ipp_teen);
       const teenExitPopsIpp = exitZones.ipp_teen_pops;
 
-      const main = getExitLinkFromBackend(teenExitIpp);
-      const pops = getExitLinkFromBackend(teenExitPopsIpp);
+      const main = getExitLinkFromBackendWithRotationInMarker(teenExitIpp);
+      const pops = getExitLinkFromBackendWithRotationInMarker(teenExitPopsIpp);
 
       if (production) {
         setCookie('nonUniqueTeen', 'true', { expires: 7, path: '' });

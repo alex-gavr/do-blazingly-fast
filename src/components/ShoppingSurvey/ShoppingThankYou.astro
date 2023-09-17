@@ -2,7 +2,7 @@
 import { defaultLocale, type TValidLocale } from '@config/globalConfig';
 import type { TShoppingSurveyDictionary } from '@i18n/10864/en';
 import { getDictionary } from '@i18n/getDictionary';
-import { findBestMatchingLocale } from '@utils/languageDetection';
+import { findBestMatchingLocale } from '@utils/languageDetection/languageDetection';
 import ThumbUp from './ThumbUp.astro';
 import Button from '@components/Button';
 
@@ -30,3 +30,4 @@ const d = (await getDictionary(10864, locale)) as TShoppingSurveyDictionary;
   </Button>
   <img src='/img/shopping/board.svg' alt='whatever' class='absolute bottom-0 w-80 sm:w-96' width={500} height={300} />
 </section>
+ @utils/languageDetection/languageDetection

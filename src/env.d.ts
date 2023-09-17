@@ -13,6 +13,7 @@ interface ImportMetaEnv {
   readonly DATABASE_PASSWORD: string;
   readonly PUBLIC_API_ROUTE_SECRET: string;
   readonly PUBLIC_SENTRY: string;
+  readonly PUBLIC_CONVERSION_URL: string;
 }
 
 interface ImportMeta {

@@ -10,13 +10,13 @@ import { useClientSearchParams } from '@hooks/useClientSearchParams';
 
 import { cn } from '@utils/cn';
 import doConversion from '@utils/doConversion';
-import fetchAndOpenUrls from '@utils/fetchAndOpenUrls';
-import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
-import { getIppIfErrorGetOnclick } from '@utils/getIppIfErrorGetOnclick';
-import { getRandomZone } from '@utils/getRandomZone';
-import getSearchParams from '@utils/getSearchParams';
-import debug from '@utils/isDebug';
-import production from '@utils/isProduction';
+import fetchAndOpenUrls from '@utils/linksHelpers/fetchAndOpenUrls';
+import { getExitLinkFromBackendWithRotationInMarker } from '@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker';
+import { getIppIfErrorGetOnclick } from '@utils/linksHelpers/getIppIfErrorGetOnclick';
+import { getRandomZone } from '@utils/simpleFunctions/getRandomZone';
+import getSearchParams from '@utils/simpleFunctions/getSearchParams';
+import debug from '@utils/simpleFunctions/isDebug';
+import production from '@utils/simpleFunctions/isProduction';
 
 export type IExitsTypes =
   | 'mainExit'
@@ -95,8 +95,8 @@ const Button = ({ children, type, variant, disabled, buttonSize, className, to, 
           // const [url, urlPops] = await Promise.all([teenExit, teenPops]);
           const teenZoneMain = getRandomZone(financeExits.ipp_teen);
 
-          const teenExit = getExitLinkFromBackend(teenZoneMain);
-          const teenPops = getExitLinkFromBackend(financeExits.ipp_teen_pops);
+          const teenExit = getExitLinkFromBackendWithRotationInMarker(teenZoneMain);
+          const teenPops = getExitLinkFromBackendWithRotationInMarker(financeExits.ipp_teen_pops);
 
           await fetchAndOpenUrls([teenExit, teenPops]);
         } else {
@@ -122,8 +122,8 @@ const Button = ({ children, type, variant, disabled, buttonSize, className, to, 
         doConversion();
         const mainExitZone = getRandomZone(financeExits.ipp_main_exit);
 
-        const mainExit = getExitLinkFromBackend(mainExitZone);
-        const mainPops = getExitLinkFromBackend(financeExits.ipp_main_exit_pops);
+        const mainExit = getExitLinkFromBackendWithRotationInMarker(mainExitZone);
+        const mainPops = getExitLinkFromBackendWithRotationInMarker(financeExits.ipp_main_exit_pops);
 
         await fetchAndOpenUrls([mainExit, mainPops]);
       } else {
