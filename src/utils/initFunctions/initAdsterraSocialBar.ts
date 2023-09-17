@@ -1,3 +1,5 @@
+import justLog from '@utils/justLog';
+
 const initAdsterraSocialBar = (url: string) => {
   const adsterraScript = document.createElement('script');
 
@@ -11,7 +13,7 @@ const initAdsterraSocialBar = (url: string) => {
   try {
     (document.body || document.documentElement).appendChild(adsterraScript);
   } catch (e) {
-    console.log(e);
+    justLog({ text: `Error in initAdsterraSocialBar: ${e}`, type: 'error' });
   }
 };
 

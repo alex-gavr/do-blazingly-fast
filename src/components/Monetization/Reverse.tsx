@@ -1,5 +1,6 @@
 import { useEffect } from 'preact/hooks';
 
+import justLog from '@utils/justLog';
 import debug from '@utils/simpleFunctions/isDebug';
 
 interface IReverseProps {}
@@ -37,7 +38,7 @@ const Reverse = ({}: IReverseProps) => {
         initBack(financeExits.onclick_back_zone);
         replaceCurrentUrl(url);
       } else {
-        console.log('reverse is not available in debug mode');
+        justLog({ text: 'reverse is not available in debug mode', type: 'info' });
       }
     };
 

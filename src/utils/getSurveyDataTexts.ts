@@ -1,9 +1,12 @@
 import type { TSurveyTexts } from 'src/i18n/2025/en';
 
 export enum LeadsTo {
+  beginSurvey = 'beginSurvey',
   nextQuestion = 'nextQuestion',
   teenExit = 'teenExit',
   thankYouPage = 'thankYouPage',
+  toAssessment = 'toAssessment',
+  mainExit = 'mainExit',
 }
 
 export const getSurveyDataTexts = (texts: TSurveyTexts) => {
@@ -16,8 +19,7 @@ export const getSurveyDataTexts = (texts: TSurveyTexts) => {
       id: objectNumber,
       question: text.q,
       answers: text.a.map((answer, index) => {
-        const to =
-          objectNumber === 2 && index === 0 ? LeadsTo.teenExit : objectNumber === length ? LeadsTo.thankYouPage : LeadsTo.nextQuestion;
+        const to = objectNumber === 2 && index === 0 ? LeadsTo.teenExit : objectNumber === length ? LeadsTo.toAssessment : LeadsTo.nextQuestion;
         return {
           id: index + 1,
           text: answer,

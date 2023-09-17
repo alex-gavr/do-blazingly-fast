@@ -2,20 +2,15 @@ import { useStore } from '@nanostores/preact';
 import { cva } from 'class-variance-authority';
 import type { VariantProps } from 'class-variance-authority';
 import type { JSX } from 'preact';
-import { setCookie } from 'typescript-cookie';
 
 import { currentStepState, doTestsExitsState, financeExitsState } from '@context/state';
 
-import { useClientSearchParams } from '@hooks/useClientSearchParams';
-
 import { cn } from '@utils/cn';
-import doConversion from '@utils/doConversion';
-import fetchAndOpenUrls from '@utils/linksHelpers/fetchAndOpenUrls';
-import { getExitLinkFromBackendWithRotationInMarker } from '@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker';
-import { getIppIfErrorGetOnclick } from '@utils/linksHelpers/getIppIfErrorGetOnclick';
+import executeExitFlow from '@utils/executeExitFlow';
+import { LeadsTo } from '@utils/getSurveyDataTexts';
+import justLog from '@utils/justLog';
 import { getRandomZone } from '@utils/simpleFunctions/getRandomZone';
 import getSearchParams from '@utils/simpleFunctions/getSearchParams';
-import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
 
 export type IExitsTypes =
@@ -40,7 +35,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-slate-900 text-white hover:bg-slate-800',
+        default: 'bg-slate-900 text-white hover:bg-slate-800 hover:text-slate-200',
+        finance: 'bg-yellow-500 text-black hover:bg-yellow-400 hover:text-black',
         primary: 'bg-indigo-800 text-slate-50 hover:bg-cyan-500',
         secondary: 'border bg-indigo-50 border-neutral-800 bg-transparent text-gray-950',
         success: 'bg-emerald-600 text-neutral-50 hover:bg-emerald-300 hover:text-neutral-900',
@@ -69,6 +65,7 @@ const buttonVariants = cva(
       },
       rounded: {
         default: 'rounded-md',
+        none: 'rounded-none',
         sm: 'rounded-sm',
         lg: 'rounded-lg',
         xl: 'rounded-xl',
@@ -89,71 +86,66 @@ const buttonVariants = cva(
 type IButtonStyles = VariantProps<typeof buttonVariants>;
 export type IButtonVariants = IButtonStyles['variant'];
 interface IButtonProps extends JSX.HTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
-  to: IButtonExits | 'beginSurvey' | 'nextQuestion' | 'thankYouPage';
+  to: IButtonExits | 'beginSurvey' | 'nextQuestion' | 'thankYouPage' | 'toAssessment';
   back?: boolean;
   isLoading?: boolean;
+  teenIppZones?: number[];
+  mainExitIppZones?: number[];
+  mainExitOnclickZones?: number[];
 }
 
 const Button = ({ type, children, onClick, disabled, className, variant, padding, rounded, back, loading, fontSize, to, ...props }: IButtonProps) => {
   const financeExits = useStore(financeExitsState);
   const doTestsExits = useStore(doTestsExitsState);
 
-  const { offerId } = useClientSearchParams();
   const oldSearchParams = getSearchParams();
 
   const handleClick = async () => {
-    if (to === 'beginSurvey') {
+    if (to === LeadsTo.beginSurvey) {
       window.location.replace(`/survey${oldSearchParams}`);
     }
-    if (to === 'nextQuestion') {
+    if (to === LeadsTo.nextQuestion) {
       currentStepState.set(currentStepState.get() + 1);
-      // dispatch({ type: ActionsType.incrementStep });
     }
-    if (to === 'teenExit') {
-      // ONLY FOR SHOPPING SURVEY TESTING
-      if (offerId === 10864) {
-        if (production) {
-          // const [url, urlPops] = await Promise.all([teenExit, teenPops]);
-          const teenZoneMain = getRandomZone(financeExits.ipp_teen);
-
-          const teenExit = getExitLinkFromBackendWithRotationInMarker(teenZoneMain);
-          const teenPops = getExitLinkFromBackendWithRotationInMarker(financeExits.ipp_teen_pops);
-
-          await fetchAndOpenUrls([teenExit, teenPops]);
-        } else {
-          console.log('shopping survey teen exit');
-        }
+    if (to === LeadsTo.teenExit) {
+      if (production) {
+        await executeExitFlow({
+          type: 'withRotationInMarker',
+          ippZones: [getRandomZone(financeExits.ipp_teen), financeExits.ipp_teen_pops],
+        });
       } else {
-        if (production) {
-          const teenExit = getIppIfErrorGetOnclick(doTestsExits.teenExitIpp, doTestsExits.teenExit);
-          const teenPops = getIppIfErrorGetOnclick(doTestsExits.teenPopsIpp, doTestsExits.teenPops);
-
-          await fetchAndOpenUrls([teenExit, teenPops]);
-        } else {
-          console.log('teen exit');
-        }
+        justLog({ text: 'teen exit', type: 'info' });
       }
     }
-    if (to === 'thankYouPage') {
+    if (to === LeadsTo.thankYouPage) {
       window.location.replace(`/thank-you${oldSearchParams}`);
     }
-
-    if (to === 'mainExit') {
-      if (offerId === 10864) {
-        doConversion();
-        const mainExitZone = getRandomZone(financeExits.ipp_main_exit);
-
-        const mainExit = getExitLinkFromBackendWithRotationInMarker(mainExitZone);
-        const mainPops = getExitLinkFromBackendWithRotationInMarker(financeExits.ipp_main_exit_pops);
-
-        await fetchAndOpenUrls([mainExit, mainPops]);
+    if (to === LeadsTo.toAssessment) {
+      const url = new URL(window.location.href);
+      if (url.pathname.endsWith('/')) {
+        url.pathname += 'assessment';
       } else {
-        doConversion();
-        const mainExit = getIppIfErrorGetOnclick(doTestsExits.mainExitIpp, doTestsExits.mainExit);
-        const mainPops = getIppIfErrorGetOnclick(doTestsExits.mainPopsIpp, doTestsExits.mainPops);
+        url.pathname += '/assessment';
+      }
+      window.location.href = url.href;
+    }
 
-        !debug && setCookie('nonUnique', 'true', { path: '/', expires: 7, secure: true });
-        await fetchAndOpenUrls([mainExit, mainPops]);
+    if (to === LeadsTo.mainExit) {
+      // TODO: for now it's like that
+      const zonesInMarker = true;
+      if (zonesInMarker) {
+        await executeExitFlow({
+          type: 'withRotationInMarker',
+          ippZones: [getRandomZone(financeExits.ipp_main_exit), financeExits.ipp_main_exit_pops],
+          executeConversion: true,
+        });
+      } else {
+        await executeExitFlow({
+          type: 'noRotationInMarker',
+          ippZones: [doTestsExits.mainExitIpp, doTestsExits.mainExit],
+          onclickZones: [doTestsExits.mainPopsIpp, doTestsExits.mainPops],
+          executeConversion: true,
+        });
       }
     }
   };

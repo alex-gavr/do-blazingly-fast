@@ -1,4 +1,5 @@
 import extractAndReformatURLParameters from '@utils/extractAndReformatURLParameters';
+import justLog from '@utils/justLog';
 
 const initVignette = (vignetteZone: number) => {
   const readySearchParams = extractAndReformatURLParameters({ intendedFor: 'backend' });
@@ -13,7 +14,7 @@ const initVignette = (vignetteZone: number) => {
   try {
     (document.body || document.documentElement).appendChild(vignetteScript);
   } catch (e) {
-    console.log(e);
+    justLog({ text: `Error in initVignette: ${e}`, type: 'error' });
   }
 };
 

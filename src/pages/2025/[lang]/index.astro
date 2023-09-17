@@ -43,7 +43,7 @@ const t = (await getDictionary(0, local)) as TFinanceDictionary;
         {t.MainSection.paragraph}
       </p>
       <section class='ml-auto mr-auto flex max-w-xl flex-col items-center justify-center gap-4 px-2 py-10'>
-        <Survey client:load texts={t.MainSection.SurveyTexts} />
+        <Survey client:only='preact' texts={t.MainSection.SurveyTexts} />
       </section>
     </section>
   </FinanceSurveyLayout>

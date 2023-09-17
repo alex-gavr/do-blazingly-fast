@@ -1,6 +1,6 @@
-import type { IDoTestsExits, IFinanceSurveyExits } from './stateTypes';
-
 import { atom, map } from 'nanostores';
+
+import type { IDoTestsExits, IFinanceSurveyExits } from './stateTypes';
 
 export const currentStepState = atom(1);
 export const surveyLengthState = atom(0);

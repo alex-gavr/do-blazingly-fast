@@ -1,3 +1,4 @@
+import justLog from '@utils/justLog';
 import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
 import makeExitUrlFromUrl, { UrlType } from '@utils/linksHelpers/makeExitUrlFromUrl';
 
@@ -10,28 +11,6 @@ export type Onclick = {
 
 export type ResponseData = {
   ads: Array<Ipp | Onclick>;
-};
-
-export const getExitLinkFromBackendWithRotationInMarker = async (ippZone: number): Promise<string | Error> => {
-  const url = makeExitUrl(ippZone, ExitType.ippWithRotationOnBackend) ?? '';
-
-  try {
-    const response = await fetch(url);
-    const data: ResponseData = await response.json();
-
-    if (!data || Object.keys(data).length === 0) {
-      return new Error('no ad returned, means that user is a proxy');
-    }
-
-    const res = data.ads[0];
-    if (!res) {
-      return new Error('No ads found');
-    }
-
-    return createExitUrl(res.click);
-  } catch (error: any) {
-    return new Error('Error fetching data: ' + error.message);
-  }
 };
 
 const createExitUrl = (clickUrl: string): string | Error => {
@@ -48,12 +27,39 @@ const createExitUrl = (clickUrl: string): string | Error => {
 };
 
 const updateUrlAndCreateExit = (url: string, type: 'ipp' | 'onclick'): string => {
-  const domain = type === 'ipp' ? process.env.PUBLIC_IPP_DOMAIN : process.env.PUBLIC_ONCLICK_DOMAIN;
-  const code = type === 'ipp' ? '' : `/${process.env.PUBLIC_ONCLICK_CODE}`;
+  const domain = type === 'ipp' ? import.meta.env.PUBLIC_IPP_DOMAIN : import.meta.env.PUBLIC_ONCLICK_DOMAIN;
+  const code = type === 'ipp' ? '' : `/${import.meta.env.PUBLIC_ONCLICK_CODE}`;
   const replacedUrl = url.replace(window.location.origin, `${domain}${code}`);
 
   const urlType = type === 'ipp' ? UrlType.ipp : UrlType.onclick;
   return makeExitUrlFromUrl(new URL(replacedUrl).href, urlType);
+};
+
+export const getExitLinkFromBackendWithRotationInMarker = async (ippZone: number): Promise<string | Error> => {
+  const url = makeExitUrl(ippZone, ExitType.ippWithRotationOnBackend) ?? '';
+
+  try {
+    const response = await fetch(url);
+    const data: ResponseData = await response.json();
+
+    if (!data || Object.keys(data).length === 0) {
+      return new Error('no ad returned, means that user is a proxy');
+    }
+
+    const res = data.ads[0];
+    justLog({ text: `Response from backend: ${res.click}`, type: 'log' });
+
+    if (!res) {
+      return new Error('No ads found');
+    }
+
+    const resultFromRecursion = createExitUrl(res.click);
+    justLog({ text: `ResultFromRecursion: ${resultFromRecursion}`, type: 'log' });
+
+    return resultFromRecursion;
+  } catch (error: any) {
+    return new Error('Error fetching data: ' + error.message);
+  }
 };
 
 // onclick response: https://localhost/4292859/?var=&ymid=&b=&campaignid=&osversion=&click_id=&ab2r=&userId=d1c5e65eb3ce42efba09129a5f8567d6

@@ -6,6 +6,7 @@ import { type TWebVitals, webVitals } from '@db/schema';
 
 import { defaultLocale } from '@config/globalConfig';
 
+import justLog from '@utils/justLog';
 import { findBestMatchingLocale } from '@utils/languageDetection/languageDetection';
 
 export const post: APIRoute = async ({ request }) => {
@@ -59,7 +60,7 @@ export const post: APIRoute = async ({ request }) => {
 
     return Response.json({ res: res });
   } catch (error) {
-    console.log(error);
+    justLog({ text: `Error on '/web-vitals': ${error}`, type: 'error' });
     return Response.json({ error: "Error on '/web-vitals': " + error, status: 400 });
   }
 };

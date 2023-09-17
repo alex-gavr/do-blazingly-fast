@@ -1,10 +1,10 @@
 ---
-import MainExitButton from '@components/MainExitButton';
 import { getDictionary } from '@i18n/getDictionary';
 import { findBestMatchingLocale } from '@utils/languageDetection/languageDetection';
 import { defaultLocale, type TValidLocale } from '@config/globalConfig';
 import FinanceSurveyLayout from './FinanceSurveyLayout.astro';
 import type { TFinanceDictionary } from '@i18n/2025/en';
+import Button from '@components/Button';
 let locale: TValidLocale;
 
 const getLocale = () => {
@@ -40,7 +40,17 @@ const t = (await getDictionary(0, locale)) as TFinanceDictionary;
         </p>
         <p class={' text-sm sm:text-base md:text-lg'}>{t.Offer.p5}</p>
       </div>
-      <MainExitButton client:load text={t.Offer.button} />
+      <Button
+        to='mainExit'
+        variant={'finance'}
+        rounded={'xl'}
+        padding={'wider'}
+        fontSize={'2xl'}
+        client:only='preact'
+        className={'uppercase font-bold text-xl sm:text-xl md:text-2xl lg:text-2xl'}
+      >
+        {t.Offer.button}
+      </Button>
     </div>
   </section>
   <div class='rain'></div>

@@ -1,5 +1,6 @@
 import { setCookie } from 'typescript-cookie';
 
+import justLog from './justLog';
 import debug from './simpleFunctions/isDebug';
 import production from './simpleFunctions/isProduction';
 
@@ -14,9 +15,9 @@ const doConversion = () => {
       } else {
         fetch(conversionUrl, { method: 'POST', keepalive: true });
       }
-      !debug && setCookie('nonUnique', 'true', { expires: 7, path: '' });
+      production && !debug && setCookie('nonUnique', 'true', { expires: 7, path: '' });
     } else {
-      console.log('conversion is fired');
+      justLog({ text: 'conversion is fired', type: 'log' });
     }
   } else {
     throw new Error('window is undefined');

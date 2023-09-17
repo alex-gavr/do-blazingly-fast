@@ -1,5 +1,6 @@
 import type { ComponentChildren } from 'preact';
 
+import justLog from '@utils/justLog';
 import fetchAndOpenUrls from '@utils/linksHelpers/fetchAndOpenUrls';
 import { getIppIfErrorGetOnclick } from '@utils/linksHelpers/getIppIfErrorGetOnclick';
 import debug from '@utils/simpleFunctions/isDebug';
@@ -28,7 +29,7 @@ const NoThankYou = ({ children, className, variant }: IProps) => {
 
       await fetchAndOpenUrls([noThankYouExit, noThankYouPops]);
     } else {
-      console.log('not interested pressed');
+      justLog({ text: 'not interested pressed', type: 'log' });
     }
   };
 
