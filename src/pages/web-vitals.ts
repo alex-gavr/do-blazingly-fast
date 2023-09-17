@@ -1,9 +1,12 @@
-import { db } from '@db/db';
-import { webVitals, type TWebVitals } from '@db/schema';
-import { findBestMatchingLocale } from '@utils/languageDetection';
 import type { APIRoute } from 'astro';
-import { defaultLocale } from 'src/config';
 import { UAParser } from 'ua-parser-js';
+
+import { db } from '@db/db';
+import { type TWebVitals, webVitals } from '@db/schema';
+
+import { defaultLocale } from '@config/globalConfig';
+
+import { findBestMatchingLocale } from '@utils/languageDetection';
 
 export const post: APIRoute = async ({ request }) => {
   const { headers } = request;

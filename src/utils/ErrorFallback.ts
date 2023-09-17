@@ -14,14 +14,13 @@ const errorFallbackRedirect = async () => {
 };
 
 if (production && !debug) {
-  // trust me, only do it in production
   const captureError = async (error: Error | undefined) => {
     try {
-      console.error(error); // Log error to console for clarification
+      console.error(error);
       const Sentry = await import('@sentry/browser');
 
       Sentry.init({
-        dsn: 'https://fa4acce17122487294edeed6ef281f21@o4505516733890560.ingest.sentry.io/4505516735201280',
+        dsn: import.meta.env.PUBLIC_SENTRY,
         release: '1.0.0',
         tracesSampleRate: 1.0,
       });
@@ -29,7 +28,6 @@ if (production && !debug) {
 
       errorFallbackRedirect();
     } catch (e) {
-      // all fails, reset window.onerror to prevent infinite loop on window.onerror
       console.error('Logging to Sentry failed', e);
       window.onerror = null;
       errorFallbackRedirect();

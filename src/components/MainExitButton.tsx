@@ -1,9 +1,13 @@
 import exitZones from '@config/2025';
-import production from '@utils/isProduction';
-import { initBack } from './Monetization/Back';
+
+import doConversion from '@utils/doConversion';
+import fetchAndOpenUrls from '@utils/fetchAndOpenUrls';
 import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
 import { getRandomZone } from '@utils/getRandomZone';
-import doConversion from '@src/utils/doConversion';
+import production from '@utils/isProduction';
+import openUrlInNewTab from '@utils/openUrlInNewTab';
+
+import { initBack } from './Monetization/Back';
 
 interface IMainExitButtonProps {
   text: string;
@@ -20,11 +24,8 @@ const MainExitButton = ({ text }: IMainExitButtonProps) => {
       const main = getExitLinkFromBackend(mainZone);
       const pops = getExitLinkFromBackend(mainPops);
 
-      const [mainUrl, popsUrl] = await Promise.all([main, pops]);
-
       initBack(exitZones.onclick_back_zone);
-      window.open(mainUrl, '_blank');
-      window.location.replace(popsUrl);
+      await fetchAndOpenUrls([main, pops]);
     } else {
       console.log('button click with conversion');
     }

@@ -1,11 +1,15 @@
 import { useStore } from '@nanostores/preact';
-import { doTestsExitsState } from '@src/context/state';
-import { cn } from '@src/utils/cn';
-import debug from '@src/utils/isDebug';
-import production from '@src/utils/isProduction';
-import makeExitUrl, { ExitType } from '@src/utils/makeExitUrl';
 import { useEffect, useState } from 'preact/hooks';
 import { getCookie, setCookie } from 'typescript-cookie';
+
+import { doTestsExitsState } from '@context/state';
+
+import { cn } from '@utils/cn';
+import debug from '@utils/isDebug';
+import production from '@utils/isProduction';
+import makeExitUrl, { ExitType } from '@utils/makeExitUrl';
+import openUrlInNewTab from '@utils/openUrlInNewTab';
+import replaceCurrentUrl from '@utils/replaceCurrentUrl';
 
 const TIMER = 120;
 const MINUTE = 60;
@@ -40,8 +44,8 @@ const CountDown = ({ freeAccess = 'free access ends in', secondsWord = 'seconds'
 
       if (doTestExits.accessAutoExit) {
         const url = makeExitUrl(doTestExits.accessAutoExit, ExitType.onclick);
-        window.open(url, '_blank');
-        window.location.replace(url);
+        openUrlInNewTab(url);
+        replaceCurrentUrl(url);
       }
     }
 

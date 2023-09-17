@@ -3,18 +3,18 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
-      "@src/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@assets/*": ["src/assets/*"],
-      "@layouts/*": ["src/layouts/*"],
+      // "@src/*": ["src/*"],
       "@styles/*": ["src/styles/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@components/*": ["src/components/*"],
       "@config/*": ["src/config/*"],
       "@utils/*": ["src/utils/*"],
       "@db/*": ["src/db/*"],
       "@i18n/*": ["src/i18n/*"],
-      "@context/*": ["src/context/*"]
+      "@context/*": ["src/context/*"],
+      "@hooks/*": ["src/hooks/*"]
     }
   }
 }

@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
   image: string;
 }
@@ -7,5 +9,5 @@ const { image } = Astro.props;
 ---
 
 <div class='relative w-10 cursor-pointer rounded-sm'>
-  <img src={image} alt={'whatever'} class='fill object-cover' loading={'lazy'} />
+  <Image src={image} alt={'whatever'} width={500} height={500} class='fill object-cover' loading={'lazy'} />
 </div>

@@ -1,9 +1,10 @@
 ---
 import NoThankYou from '@components/Monetization/NoThankYou';
-import { TValidLocale, defaultLocale } from '@src/config';
-import type { TShoppingSurveyDictionary } from '@src/i18n/10864/en';
-import { getDictionary } from '@src/i18n/getDictionary';
-import { findBestMatchingLocale } from '@src/utils/languageDetection';
+import { defaultLocale } from '@config/globalConfig';
+import type { TValidLocale } from '@config/globalConfig';
+import type { TShoppingSurveyDictionary } from '@i18n/10864/en';
+import { getDictionary } from '@i18n/getDictionary';
+import { findBestMatchingLocale } from '@utils/languageDetection';
 import Button from '../Button';
 import CountDown from '../Monetization/CountDown';
 import ReviewsContainer from './Reviews/ReviewsContainer.astro';

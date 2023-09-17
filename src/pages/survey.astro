@@ -1,10 +1,10 @@
 ---
-import SurveyContainer from '@src/components/SurveyContainer';
-import { defaultLocale, type TValidLocale } from '@src/config';
-import type { TShoppingSurveyDictionary } from '@src/i18n/10864/en';
-import { getDictionary } from '@src/i18n/getDictionary';
-import Layout from '@src/layouts/Layout.astro';
-import { findBestMatchingLocale } from '@src/utils/languageDetection';
+import SurveyContainer from '@components/SurveyContainer';
+import { defaultLocale, type TValidLocale } from '@config/globalConfig';
+import type { TShoppingSurveyDictionary } from '@i18n/10864/en';
+import { getDictionary } from '@i18n/getDictionary';
+import Layout from '@layouts/Layout.astro';
+import { findBestMatchingLocale } from '@utils/languageDetection';
 
 let locale: TValidLocale;
 const getLocale = () => {
@@ -21,11 +21,5 @@ const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '0');
 ---
 
 <Layout title='Finance Survey'>
-  {
-    offer === 10864 ? (
-      <SurveyContainer client:only='preact' surveyData={d.SurveyTexts} buttonStyle={'lazadaSecondary'} />
-    ) : (
-      <p>There was a problem</p>
-    )
-  }
+  {offer === 10864 ? <SurveyContainer client:only='preact' surveyData={d.SurveyTexts} buttonStyle={'lazadaSecondary'} /> : <p>There was a problem</p>}
 </Layout>

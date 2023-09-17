@@ -1,33 +1,15 @@
 ---
 import FinanceSurvey from '@components/FinanceSurvey/FinanceSurvey.astro';
 import Layout from '@layouts/Layout.astro';
-import NonUniqueWithClick from '@src/components/NonUnique/NonUniqueWithClick.astro';
-import ShoppingSurvey from '@src/components/ShoppingSurvey/ShoppingSurvey.astro';
-import { offers } from '@src/config';
+import ShoppingSurvey from '@components/ShoppingSurvey/ShoppingSurvey.astro';
+import { offers } from '@config/globalConfig';
 
 const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '0');
 const offerExists = offers.includes(offer as (typeof offers)[number]);
-
-const nonUniqueTest = Astro.url.searchParams.get('abtest');
-const nonUniqueTestParamExists = nonUniqueTest === '270769111' || nonUniqueTest === '270769222' ? true : false;
-
-const nonUnique = Astro.cookies.get('nonUnique').value ? true : false;
-const nonUniqueTeen = Astro.cookies.get('nonUniqueTeen').value ? true : false;
-const nonUniqueDo = Astro.cookies.get('lead').value ? true : false;
-const nonUniqueTeenDo = Astro.cookies.get('lead-teenage').value ? true : false;
-const nonUniqueCrossDo = Astro.cookies.get('lead-cross').value ? true : false;
-const nonUniqueCrossTeenDo = Astro.cookies.get('lead-teenage-cross').value ? true : false;
-
-const isUserNonUnique =
-  nonUnique || nonUniqueTeen || nonUniqueDo || nonUniqueTeenDo || nonUniqueCrossDo || nonUniqueCrossTeenDo ? true : false;
-
-const showNonUniqueTest = nonUniqueTestParamExists && isUserNonUnique ? true : false;
 ---
 
 {
-  showNonUniqueTest ? (
-    <NonUniqueWithClick />
-  ) : (
+  (
     <Layout title='Best Survey in the world'>
       {offer === 0 || offer === 2025 || !offer || !offerExists ? <FinanceSurvey /> : null}
       {offer === 10864 ? <ShoppingSurvey /> : null}

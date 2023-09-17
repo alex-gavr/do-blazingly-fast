@@ -1,7 +1,7 @@
-import traverseSearchParams from '../traverseSearchParams';
+import extractAndReformatURLParameters from '@utils/extractAndReformatURLParameters';
 
 const initVignette = (vignetteZone: number) => {
-  const readySearchParams = traverseSearchParams();
+  const readySearchParams = extractAndReformatURLParameters({ intendedFor: 'backend' });
 
   const searchParams = readySearchParams.toString();
 

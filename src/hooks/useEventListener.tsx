@@ -1,6 +1,6 @@
 import type { RefObject } from 'preact';
 import { useEffect, useRef } from 'preact/hooks';
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
+import { useIsomorphicLayoutEffect } from '@hooks/useIsomorphicLayoutEffect';
 
 // MediaQueryList Event based useEventListener interface
 function useEventListener<K extends keyof MediaQueryListEventMap>(

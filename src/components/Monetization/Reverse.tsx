@@ -1,5 +1,6 @@
 import { useEffect } from 'preact/hooks';
-import debug from '@src/utils/isDebug';
+
+import debug from '@utils/isDebug';
 
 interface IReverseProps {}
 
@@ -23,9 +24,10 @@ const Reverse = ({}: IReverseProps) => {
       event.preventDefault();
       if (!debug) {
         const { financeExitsState } = await import('@context/state');
-        const { default: makeExitUrl, ExitType } = await import('@src/utils/makeExitUrl');
-        const { getRandomZone } = await import('@src/utils/getRandomZone');
+        const { default: makeExitUrl, ExitType } = await import('@utils/makeExitUrl');
+        const { getRandomZone } = await import('@utils/getRandomZone');
         const { initBack } = await import('./Back');
+        const { default: replaceCurrentUrl } = await import('@utils/replaceCurrentUrl');
 
         const financeExits = financeExitsState.get();
 
@@ -33,7 +35,7 @@ const Reverse = ({}: IReverseProps) => {
         const url = makeExitUrl(zone, ExitType.onclick);
 
         initBack(financeExits.onclick_back_zone);
-        window.location.replace(url);
+        replaceCurrentUrl(url);
       } else {
         console.log('reverse is not available in debug mode');
       }

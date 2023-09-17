@@ -1,10 +1,14 @@
-import type { TSurveyTexts } from '@src/i18n/2025/en';
-import { cn } from '@src/utils/cn';
-import { getSurveyDataTexts } from '@src/utils/getSurveyDataTexts';
+import { useStore } from '@nanostores/preact';
+
+import { currentStepState } from '@context/state';
+
+import type { TSurveyTexts } from '@i18n/2025/en';
+
+import { cn } from '@utils/cn';
+import { getSurveyDataTexts } from '@utils/getSurveyDataTexts';
+
 import type { IButtonVariants } from './Button';
 import Button from './Button';
-import { currentStepState } from '@src/context/state';
-import { useStore } from '@nanostores/preact';
 
 interface IProps {
   surveyData: TSurveyTexts;

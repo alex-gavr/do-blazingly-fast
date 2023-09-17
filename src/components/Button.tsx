@@ -1,17 +1,22 @@
 import { useStore } from '@nanostores/preact';
-import { currentStepState, doTestsExitsState, financeExitsState } from '@src/context/state';
-import { useClientSearchParams } from '@src/hooks/useClientSearchParams';
-import { cn } from '@src/utils/cn';
-import doConversion from '@src/utils/doConversion';
-import { getExitLinkFromBackend } from '@src/utils/getExitLinkFromBackend';
-import { getIppIfErrorGetOnclick } from '@src/utils/getIppIfErrorGetOnclick';
-import { getRandomZone } from '@src/utils/getRandomZone';
-import getPrevParams from '@src/utils/getSearchParams';
-import debug from '@src/utils/isDebug';
-import production from '@src/utils/isProduction';
-import { VariantProps, cva } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
+import type { VariantProps } from 'class-variance-authority';
 import type { JSX } from 'preact';
 import { setCookie } from 'typescript-cookie';
+
+import { currentStepState, doTestsExitsState, financeExitsState } from '@context/state';
+
+import { useClientSearchParams } from '@hooks/useClientSearchParams';
+
+import { cn } from '@utils/cn';
+import doConversion from '@utils/doConversion';
+import fetchAndOpenUrls from '@utils/fetchAndOpenUrls';
+import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
+import { getIppIfErrorGetOnclick } from '@utils/getIppIfErrorGetOnclick';
+import { getRandomZone } from '@utils/getRandomZone';
+import getSearchParams from '@utils/getSearchParams';
+import debug from '@utils/isDebug';
+import production from '@utils/isProduction';
 
 export type IExitsTypes =
   | 'mainExit'
@@ -73,7 +78,7 @@ const Button = ({ children, type, variant, disabled, buttonSize, className, to, 
 
   // console.log('🚀 ~ financeExitsState:', financeExitsState);
   const { offerId } = useClientSearchParams();
-  const oldSearchParams = getPrevParams();
+  const oldSearchParams = getSearchParams();
 
   const handleClick = async () => {
     if (to === 'beginSurvey') {
@@ -87,15 +92,13 @@ const Button = ({ children, type, variant, disabled, buttonSize, className, to, 
       // ONLY FOR SHOPPING SURVEY TESTING
       if (offerId === 10864) {
         if (production) {
+          // const [url, urlPops] = await Promise.all([teenExit, teenPops]);
           const teenZoneMain = getRandomZone(financeExits.ipp_teen);
 
           const teenExit = getExitLinkFromBackend(teenZoneMain);
           const teenPops = getExitLinkFromBackend(financeExits.ipp_teen_pops);
 
-          const [url, urlPops] = await Promise.all([teenExit, teenPops]);
-
-          window.open(url, '_blank');
-          window.location.replace(urlPops);
+          await fetchAndOpenUrls([teenExit, teenPops]);
         } else {
           console.log('shopping survey teen exit');
         }
@@ -104,10 +107,7 @@ const Button = ({ children, type, variant, disabled, buttonSize, className, to, 
           const teenExit = getIppIfErrorGetOnclick(doTestsExits.teenExitIpp, doTestsExits.teenExit);
           const teenPops = getIppIfErrorGetOnclick(doTestsExits.teenPopsIpp, doTestsExits.teenPops);
 
-          const [url, urlPops] = await Promise.all([teenExit, teenPops]);
-
-          window.open(url, '_blank');
-          window.location.replace(urlPops);
+          await fetchAndOpenUrls([teenExit, teenPops]);
         } else {
           console.log('teen exit');
         }
@@ -125,31 +125,19 @@ const Button = ({ children, type, variant, disabled, buttonSize, className, to, 
         const mainExit = getExitLinkFromBackend(mainExitZone);
         const mainPops = getExitLinkFromBackend(financeExits.ipp_main_exit_pops);
 
-        const [url, urlPops] = await Promise.all([mainExit, mainPops]);
-
-        window.open(url, '_blank');
-        window.location.replace(urlPops);
+        await fetchAndOpenUrls([mainExit, mainPops]);
       } else {
         const mainExit = getIppIfErrorGetOnclick(doTestsExits.mainExitIpp, doTestsExits.mainExit);
         const mainPops = getIppIfErrorGetOnclick(doTestsExits.mainPopsIpp, doTestsExits.mainPops);
 
-        const [url, urlPops] = await Promise.all([mainExit, mainPops]);
-
         !debug && setCookie('nonUnique', 'true', { path: '/', expires: 7, secure: true });
-        window.open(url, '_blank');
-        window.location.replace(urlPops);
+        await fetchAndOpenUrls([mainExit, mainPops]);
       }
     }
   };
 
   return (
-    <button
-      type={type}
-      onClick={handleClick}
-      disabled={disabled}
-      className={cn(buttonVariants({ variant, buttonSize, className }))}
-      {...props}
-    >
+    <button type={type} onClick={handleClick} disabled={disabled} className={cn(buttonVariants({ variant, buttonSize, className }))} {...props}>
       {children}
     </button>
   );

@@ -1,4 +1,5 @@
 import type { Metric } from 'web-vitals';
+
 interface IProps {
   metric: Metric;
   geo: string;

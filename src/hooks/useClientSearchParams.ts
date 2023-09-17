@@ -1,5 +1,7 @@
-import { TValidLocale, TValidOffer, defaultCountry, defaultLocale, defaultOffer } from '@src/config';
-import { SearchParamsOptions } from '@utils/makeExitUrl';
+import { defaultCountry, defaultLocale, defaultOffer } from '@config/globalConfig';
+import type { TValidLocale, TValidOffer } from '@config/globalConfig';
+
+import { SearchParamsOptions } from '@utils/extractAndReformatURLParameters';
 
 type TSearchParamsKeys = keyof typeof SearchParamsOptions;
 export type TSearchParams = Partial<Record<SearchParamsOptions, string>>;

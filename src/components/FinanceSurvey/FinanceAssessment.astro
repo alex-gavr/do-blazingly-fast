@@ -1,9 +1,9 @@
 ---
-import { defaultLocale, type TValidLocale } from 'src/config';
 import FinanceSurveyLayout from './FinanceSurveyLayout.astro';
 import { findBestMatchingLocale } from '@utils/languageDetection';
 import { getDictionary } from '@i18n/getDictionary';
-import type { TFinanceDictionary } from '@src/i18n/2025/en';
+import type { TFinanceDictionary } from '@i18n/2025/en';
+import { defaultLocale, type TValidLocale } from '@config/globalConfig';
 
 let locale: TValidLocale;
 

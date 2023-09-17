@@ -1,4 +1,4 @@
-import type { InferModel } from 'drizzle-orm';
+import type { InferSelectModel } from 'drizzle-orm';
 import { char, mysqlEnum, mysqlTable, smallint, varchar } from 'drizzle-orm/mysql-core';
 
 export const webVitals = mysqlTable('web_vitals', {
@@ -21,7 +21,7 @@ export const webVitals = mysqlTable('web_vitals', {
   deviceType: varchar('device_type', { length: 100 }).notNull().default('??'),
 });
 
-export type TWebVitals = InferModel<typeof webVitals>;
+export type TWebVitals = InferSelectModel<typeof webVitals>;
 
 export const webVitalsStaticVsEdge = mysqlTable('web_vitals_static_vs_edge', {
   id: varchar('id', { length: 50 }).primaryKey(),
@@ -43,4 +43,4 @@ export const webVitalsStaticVsEdge = mysqlTable('web_vitals_static_vs_edge', {
   deviceType: varchar('device_type', { length: 100 }).notNull().default('??'),
 });
 
-export type TWebVitalsStaticVsEdge = InferModel<typeof webVitalsStaticVsEdge>;
+export type TWebVitalsStaticVsEdge = InferSelectModel<typeof webVitalsStaticVsEdge>;

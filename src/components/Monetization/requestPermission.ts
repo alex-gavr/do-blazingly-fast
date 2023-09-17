@@ -1,3 +1,4 @@
+// TODO: Not in use
 const pushRequestPermissions = () => {
   if ('Notification' in window) {
     const permissionOnLoad = Notification.permission;

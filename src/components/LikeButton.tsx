@@ -1,5 +1,6 @@
-import { cn } from '@utils/cn';
 import { useState } from 'preact/hooks';
+
+import { cn } from '@utils/cn';
 
 interface ILikeButtonProps {
   likes: number;

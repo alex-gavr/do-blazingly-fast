@@ -1,20 +1,25 @@
 import { setCookie } from 'typescript-cookie';
-import production from './isProduction';
-import debug from './isDebug';
 
-const doConversion = async () => {
-  if (typeof window !== 'undefined' && production) {
-    const url = new URL(window.location.href);
-    const subId = url.searchParams.get('s');
-    const conversionUrl = `https://ad.propellerads.com/conversion.php?visitor_id=${subId}`;
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon(conversionUrl);
+import debug from './isDebug';
+import production from './isProduction';
+
+const doConversion = () => {
+  if (typeof window !== 'undefined') {
+    if (production) {
+      const url = new URL(window.location.href);
+      const subId = url.searchParams.get('s');
+      const conversionUrl = `https://ad.propellerads.com/conversion.php?visitor_id=${subId}`;
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(conversionUrl);
+      } else {
+        fetch(conversionUrl, { method: 'POST', keepalive: true });
+      }
+      !debug && setCookie('nonUnique', 'true', { expires: 7, path: '' });
     } else {
-      fetch(conversionUrl, { method: 'POST', keepalive: true });
+      console.log('conversion is fired');
     }
-    !debug && setCookie('nonUnique', 'true', { expires: 7, path: '' });
   } else {
-    console.log(`conversion`);
+    throw new Error('window is undefined');
   }
 };
 

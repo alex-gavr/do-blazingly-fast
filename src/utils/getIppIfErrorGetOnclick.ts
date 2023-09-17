@@ -16,63 +16,41 @@ type IppData = {
   }[];
 };
 
-const getIppLink = async (zone: number) => {
+type ApiResponse = {
+  ads: IppData[];
+};
+
+const fetchIppData = async (zone: number): Promise<ApiResponse | null> => {
   const url = makeExitUrl(zone, ExitType.ipp) ?? '';
+  try {
+    const response = await fetch(url);
+    const data: ApiResponse = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
 
-  // zone example 6020461
-  const data = await fetch(url)
-    .then((res) => res.json())
-    .catch((error) => console.error(error));
-
-  const emptyObject = Object.keys(data).length === 0 ? true : false;
-  if (emptyObject) {
-    console.error('No data');
-  } else {
-    const res = data.ads[0] as IppData;
+const getIppLink = async (zone: number): Promise<string | null> => {
+  const data = await fetchIppData(zone);
+  if (data && data.ads.length > 0) {
+    const res = data.ads[0];
     triggerImpression(res.impression_url);
-    const exitUrl = makeExitUrlFromUrl(res.click, UrlType.ipp);
-
-    return exitUrl;
+    return makeExitUrlFromUrl(res.click, UrlType.ipp);
+  } else {
+    console.error('No ads data', data);
+    return null;
   }
 };
 
 export const getIppIfErrorGetOnclick = async (ippZone: number, onclickZone: number) => {
   const getIpp = await getIppLink(ippZone);
 
-  if (getIpp === undefined) {
+  if (!getIpp) {
     const getOnclick = makeExitUrl(onclickZone, ExitType.onclick);
     return getOnclick;
   } else {
     return getIpp;
   }
 };
-
-// OLD WAY TO GET IPP
-// I was requesting /rotate with a zone that was not in the list of rotating zones
-
-// try {
-//   const url = makeExitUrl(zone, ExitType.ipp) ?? '';
-
-//   // zone example 6020461
-//   const data = await fetch(url).then((res) => res.json());
-//   const res = data.ads[0] as IppData;
-
-//   // response is:
-
-//   // const url = res.click.slice(15);
-//   if (production) {
-//     const domain = window.location.origin;
-//     const stringAfterDomain = res.click.substring(domain.length);
-//     const urlPending = `https://in-page-push.net${stringAfterDomain}`;
-//     const url = makeExitUrlFromUrl(urlPending, UrlType.ipp);
-//     return url;
-//   } else {
-//     const domain = 'https://localhost/';
-//     const stringAfterDomain = res.click.substring(domain.length);
-//     const urlPending = `https://in-page-push.net/${stringAfterDomain}`;
-//     const url = makeExitUrlFromUrl(urlPending, UrlType.ipp);
-//     return url;
-//   }
-// } catch (error) {
-//   console.log(error);
-// }

@@ -1,12 +1,17 @@
-import exitZones from '@config/2025';
-import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
-import production from '@utils/isProduction';
-import { initBack } from './Monetization/Back';
 import { useState } from 'preact/hooks';
-import type { TSurveyTexts } from '@i18n/2025/en';
-import { getRandomZone } from '@utils/getRandomZone';
-import { LeadsTo, getSurveyDataTexts } from '@src/utils/getSurveyDataTexts';
 import { setCookie } from 'typescript-cookie';
+
+import exitZones from '@config/2025';
+
+import type { TSurveyTexts } from '@i18n/2025/en';
+
+import fetchAndOpenUrls from '@utils/fetchAndOpenUrls';
+import { getExitLinkFromBackend } from '@utils/getExitLinkFromBackend';
+import { getRandomZone } from '@utils/getRandomZone';
+import { LeadsTo, getSurveyDataTexts } from '@utils/getSurveyDataTexts';
+import production from '@utils/isProduction';
+
+import { initBack } from './Monetization/Back';
 
 interface ISurveyProps {
   texts: TSurveyTexts;
@@ -28,17 +33,13 @@ const Survey = ({ texts }: ISurveyProps) => {
 
       const main = getExitLinkFromBackend(teenExitIpp);
       const pops = getExitLinkFromBackend(teenExitPopsIpp);
-      const [mainUrl, popsUrl] = await Promise.all([main, pops]);
 
       if (production) {
         setCookie('nonUniqueTeen', 'true', { expires: 7, path: '' });
         initBack(exitZones.onclick_back_zone);
-        window.open(mainUrl, '_blank');
-        window.location.replace(popsUrl);
+        await fetchAndOpenUrls([main, pops]);
       } else {
         console.log('teen exit');
-        console.log(`mainUrl = `, mainUrl);
-        console.log(`popsUrl = `, popsUrl);
       }
     }
 

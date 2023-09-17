@@ -1,8 +1,12 @@
+import type { ComponentChildren } from 'preact';
+
+import fetchAndOpenUrls from '@utils/fetchAndOpenUrls';
 import { getIppIfErrorGetOnclick } from '@utils/getIppIfErrorGetOnclick';
 import debug from '@utils/isDebug';
 import production from '@utils/isProduction';
-import type { ComponentChildren } from 'preact';
-import Button, { IButtonVariants } from '../Button';
+
+import Button from '../Button';
+import type { IButtonVariants } from '../Button';
 
 interface IProps {
   children: ComponentChildren;
@@ -22,10 +26,7 @@ const NoThankYou = ({ children, className, variant }: IProps) => {
       const noThankYouExit = getIppIfErrorGetOnclick(nonUniqueIpp, noThankYouOnclick);
       const noThankYouPops = getIppIfErrorGetOnclick(noThankYouIpp, noThankYouPopsOnclick);
 
-      const [url, urlPops] = await Promise.all([noThankYouExit, noThankYouPops]);
-
-      window.open(url, '_blank');
-      window.location.replace(urlPops);
+      await fetchAndOpenUrls([noThankYouExit, noThankYouPops]);
     } else {
       console.log('not interested pressed');
     }

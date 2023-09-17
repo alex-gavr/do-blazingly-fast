@@ -1,7 +1,7 @@
 ---
 import FinanceAssessment from '@components/FinanceSurvey/FinanceAssessment.astro';
 import Layout from '@layouts/Layout.astro';
-import { offers } from '@src/config';
+import { offers } from '@config/globalConfig';
 
 const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '0');
 const offerExists = offers.includes(offer as (typeof offers)[number]);

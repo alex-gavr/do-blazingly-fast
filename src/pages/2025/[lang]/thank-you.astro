@@ -1,11 +1,11 @@
 ---
 export const prerender = true;
-import FinanceSurveyLayout from '@src/components/FinanceSurvey/FinanceSurveyLayout.astro';
-import MainExitButton from '@src/components/MainExitButton';
-import { locales, type TValidLocale } from '@src/config';
-import type { TFinanceDictionary } from '@src/i18n/2025/en';
-import { getDictionary } from '@src/i18n/getDictionary';
-import Layout from '@src/layouts/Layout.astro';
+import FinanceSurveyLayout from '@components/FinanceSurvey/FinanceSurveyLayout.astro';
+import MainExitButton from '@components/MainExitButton';
+import { locales, type TValidLocale } from '@config/globalConfig';
+import type { TFinanceDictionary } from '@i18n/2025/en';
+import { getDictionary } from '@i18n/getDictionary';
+import Layout from '@layouts/Layout.astro';
 
 export function getStaticPaths() {
   return locales.map((locale) => {

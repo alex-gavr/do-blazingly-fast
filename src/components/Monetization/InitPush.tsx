@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'preact/hooks';
-import debug from '@src/utils/isDebug';
+
+import debug from '@utils/isDebug';
 
 interface IInitPushProps {}
 
@@ -23,7 +24,7 @@ const InitPush = ({}: IInitPushProps) => {
       if (!debug) {
         startPush();
       } else {
-        console.log('push disabled in debug mode');
+        console.log('push is disabled in debug mode');
       }
     }
   }, [done]);

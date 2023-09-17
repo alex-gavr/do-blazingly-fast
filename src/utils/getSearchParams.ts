@@ -1,9 +1,9 @@
-const getPrevParams = () => {
+const getSearchParams = () => {
   if (typeof window !== 'undefined') {
     return window.location.search;
   } else {
-    throw new Error('you cannot use this function on backend');
+    throw new Error('window is undefined');
   }
 };
 
-export default getPrevParams;
+export default getSearchParams;

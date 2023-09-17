@@ -1,5 +1,6 @@
-import { defaultLocale, locales, type TValidLocale } from "src/config";
 import langParser from 'accept-language-parser';
+
+import { type TValidLocale, defaultLocale, locales } from '@config/globalConfig';
 
 type TLocaleSource = {
   locale: TValidLocale;

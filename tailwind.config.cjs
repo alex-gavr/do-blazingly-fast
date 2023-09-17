@@ -10,7 +10,7 @@ module.exports = {
         },
       },
       animation: {
-        'widthGrowth': 'widthGrowth',
+        widthGrowth: 'widthGrowth',
       },
     },
   },

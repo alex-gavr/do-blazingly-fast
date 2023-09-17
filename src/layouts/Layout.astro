@@ -4,7 +4,7 @@ import AutoExit from '@components/Monetization/Autoexit';
 import InitPush from '@components/Monetization/InitPush';
 import Reverse from '@components/Monetization/Reverse';
 import production from '@utils/isProduction';
-import NonUnique from '@src/components/Monetization/NonUnique';
+import NonUnique from '@components/Monetization/NonUnique';
 
 export interface Props {
   title: string;
@@ -13,7 +13,7 @@ export interface Props {
 const { title } = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang='en'>
   <head>
     <meta charset='UTF-8' />

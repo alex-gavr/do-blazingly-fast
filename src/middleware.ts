@@ -1,6 +1,7 @@
 import langParser from 'accept-language-parser';
 import { defineMiddleware } from 'astro/middleware';
-import { TValidLocale, defaultLocale, locales } from './config';
+import { defaultLocale, locales } from './config/globalConfig';
+import type { TValidLocale } from './config/globalConfig';
 
 // // const BLOCKED_COUNTRY = 'PH';
 

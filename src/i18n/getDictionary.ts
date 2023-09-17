@@ -1,4 +1,4 @@
-import type { TValidLocale, TValidOffer, locales, offers } from 'src/config';
+import type { TValidLocale, TValidOffer, locales, offers } from '@config/globalConfig';
 
 const dictionaries: Record<(typeof offers)[number], Record<(typeof locales)[number], () => Promise<any>>> = {
   0: {

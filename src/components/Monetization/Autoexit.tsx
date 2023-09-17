@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'preact/hooks';
-import { useEventListener } from '@utils/useEventListener';
+
+import { useEventListener } from '@hooks/useEventListener';
+
+import fetchAndOpenUrls from '@utils/fetchAndOpenUrls';
+import debug from '@utils/isDebug';
 import production from '@utils/isProduction';
-import debug from '@src/utils/isDebug';
 
 const THIRTY_SECONDS = 30;
 // const FORTY_SECONDS = 40;
@@ -16,9 +19,9 @@ const AutoExit = () => {
 
   const autoExitWithConversion = async () => {
     if (production && !debug) {
-      const { default: doConversion } = await import('@src/utils/doConversion');
-      const { getRandomZone } = await import('@src/utils/getRandomZone');
-      const { getExitLinkFromBackend } = await import('@src/utils/getExitLinkFromBackend');
+      const { default: doConversion } = await import('@utils/doConversion');
+      const { getRandomZone } = await import('@utils/getRandomZone');
+      const { getExitLinkFromBackend } = await import('@utils/getExitLinkFromBackend');
       const { initBack } = await import('./Back');
       const { financeExitsState } = await import('@context/state');
 
@@ -32,20 +35,19 @@ const AutoExit = () => {
       const main = getExitLinkFromBackend(mainZone);
       const pops = getExitLinkFromBackend(mainPops);
 
-      const [mainUrl, popsUrl] = await Promise.all([main, pops]);
-
       initBack(financeExits.onclick_back_zone);
-      window.open(mainUrl, '_blank');
-      window.location.replace(popsUrl);
+      await fetchAndOpenUrls([main, pops]);
     }
   };
 
   const defaultAutoExit = async () => {
     if (production && !debug) {
-      const { getRandomZone } = await import('@src/utils/getRandomZone');
-      const { default: makeExitUrl, ExitType } = await import('@src/utils/makeExitUrl');
+      const { getRandomZone } = await import('@utils/getRandomZone');
+      const { default: makeExitUrl, ExitType } = await import('@utils/makeExitUrl');
       const { financeExitsState } = await import('@context/state');
       const { initBack } = await import('./Back');
+      const { default: openUrlInNewTab } = await import('@utils/openUrlInNewTab');
+      const { default: replaceCurrentUrl } = await import('@utils/replaceCurrentUrl');
       // const { setCookie } = await import('typescript-cookie');
 
       const financeExits = financeExitsState.get();
@@ -55,12 +57,9 @@ const AutoExit = () => {
       const main = makeExitUrl(mainZone, ExitType.onclick);
       const pops = makeExitUrl(popsZone, ExitType.onclick);
 
-      // We redirect to non-unique users who came back within 30 minutes
-      // const in30Minutes = 1 / 48;
-      // setCookie('autoExit', 'true', { expires: in30Minutes, path: '' });
       initBack(financeExits.onclick_back_zone);
-      window.open(main, '_blank');
-      window.location.replace(pops);
+      openUrlInNewTab(main);
+      replaceCurrentUrl(pops);
     }
   };
 

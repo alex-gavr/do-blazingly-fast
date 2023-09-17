@@ -1,4 +1,4 @@
-const pushMicroTagScript = ({ pushZone, callback }: {pushZone: number, callback?: () => void}) => {
+const pushMicroTagScript = ({ pushZone, callback }: { pushZone: number; callback?: () => void }) => {
   const $pushScript = document.createElement('script');
   const url = new URL(window.location.href);
   const ab2TTL = 60 * 60 * 24 * 60 * 1000; // 60 days in ms
