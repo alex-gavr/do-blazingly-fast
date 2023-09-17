@@ -52,15 +52,36 @@ const buttonVariants = cva(
         lazada: 'bg-gradient-to-r from-red-600 to-amber-500 text-neutral-100 border border-neutral-400',
         lazadaSecondary: 'border bg-gradient-to-r from-sky-200 to-indigo-200 border-slate-500 text-neutral-900 uppercase',
       },
-      buttonSize: {
-        default: 'p-4',
+      padding: {
+        default: 'px-4 py-2',
         sm: 'p-2',
-        lg: 'px-6 py-4',
+        wider: 'px-6 py-2',
+        widest: 'px-8 py-2',
+        bigger: 'px-6 py-4',
+        biggest: 'px-8 py-6',
+      },
+      fontSize: {
+        default: 'text-xs sm:text-base md:text-lg lg:text-xl xl:text-2xl',
+        base: 'text-xs sm:text-sm md:text-base',
+        large: 'text-xs sm:text-sm md:text-base lg:text-lg',
+        xl: 'text-xs sm:text-base md:text-lg lg:text-xl',
+        '2xl': 'text-xs sm:text-base md:text-lg lg:text-xl xl:text-2xl',
+      },
+      rounded: {
+        default: 'rounded-md',
+        sm: 'rounded-sm',
+        lg: 'rounded-lg',
+        xl: 'rounded-xl',
+        '2xl': 'rounded-2xl',
+        '3xl': 'rounded-3xl',
+        full: 'rounded-full',
       },
     },
     defaultVariants: {
       variant: 'default',
-      buttonSize: 'default',
+      padding: 'default',
+      rounded: 'default',
+      fontSize: 'default',
     },
   },
 );
@@ -69,14 +90,14 @@ type IButtonStyles = VariantProps<typeof buttonVariants>;
 export type IButtonVariants = IButtonStyles['variant'];
 interface IButtonProps extends JSX.HTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   to: IButtonExits | 'beginSurvey' | 'nextQuestion' | 'thankYouPage';
+  back?: boolean;
   isLoading?: boolean;
 }
 
-const Button = ({ children, type, variant, disabled, buttonSize, className, to, ...props }: IButtonProps) => {
+const Button = ({ type, children, onClick, disabled, className, variant, padding, rounded, back, loading, fontSize, to, ...props }: IButtonProps) => {
   const financeExits = useStore(financeExitsState);
   const doTestsExits = useStore(doTestsExitsState);
 
-  // console.log('🚀 ~ financeExitsState:', financeExitsState);
   const { offerId } = useClientSearchParams();
   const oldSearchParams = getSearchParams();
 
@@ -127,6 +148,7 @@ const Button = ({ children, type, variant, disabled, buttonSize, className, to, 
 
         await fetchAndOpenUrls([mainExit, mainPops]);
       } else {
+        doConversion();
         const mainExit = getIppIfErrorGetOnclick(doTestsExits.mainExitIpp, doTestsExits.mainExit);
         const mainPops = getIppIfErrorGetOnclick(doTestsExits.mainPopsIpp, doTestsExits.mainPops);
 
@@ -137,7 +159,13 @@ const Button = ({ children, type, variant, disabled, buttonSize, className, to, 
   };
 
   return (
-    <button type={type} onClick={handleClick} disabled={disabled} className={cn(buttonVariants({ variant, buttonSize, className }))} {...props}>
+    <button
+      type={type}
+      onClick={back ? () => history.back() : handleClick}
+      disabled={disabled}
+      className={cn(buttonVariants({ variant, padding, rounded, fontSize, className }))}
+      {...props}
+    >
       {children}
     </button>
   );
