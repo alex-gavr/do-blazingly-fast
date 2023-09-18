@@ -14,7 +14,9 @@
       "@db/*": ["src/db/*"],
       "@i18n/*": ["src/i18n/*"],
       "@context/*": ["src/context/*"],
-      "@hooks/*": ["src/hooks/*"]
+      "@hooks/*": ["src/hooks/*"],
+      "@monetization/*": ["src/monetization/*"],
+      "@fraudPrevention/*": ["src/fraudPrevention/*"]
     }
   }
 }

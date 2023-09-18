@@ -5,8 +5,8 @@ import justLog from '@utils/justLog';
 import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
 
-import Button from '../Button';
-import type { IButtonVariants } from '../Button';
+import Button from '../components/Button';
+import type { IButtonVariants } from '../components/Button';
 
 interface IProps {
   children: ComponentChildren;

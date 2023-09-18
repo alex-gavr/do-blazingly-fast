@@ -3,7 +3,7 @@ import production from './simpleFunctions/isProduction';
 
 const errorFallbackRedirect = async () => {
   const { default: makeExitUrl, ExitType } = await import('@utils/linksHelpers/makeExitUrl');
-  const { initBack } = await import('@components/Monetization/Back');
+  const { initBack } = await import('@monetization/Back');
   const { financeExitsState } = await import('@context/state');
 
   const FALLBACK = 5812355;
