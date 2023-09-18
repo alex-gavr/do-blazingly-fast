@@ -45,11 +45,9 @@ const { title } = Astro.props;
 </script>
 
 <script>
-  import { useEffect } from 'preact/hooks';
-
-  useEffect(() => {
+  if (typeof window !== 'undefined') {
     if (!sessionStorage.getItem('surveyStartTime')) {
       sessionStorage.setItem('surveyStartTime', Date.now().toString());
     }
-  }, []);
+  }
 </script>
