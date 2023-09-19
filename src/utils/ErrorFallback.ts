@@ -1,15 +1,17 @@
+import { initBack } from '@monetization/Back';
+
+import { errorFallBackZone } from '@context/state';
+
+import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
+
 import debug from './simpleFunctions/isDebug';
 import production from './simpleFunctions/isProduction';
 
 const errorFallbackRedirect = async () => {
-  const { default: makeExitUrl, ExitType } = await import('@utils/linksHelpers/makeExitUrl');
-  const { initBack } = await import('@monetization/Back');
-  const { financeExitsState } = await import('@context/state');
+  const errorFallback = errorFallBackZone.get();
+  const fallbackUrl = makeExitUrl(errorFallback, ExitType.onclick);
 
-  const FALLBACK = 5812355;
-  const fallbackUrl = makeExitUrl(FALLBACK, ExitType.onclick);
-  const backZone = financeExitsState.get();
-  initBack(backZone.onclick_back_zone);
+  initBack();
   window.location.replace(fallbackUrl);
 };
 

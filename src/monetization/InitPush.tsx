@@ -1,27 +1,33 @@
 import { useEffect, useState } from 'preact/hooks';
 
+import { financeExitsState } from '@context/state';
+
+import { useClientSearchParams } from '@hooks/useClientSearchParams';
+
 import justLog from '@utils/justLog';
+import { getRandomZoneIfArray } from '@utils/simpleFunctions/getRandomZoneIfArray';
 import debug from '@utils/simpleFunctions/isDebug';
 
-interface IInitPushProps {}
+import pushMicroTagScript from './pushMicroTagScript';
 
-const InitPush = ({}: IInitPushProps) => {
+type InitPushProps = {
+  zone: number;
+};
+
+const InitPush = ({ zone }: InitPushProps) => {
   const [done, setDone] = useState<boolean>(false);
+  const { push } = useClientSearchParams();
 
   const startPush = async () => {
-    const { getRandomZone } = await import('@utils/simpleFunctions/getRandomZone');
-    const { financeExitsState } = await import('@context/state');
-    const { default: pushMicroTagScript } = await import('./pushMicroTagScript');
-
     const financeExits = financeExitsState.get();
 
-    const pushZone = getRandomZone(financeExits.push_zone);
-    pushMicroTagScript({ pushZone: pushZone });
+    const pushZone = getRandomZoneIfArray(financeExits.push_zone);
+    pushMicroTagScript({ pushZone: pushZone | zone });
     setDone(true);
   };
 
   useEffect(() => {
-    if (!done) {
+    if (!done && push !== '0') {
       if (!debug) {
         startPush();
       } else {

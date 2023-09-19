@@ -6,9 +6,14 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
   integrations: [preact(), tailwind()],
-  output: 'server',
+  output: 'hybrid',
   adapter: vercel({
     imageService: true,
   }),
+  vite: {
+    build: {
+      target: 'es2015',
+    },
+  },
   site: 'https://blazingly-fast-do.top/',
 });

@@ -19,10 +19,21 @@ export enum SearchParamsOptions {
   rhd = 'rhd',
   abTest = 'abtest',
 
+  // possible Search Params
   locale = 'locale',
   debug = 'debug',
   country = 'country',
   offerId = 'offer_id',
+
+  // possible Search Params
+  push = 'push',
+  reverse = 'reverse',
+  back = 'back',
+  autoexit = 'autoexit',
+  autoexitStart = 'autoexit_start',
+  autoexitMiddle = 'autoexit_middle',
+  autoexitEnd = 'autoexit_end',
+  nonUnique = 'non_unique',
 }
 
 type TFrontendSearchParams = {

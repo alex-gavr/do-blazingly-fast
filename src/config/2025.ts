@@ -1,53 +1,4 @@
-import { atom, map } from 'nanostores';
-
-import type { IDoTestsExits, IFinanceSurveyExits } from './stateTypes';
-
-export const currentStepState = atom(1);
-export const surveyLengthState = atom(0);
-
-type BackProps = {
-  zone: number;
-  disabled: boolean;
-  historyTimeAmount: number;
-};
-export const back = map<BackProps>({
-  zone: 6942069,
-  disabled: false,
-  historyTimeAmount: 3,
-});
-
-export const errorFallBackZone = atom(5812355);
-
-export const doTestsExitsState = map<IDoTestsExits>({
-  mainExit: 5874453,
-  mainPops: 5874457,
-  teenExit: 5874458,
-  teenPops: 5874460,
-  autoExit: 5874492,
-  reverse: 5874494,
-  backButton: 5908107,
-  nonUniqueExit: 5874462,
-  accessAutoExit: 5874496,
-  photoExit: 5874497,
-  noThankYou: 5892040,
-  noThankYouPops: 5892041,
-  motivatedYes: 5906970,
-  motivatedYesPops: 5906971,
-  mainExitIpp: 5972907,
-  mainPopsIpp: 5972947,
-  teenExitIpp: 5972992,
-  teenPopsIpp: 5972993,
-  nonUniqueIpp: 5973160,
-  noThankYouIpp: 5973161,
-  noThankYouPopsIpp: 5973162,
-  gameFinishIpp: 6020461,
-  cookiesDisabled: 6088166,
-  vignetteShowHint: 5948180,
-  vignetteGameOver: 5959144,
-  vignetteGetHint: 5959137,
-});
-
-export const financeExitsState = map<IFinanceSurveyExits>({
+const exitZones = {
   // main exit IPP
   ipp_main_exit: [4292523, 4292518, 4292525, 4292526, 4292527],
   // ipp_main_exit_pops: [5128285, 5368781, 5368782, 5368783, 5368785],
@@ -85,4 +36,9 @@ export const financeExitsState = map<IFinanceSurveyExits>({
   push_zone: [4842422, 4842423, 4842621, 4842618, 4842617],
   // reverse
   onclick_reverse_zone: [4292574, 4292573, 4292576, 4292579, 4292580],
-});
+
+  // cookies disabled
+  cookiesDisabled: 6088166,
+};
+
+export default exitZones;

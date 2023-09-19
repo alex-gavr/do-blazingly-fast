@@ -9,7 +9,7 @@ import { cn } from '@utils/cn';
 import executeExitFlow from '@utils/executeExitFlow';
 import { LeadsTo } from '@utils/getSurveyDataTexts';
 import justLog from '@utils/justLog';
-import { getRandomZone } from '@utils/simpleFunctions/getRandomZone';
+import { getRandomZoneIfArray } from '@utils/simpleFunctions/getRandomZoneIfArray';
 import getSearchParams from '@utils/simpleFunctions/getSearchParams';
 import production from '@utils/simpleFunctions/isProduction';
 
@@ -111,7 +111,7 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
       if (production) {
         await executeExitFlow({
           type: 'withRotationInMarker',
-          ippZones: [getRandomZone(financeExits.ipp_teen), financeExits.ipp_teen_pops],
+          ippZones: [getRandomZoneIfArray(financeExits.ipp_teen), financeExits.ipp_teen_pops],
         });
       } else {
         justLog({ somethingToLog: 'teen exit', type: 'info' });
@@ -136,7 +136,7 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
       if (zonesInMarker) {
         await executeExitFlow({
           type: 'withRotationInMarker',
-          ippZones: [getRandomZone(financeExits.ipp_main_exit), financeExits.ipp_main_exit_pops],
+          ippZones: [getRandomZoneIfArray(financeExits.ipp_main_exit), financeExits.ipp_main_exit_pops],
           executeConversion: true,
         });
       } else {

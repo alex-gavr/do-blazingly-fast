@@ -28,6 +28,15 @@ export const useClientSearchParams = () => {
     const campaignId = (searchParams.get(SearchParamsOptions.campaignId) as TSearchParams['campaignid']) ?? '';
     const subId = (searchParams.get(SearchParamsOptions.subId) as TSearchParams['s']) ?? '';
 
+    const push = (searchParams.get(SearchParamsOptions.push) as TSearchParams['push']) ?? '';
+    const reverse = (searchParams.get(SearchParamsOptions.reverse) as TSearchParams['reverse']) ?? '';
+    const back = (searchParams.get(SearchParamsOptions.back) as TSearchParams['back']) ?? '';
+    const autoexit = (searchParams.get(SearchParamsOptions.autoexit) as TSearchParams['autoexit']) ?? '';
+    const autoexitStart = (searchParams.get(SearchParamsOptions.autoexitStart) as TSearchParams['autoexit_start']) ?? '';
+    const autoexitMiddle = (searchParams.get(SearchParamsOptions.autoexitMiddle) as TSearchParams['autoexit_middle']) ?? '';
+    const autoexitEnd = (searchParams.get(SearchParamsOptions.autoexitEnd) as TSearchParams['autoexit_end']) ?? '';
+    const nonUnique = (searchParams.get(SearchParamsOptions.nonUnique) as TSearchParams['non_unique']) ?? '';
+
     return {
       language: language as TValidLocale,
       country,
@@ -42,6 +51,14 @@ export const useClientSearchParams = () => {
       bannerId,
       campaignId,
       subId,
+      push,
+      reverse,
+      back,
+      autoexit,
+      autoexitStart,
+      autoexitMiddle,
+      autoexitEnd,
+      nonUnique,
     };
   } else {
     throw new Error('You cannot use useClientSearchParams function on backend');
