@@ -1,5 +1,5 @@
-export const financeFullConfig = {
-  zones: {
+export const financeSurveyFullConfig = {
+  Zones: {
     ipp_main_exit: [4292523, 4292518, 4292525, 4292526, 4292527],
     ipp_main_exit_pops: 5128285,
     onclick_main_exit: [3746391, 3746371, 3746380, 4209942, 4209943],
@@ -24,21 +24,73 @@ export const financeFullConfig = {
     title: 'Would You Make A Great Career Online And Become A Millionaire By 2023?',
     paragraph: 'Take this FREE test and find out how you can make money on the Internet.',
     SurveyTexts: [
-      { q: 'What is your gender?', a: ['Man', 'Woman'] },
-      { q: 'How old are you?', a: ['less than 18 years', '18-29 years', '30-49 years', '50-80 years'] },
-      { q: 'How do you make a living?', a: ['I work', 'I am self-employed', 'I am unemployed', 'I am a pensioner'] },
-      { q: 'What is your average income per year?', a: ['Less than $10,000', '$10,000-$30,000', '$30,000-$50,000', 'more than $50,000'] },
       {
-        q: 'What is your financial goal for the next 5 years?',
-        a: ['Go on a family holiday', 'Buy a supercar', 'Buy an apartment or a house', 'Start my own business'],
+        id: 1,
+        question: 'What is your gender?',
+        answers: [
+          { id: 1, text: 'Man', to: 'nextQuestion' },
+          { id: 2, text: 'Woman', to: 'nextQuestion' },
+        ],
       },
       {
-        q: 'How much would you invest right now to get closer to your financial goal much faster?',
-        a: ['less than $250', '$250-$500', '$500-$1000', 'more than $1000'],
+        id: 2,
+        question: 'How old are you?',
+        answers: [
+          { id: 1, text: 'less than 18 years', to: 'teenExit' },
+          { id: 2, text: '18-29 years', to: 'nextQuestion' },
+          { id: 3, text: '30-49 years', to: 'nextQuestion' },
+          { id: 4, text: '50-80 years', to: 'nextQuestion' },
+        ],
       },
       {
-        q: 'Do you have any experience in Bitcoin trading?',
-        a: ['No, I have never heard of it', 'No, but I want to try', 'Yes, I am a beginner', 'Yes, I do it professionally'],
+        id: 3,
+        question: 'How do you make a living?',
+        answers: [
+          { id: 1, text: 'I work', to: 'nextQuestion' },
+          { id: 2, text: 'I am self-employed', to: 'nextQuestion' },
+          { id: 3, text: 'I am unemployed', to: 'nextQuestion' },
+          { id: 4, text: 'I am a pensioner', to: 'nextQuestion' },
+        ],
+      },
+      {
+        id: 4,
+        question: 'What is your average income per year?',
+        answers: [
+          { id: 1, text: 'Less than $10,000', to: 'nextQuestion' },
+          { id: 2, text: '$10,000-$30,000', to: 'nextQuestion' },
+          { id: 3, text: '$30,000-$50,000', to: 'nextQuestion' },
+          { id: 4, text: 'more than $50,000', to: 'nextQuestion' },
+        ],
+      },
+      {
+        id: 5,
+        question: 'What is your financial goal for the next 5 years?',
+        answers: [
+          { id: 1, text: 'Go on a family holiday', to: 'nextQuestion' },
+          { id: 2, text: 'Buy a supercar', to: 'nextQuestion' },
+          { id: 3, text: 'Buy an apartment or a house', to: 'nextQuestion' },
+          { id: 4, text: 'Start my own business', to: 'nextQuestion' },
+        ],
+      },
+      {
+        id: 6,
+        question: 'How much would you invest right now to get closer to your financial goal much faster?',
+        answers: [
+          { id: 1, text: 'less than $250', to: 'nextQuestion' },
+          { id: 2, text: '$250-$500', to: 'nextQuestion' },
+          { id: 3, text: '$500-$1000', to: 'nextQuestion' },
+          { id: 4, text: 'more than $1000', to: 'nextQuestion' },
+        ],
+      },
+      {
+        id: 7,
+        question: 'Do you have any experience in Bitcoin trading?',
+        answers: [
+          { id: 1, text: 'No, I have never heard of it', to: 'toAssessment' },
+          { id: 2, text: 'No, but I want to try', to: 'toAssessment' },
+          { id: 3, text: 'Yes, I am a beginner', to: 'toAssessment' },
+          { id: 4, text: 'Yes, I do it professionally', to: 'toAssessment' },
+        ],
       },
     ],
   },
@@ -128,3 +180,5 @@ export const financeFullConfig = {
     button: 'get offer',
   },
 };
+
+type FinanceSurveyFullConfigType = typeof financeSurveyFullConfig;

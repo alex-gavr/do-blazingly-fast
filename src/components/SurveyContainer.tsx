@@ -18,7 +18,7 @@ interface ISurveyProps {
 const SurveyContainer = ({ texts, offerId }: ISurveyProps) => {
   const surveyData = getSurveyDataTexts(texts, offerId);
   const currentStep = useStore(currentStepState);
-  const filteredQuestion = surveyData.filter((question) => question.id === currentStepState.value)[0];
+  const filteredQuestion = surveyData.filter((question) => question.id === currentStep)[0];
 
   return (
     <>

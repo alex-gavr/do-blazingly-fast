@@ -8,6 +8,8 @@ import NonUnique from '@monetization/NonUnique';
 import { getDictionary } from '@i18n/getDictionary';
 import makeCommentsForFinanceSurvey from '@config/FinanceComments';
 import type { TFinanceDictionary } from '@i18n/2025/en';
+import { financeSurveyFullConfig } from '@i18n/FinanceSurveyFullConfig';
+// import { getSurveyDataTexts } from '@utils/getSurveyDataTexts';
 // import fs from 'fs';
 // import path, { dirname, join } from 'path';
 // import { fileURLToPath } from 'url';
@@ -21,11 +23,18 @@ const { title } = Astro.props;
 
 const d = (await getDictionary(0, 'en')) as TFinanceDictionary;
 
+const zones = financeSurveyFullConfig.Zones;
+
+// const surveyData = getSurveyDataTexts(d.MainSection.SurveyTexts, 0);
+
 // const mainSection = d.MainSection;
 
 // const fullConfig = {
-//   zones: financeZones,
-//   MainSection: d.MainSection,
+//   Zones: financeZones,
+//   MainSection: {
+//     ...d.MainSection,
+//     SurveyTexts: surveyData,
+//   },
 //   CommentSection: {
 //     ...d.CommentSection,
 //     Comments: makeCommentsForFinanceSurvey(d.CommentSection.Comments),
@@ -38,7 +47,7 @@ const d = (await getDictionary(0, 'en')) as TFinanceDictionary;
 // const __dirname = dirname(__filename);
 
 // const filePath = join(__dirname, '..', 'i18n', 'FinanceSurveyFullConfig.ts');
-// fs.writeFileSync(filePath, `export const financeFullConfig = ${JSON.stringify(fullConfig)}`);
+// fs.writeFileSync(filePath, `export const financeSurveyFullConfig = ${JSON.stringify(fullConfig)}`);
 ---
 
 <!doctype html>
@@ -57,22 +66,24 @@ const d = (await getDictionary(0, 'en')) as TFinanceDictionary;
     <main class='flex flex-col justify-center items-center min-h-screen'>
       <slot />
     </main>
-    {production && <Reverse zone={421421} client:only='preact' />}
-    {production && <NonUnique client:only='preact' />}
-    {
-      production && (
-        <AutoExit
-          zoneFirstStep={4342}
-          zoneFirstStepPops={32532}
-          zoneLastStep={532523}
-          zoneLastStepPops={53223}
-          zoneMiddleSteps={53252}
-          zoneMiddleStepsPops={532523}
-          client:only='preact'
-        />
-      )
-    }
-    {production && <InitPush zone={5432523} client:only='preact' />}
+    <Reverse zone={zones.onclick_reverse_zone} client:only='preact' />
+    <NonUnique
+      zone={zones.ipp_not_unique}
+      zonePops={zones.ipp_not_unique}
+      zoneTeen={zones.ipp_not_unique_teen}
+      zoneTeenPops={zones.ipp_not_unique_teen}
+      client:only='preact'
+    />
+    <AutoExit
+      zoneFirstStep={zones.onclick_autoexit}
+      zoneFirstStepPops={zones.onclick_autoexit_pops}
+      zoneLastStep={zones.ipp_autoexit}
+      zoneLastStepPops={zones.ipp_autoexit_pops}
+      zoneMiddleSteps={zones.ipp_autoexit}
+      zoneMiddleStepsPops={zones.ipp_autoexit_pops}
+      client:only='preact'
+    />
+    <InitPush zone={zones.push_zone} client:only='preact' />
   </body>
 </html>
 

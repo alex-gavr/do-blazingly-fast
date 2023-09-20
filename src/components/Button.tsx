@@ -100,7 +100,7 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
 
   const oldSearchParams = getSearchParams();
 
-  const handleClick = async () => {
+  const handleClick = () => {
     if (to === LeadsTo.beginSurvey) {
       window.location.replace(`/survey${oldSearchParams}`);
     }
@@ -109,7 +109,7 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
     }
     if (to === LeadsTo.teenExit) {
       if (production) {
-        await executeExitFlow({
+        executeExitFlow({
           type: 'withRotationInMarker',
           ippZones: [getRandomZoneIfArray(financeExits.ipp_teen), financeExits.ipp_teen_pops],
         });
@@ -134,13 +134,13 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
       // TODO: for now it's like that
       const zonesInMarker = true;
       if (zonesInMarker) {
-        await executeExitFlow({
+        executeExitFlow({
           type: 'withRotationInMarker',
           ippZones: [getRandomZoneIfArray(financeExits.ipp_main_exit), financeExits.ipp_main_exit_pops],
           executeConversion: true,
         });
       } else {
-        await executeExitFlow({
+        executeExitFlow({
           type: 'noRotationInMarker',
           ippZones: [doTestsExits.mainExitIpp, doTestsExits.mainExit],
           onclickZones: [doTestsExits.mainPopsIpp, doTestsExits.mainPops],

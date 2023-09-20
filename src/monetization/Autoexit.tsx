@@ -22,6 +22,7 @@ type AutoExitProps = {
   zoneMiddleStepsPops: number | number[];
   zoneLastStep: number | number[];
   zoneLastStepPops: number | number[];
+  disabled?: boolean;
 };
 
 const AutoExit = ({
@@ -31,9 +32,11 @@ const AutoExit = ({
   zoneMiddleStepsPops = 5381332, //IPP autoexit pops
   zoneLastStep = 4292523, // IPP main exit
   zoneLastStepPops = 5128285, // IPP main exit pops
+  disabled,
 }: AutoExitProps) => {
   // ability to disable any time of autoexit
   const { autoexit, autoexitStart, autoexitMiddle, autoexitEnd } = useClientSearchParams();
+  const autoExitDisabled = disabled || autoexit === '0' || !production || debug;
 
   const [count, setCount] = useState(THIRTY_SECONDS);
   const step = useStore(currentStepState);
@@ -78,7 +81,7 @@ const AutoExit = ({
     }, 1000);
     if (count === 0) {
       if (typeof window !== 'undefined') {
-        if ((production && !debug) || (production && autoexit !== '0')) {
+        if (!autoExitDisabled) {
           initAutoExit();
         }
       }

@@ -7,9 +7,22 @@ import { useClientSearchParams } from '@hooks/useClientSearchParams';
 
 import executeExitFlow from '@utils/executeExitFlow';
 import { getRandomZoneIfArray } from '@utils/simpleFunctions/getRandomZoneIfArray';
+import debug from '@utils/simpleFunctions/isDebug';
+import production from '@utils/simpleFunctions/isProduction';
 
-const NonUnique = () => {
+type NonUniqueProps = {
+  zone: number | number[] | undefined;
+  zonePops: number | number[] | undefined;
+  zoneTeen: number | number[] | undefined;
+  zoneTeenPops: number | number[] | undefined;
+  disabled?: boolean;
+};
+
+const NonUnique = ({ disabled, zone, zonePops, zoneTeen, zoneTeenPops }: NonUniqueProps) => {
   const { nonUnique: nonUniqueSearchParam } = useClientSearchParams();
+
+  const nonUniqueDisabled = disabled || nonUniqueSearchParam === '0' || !production || debug;
+
   const nonUnique = getCookie('nonUnique') ?? false;
   const nonUniqueTeen = getCookie('nonUniqueTeen') ?? false;
   const nonUniqueDo = getCookie('lead') ?? false;
@@ -21,23 +34,32 @@ const NonUnique = () => {
     const financeExits = financeExitsState.get();
     const nonUniqueTeenIpp = financeExits.ipp_not_unique_teen;
 
-    executeExitFlow({
-      type: 'withRotationInMarker',
-      ippZones: [nonUniqueTeenIpp, nonUniqueTeenIpp],
-    });
+    if (zoneTeen !== undefined && zoneTeenPops !== undefined) {
+      const zoneTeenFromProps = getRandomZoneIfArray(zoneTeen);
+      const zoneTeenPopsFromProps = getRandomZoneIfArray(zoneTeenPops);
+      executeExitFlow({
+        type: 'withRotationInMarker',
+        ippZones: [nonUniqueTeenIpp || zoneTeenFromProps, nonUniqueTeenIpp || zoneTeenPopsFromProps],
+      });
+    }
   };
 
   const initNonUnique = () => {
+    // We take zone from context
     const financeExits = financeExitsState.get();
     const nonUniqueIpp = getRandomZoneIfArray(financeExits.ipp_not_unique);
-    executeExitFlow({
-      type: 'withRotationInMarker',
-      ippZones: [nonUniqueIpp, nonUniqueIpp],
-    });
+    if (zone !== undefined && zonePops !== undefined) {
+      const zoneFromProps = getRandomZoneIfArray(zone);
+      const zonePopsFromProps = getRandomZoneIfArray(zonePops);
+      executeExitFlow({
+        type: 'withRotationInMarker',
+        ippZones: [nonUniqueIpp || zoneFromProps, nonUniqueIpp || zonePopsFromProps],
+      });
+    }
   };
 
   useEffect(() => {
-    if (nonUniqueSearchParam !== '0') {
+    if (!nonUniqueDisabled) {
       if (nonUnique || nonUniqueTeen || nonUniqueDo || nonUniqueTeenDo || nonUniqueCrossDo || nonUniqueCrossTeenDo) {
         if (nonUniqueTeen || nonUniqueTeenDo || nonUniqueCrossTeenDo) {
           initNonUniqueTeen();

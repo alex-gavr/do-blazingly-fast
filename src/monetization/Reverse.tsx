@@ -8,40 +8,40 @@ import justLog from '@utils/justLog';
 import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
 import { getRandomZoneIfArray } from '@utils/simpleFunctions/getRandomZoneIfArray';
 import debug from '@utils/simpleFunctions/isDebug';
+import production from '@utils/simpleFunctions/isProduction';
 import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
 
 import { initBack } from './Back';
 
 interface IReverseProps {
-  zone: number;
+  zone: number | number[] | undefined;
   disabled?: boolean;
 }
 
 const Reverse = ({ zone, disabled }: IReverseProps) => {
   const { reverse } = useClientSearchParams();
 
+  const reverseDisabled = disabled || reverse === '0' || !production || debug || zone === undefined;
+
   const pathname = window.location.pathname;
   const searchParams = window.location.search;
   const pathnameWithSearchParams = `${pathname}${searchParams}`;
 
   useEffect(() => {
-    if (!disabled || reverse !== '0') {
+    if (!reverseDisabled) {
       // due to pathname below static finance survey doesn't have reverse
       history.pushState(null, 'Finance Survey', `${pathnameWithSearchParams}`);
 
       const handleBackButton = async (event: PopStateEvent) => {
         event.preventDefault();
-        if (!debug) {
-          const financeExits = financeExitsState.get();
+        // This is zone from context
+        const financeExits = financeExitsState.get();
+        const zoneFromStore = getRandomZoneIfArray(financeExits.onclick_reverse_zone);
 
-          // TODO: Decide how we do? Do we prop drill or get zone/zones from context?
-          const zoneFromStore = getRandomZoneIfArray(financeExits.onclick_reverse_zone);
-          const url = makeExitUrl(zone | zoneFromStore, ExitType.onclick);
-
+        if (zone !== undefined) {
+          const url = makeExitUrl(getRandomZoneIfArray(zone) | zoneFromStore, ExitType.onclick);
           initBack();
           replaceCurrentUrl(url);
-        } else {
-          justLog({ somethingToLog: 'reverse is not available in debug mode', type: 'info' });
         }
       };
 
