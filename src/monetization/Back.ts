@@ -8,9 +8,10 @@ export const initBack = () => {
   if (disabled) return;
 
   const searchParams = extractAndReformatURLParameters({ intendedFor: 'frontend', zone });
-  const searchParamsString = searchParams.toString();
 
   for (let i = 0; i < historyTimeAmount; i += 1) {
+    searchParams.set('historyTimeAmount', String(i + 1));
+    const searchParamsString = searchParams.toString();
     window.history.pushState(null, 'Please wait...', `/back?${searchParamsString}`);
   }
 };
