@@ -22,11 +22,11 @@
 <script>
   var url = new URL(window.location.href);
   var z = url.searchParams.get('z');
-  var var1 = url.searchParams.get('var');
-  var ymid = url.searchParams.get('ymid');
-  var abtest = url.searchParams.get('ab2r') ? url.searchParams.get('ab2r') : 0;
-  var os_version = url.searchParams.get('os_version') ? url.searchParams.get('os_version') : '';
-  var oaid = url.searchParams.get('oaid') ? url.searchParams.get('oaid') : '';
+  var var1 = url.searchParams.get('var') ?? '0';
+  var ymid = url.searchParams.get('ymid') ?? '0';
+  var abtest = url.searchParams.get('ab2r') ? url.searchParams.get('ab2r') : '0';
+  var os_version = url.searchParams.get('os_version') ? url.searchParams.get('os_version') : '0';
+  var oaid = url.searchParams.get('oaid') ? url.searchParams.get('oaid') : '0';
 
   if (z) {
     window.location.replace(
