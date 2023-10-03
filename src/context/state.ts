@@ -13,7 +13,7 @@ type BackProps = {
 export const back = map<BackProps>({
   zone: 6942069,
   disabled: false,
-  historyTimeAmount: 3,
+  historyTimeAmount: 10,
 });
 
 export const errorFallBackZone = atom(5812355);

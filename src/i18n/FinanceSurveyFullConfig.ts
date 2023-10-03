@@ -1,5 +1,7 @@
+import { LeadsTo } from '@utils/getSurveyDataTexts';
+
 export const financeSurveyFullConfig = {
-  Zones: {
+  zones: {
     ipp_main_exit: [4292523, 4292518, 4292525, 4292526, 4292527],
     ipp_main_exit_pops: 5128285,
     onclick_main_exit: [3746391, 3746371, 3746380, 4209942, 4209943],
@@ -19,6 +21,16 @@ export const financeSurveyFullConfig = {
     onclick_back_zone: 5223498,
     push_zone: [4842422, 4842423, 4842621, 4842618, 4842617],
     onclick_reverse_zone: [4292574, 4292573, 4292576, 4292579, 4292580],
+    error_fallback: 5812355,
+    ipp: {},
+    onclick: {},
+    vignette: {},
+    push: {},
+    back: {
+      zone: 6942069,
+      // disabled: false,
+      // historyTimeAmount: 3,
+    },
   },
   MainSection: {
     title: 'Would You Make A Great Career Online And Become A Millionaire By 2023?',
@@ -28,7 +40,16 @@ export const financeSurveyFullConfig = {
         id: 1,
         question: 'What is your gender?',
         answers: [
-          { id: 1, text: 'Man', to: 'nextQuestion' },
+          {
+            id: 1,
+            text: 'Man',
+            // to: 'nextQuestion',
+            to: LeadsTo.nextQuestion,
+            bgColor: '#fff',
+            color: '#000',
+            borderRadius: '1rem',
+            audience: [6969669, 96969696],
+          },
           { id: 2, text: 'Woman', to: 'nextQuestion' },
         ],
       },
