@@ -9,6 +9,7 @@ import { getDictionary } from '@i18n/getDictionary';
 import makeCommentsForFinanceSurvey from '@config/FinanceComments';
 import type { TFinanceDictionary } from '@i18n/2025/en';
 import { financeSurveyFullConfig } from '@i18n/FinanceSurveyFullConfig';
+import { rewardisExitsState } from '@context/state';
 // import { getSurveyDataTexts } from '@utils/getSurveyDataTexts';
 // import fs from 'fs';
 // import path, { dirname, join } from 'path';
@@ -23,7 +24,8 @@ const { title } = Astro.props;
 
 const d = (await getDictionary(0, 'en')) as TFinanceDictionary;
 
-const zones = financeSurveyFullConfig.zones;
+// const zones = financeSurveyFullConfig.zones;
+const zonesRewardis = rewardisExitsState.get();
 
 // const surveyData = getSurveyDataTexts(d.MainSection.SurveyTexts, 0);
 
@@ -63,27 +65,27 @@ const zones = financeSurveyFullConfig.zones;
     <script src='@fraudPrevention/areCookiesEnabled.ts'></script>
   </head>
   <body id='body'>
-    <main class='flex flex-col justify-center items-center min-h-screen'>
+    <main class='flex flex-col justify-center items-center min-h-screen overflow-hidden'>
       <slot />
     </main>
-    <Reverse zone={zones.onclick_reverse_zone} client:only='preact' />
+    <Reverse zone={zonesRewardis.reverse} client:only='preact' />
     <NonUnique
-      zone={zones.ipp_not_unique}
-      zonePops={zones.ipp_not_unique}
-      zoneTeen={zones.ipp_not_unique_teen}
-      zoneTeenPops={zones.ipp_not_unique_teen}
+      zone={zonesRewardis.nonUnique.ipp.currentTab}
+      zonePops={zonesRewardis.nonUnique.ipp.currentTab}
+      zoneTeen={zonesRewardis.nonUnique.teen.ipp.currentTab}
+      zoneTeenPops={zonesRewardis.nonUnique.teen.ipp.currentTab}
       client:only='preact'
     />
     <AutoExit
-      zoneFirstStep={zones.onclick_autoexit}
-      zoneFirstStepPops={zones.onclick_autoexit_pops}
-      zoneLastStep={zones.ipp_autoexit}
-      zoneLastStepPops={zones.ipp_autoexit_pops}
-      zoneMiddleSteps={zones.ipp_autoexit}
-      zoneMiddleStepsPops={zones.ipp_autoexit_pops}
+      zoneFirstStep={zonesRewardis.autoexit.autoexitBeginning.onclick.newTab}
+      zoneFirstStepPops={zonesRewardis.autoexit.autoexitBeginning.onclick.currentTab}
+      zoneLastStep={zonesRewardis.autoexit.autoexitFinal.onclick.newTab}
+      zoneLastStepPops={zonesRewardis.autoexit.autoexitFinal.onclick.currentTab}
+      zoneMiddleSteps={zonesRewardis.autoexit.autoexitStep.onclick.newTab}
+      zoneMiddleStepsPops={zonesRewardis.autoexit.autoexitStep.onclick.currentTab}
       client:only='preact'
     />
-    <InitPush zone={zones.push_zone} client:only='preact' />
+    <InitPush zone={zonesRewardis.push.zone} client:only='preact' />
   </body>
 </html>
 
@@ -95,10 +97,38 @@ const zones = financeSurveyFullConfig.zones;
   }
 </script>
 
-<script>
+<!-- <script>
   if (typeof window !== 'undefined') {
     if (!sessionStorage.getItem('surveyStartTime')) {
       sessionStorage.setItem('surveyStartTime', Date.now().toString());
     }
+  }
+</script> -->
+
+<script>
+  import { rewardisUrlState } from '@context/state';
+  import { useClientSearchParams } from '@hooks/useClientSearchParams';
+  export interface IRewardisUrlParams {
+    sub_id1: string; // zone
+    sub_id2: string; // request_var
+    sub_id3: string; // ymid
+    sub_id4: string; // var_3
+    sub_id5: string; // click_id
+    abtest?: string; // ab2r
+  }
+
+  if (typeof window !== 'undefined') {
+    const { zone, requestVar, var3, ymid, subId, abTest } = useClientSearchParams();
+
+    const updatedRewardisUrl = new URL(import.meta.env.PUBLIC_REWARDIS_URL);
+    const searchParams = updatedRewardisUrl.searchParams;
+    searchParams.set('sub_id1', zone);
+    searchParams.set('sub_id2', requestVar);
+    searchParams.set('sub_id3', ymid);
+    searchParams.set('sub_id4', var3);
+    searchParams.set('sub_id5', subId);
+    searchParams.set('ab2r', abTest);
+
+    rewardisUrlState.set(updatedRewardisUrl.href);
   }
 </script>

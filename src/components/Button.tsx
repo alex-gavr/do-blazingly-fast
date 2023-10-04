@@ -1,17 +1,23 @@
+import { initBack } from '@monetization/Back';
 import { useStore } from '@nanostores/preact';
 import { cva } from 'class-variance-authority';
 import type { VariantProps } from 'class-variance-authority';
 import type { JSX } from 'preact';
+import { Cookies } from 'typescript-cookie';
 
-import { currentStepState, doTestsExitsState, financeExitsState } from '@context/state';
+import { currentStepState, doTestsExitsState, financeExitsState, rewardisExitsState } from '@context/state';
 
 import { cn } from '@utils/cn';
-import executeExitFlow from '@utils/executeExitFlow';
+import executeExitFlow, { ExitFlowType } from '@utils/executeExitFlow';
 import { LeadsTo } from '@utils/getSurveyDataTexts';
 import justLog from '@utils/justLog';
+import { getExitLinkFromBackendWithRotationInMarker } from '@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker';
+import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
 import { getRandomZoneIfArray } from '@utils/simpleFunctions/getRandomZoneIfArray';
 import getSearchParams from '@utils/simpleFunctions/getSearchParams';
 import production from '@utils/simpleFunctions/isProduction';
+import openUrlInNewTab from '@utils/simpleFunctions/openUrlInNewTab';
+import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
 
 export type IExitsTypes =
   | 'mainExit'
@@ -47,6 +53,7 @@ const buttonVariants = cva(
         backButton: 'border border-red-300 bg-neutral-900 text-gray-200 hover:bg-gray-950 hover:text-gray-100',
         lazada: 'bg-gradient-to-r from-red-600 to-amber-500 text-neutral-100 border border-neutral-400',
         lazadaSecondary: 'border bg-gradient-to-r from-sky-200 to-indigo-200 border-slate-500 text-neutral-900 uppercase',
+        rewardisSweep: 'bg-emerald-500 text-white',
       },
       padding: {
         default: 'px-4 py-2',
@@ -83,7 +90,7 @@ const buttonVariants = cva(
   },
 );
 
-type IButtonStyles = VariantProps<typeof buttonVariants>;
+export type IButtonStyles = VariantProps<typeof buttonVariants>;
 export type IButtonVariants = IButtonStyles['variant'];
 interface IButtonProps extends JSX.HTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   to: IButtonExits | 'beginSurvey' | 'nextQuestion' | 'thankYouPage' | 'toAssessment';
@@ -96,13 +103,14 @@ interface IButtonProps extends JSX.HTMLAttributes<HTMLButtonElement>, VariantPro
 
 const Button = ({ type, children, onClick, disabled, className, variant, padding, rounded, back, loading, fontSize, to, ...props }: IButtonProps) => {
   const financeExits = useStore(financeExitsState);
+  const rewardisExits = useStore(rewardisExitsState);
   const doTestsExits = useStore(doTestsExitsState);
 
   const oldSearchParams = getSearchParams();
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (to === LeadsTo.beginSurvey) {
-      window.location.replace(`/survey${oldSearchParams}`);
+      replaceCurrentUrl(`/survey${oldSearchParams}`);
     }
     if (to === LeadsTo.nextQuestion) {
       currentStepState.set(currentStepState.get() + 1);
@@ -110,24 +118,35 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
     if (to === LeadsTo.teenExit) {
       if (production) {
         executeExitFlow({
-          type: 'withRotationInMarker',
-          ippZones: [getRandomZoneIfArray(financeExits.ipp_teen), financeExits.ipp_teen_pops],
+          type: ExitFlowType.withRotationInMarker,
+          ippZones: [getRandomZoneIfArray(rewardisExits.teen.ipp.newTab), rewardisExits.teen.ipp.newTab],
         });
+        Cookies.set('nonUniqueTeen', 'true', { expires: 7 });
       } else {
         justLog({ somethingToLog: 'teen exit', type: 'info' });
       }
     }
     if (to === LeadsTo.thankYouPage) {
-      window.location.replace(`/thank-you${oldSearchParams}`);
+      replaceCurrentUrl(`/thank-you${oldSearchParams}`);
     }
     if (to === LeadsTo.toAssessment) {
       const url = new URL(window.location.href);
+      const offer = url.searchParams.get('offer_id');
       if (url.pathname.endsWith('/')) {
         url.pathname += 'assessment';
       } else {
         url.pathname += '/assessment';
       }
-      window.location.href = url.href;
+      if (offer === '9560') {
+        executeExitFlow({
+          type: ExitFlowType.rewardis,
+          ippZones: rewardisExits.tabUnder.ipp.currentTab,
+          onclickZones: rewardisExits.tabUnder.onclick.currentTab,
+          rewardisUrl: url.href,
+        });
+      } else {
+        window.location.href = url.href;
+      }
     }
 
     if (to === LeadsTo.mainExit) {
@@ -135,13 +154,13 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
       const zonesInMarker = true;
       if (zonesInMarker) {
         executeExitFlow({
-          type: 'withRotationInMarker',
+          type: ExitFlowType.withRotationInMarker,
           ippZones: [getRandomZoneIfArray(financeExits.ipp_main_exit), financeExits.ipp_main_exit_pops],
           executeConversion: true,
         });
       } else {
         executeExitFlow({
-          type: 'noRotationInMarker',
+          type: ExitFlowType.withRotationInMarker,
           ippZones: [doTestsExits.mainExitIpp, doTestsExits.mainExit],
           onclickZones: [doTestsExits.mainPopsIpp, doTestsExits.mainPops],
           executeConversion: true,

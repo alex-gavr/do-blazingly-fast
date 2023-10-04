@@ -5,7 +5,7 @@ import { getCookie, setCookie } from 'typescript-cookie';
 import { doTestsExitsState } from '@context/state';
 
 import { cn } from '@utils/cn';
-import executeExitFlow from '@utils/executeExitFlow';
+import executeExitFlow, { ExitFlowType } from '@utils/executeExitFlow';
 import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
 
@@ -27,7 +27,7 @@ const CountDown = ({ freeAccess = 'free access ends in', secondsWord = 'seconds'
     if (alreadyAccessAutoExit) {
       if (doTestExits.accessAutoExit) {
         executeExitFlow({
-          type: 'justOnclick',
+          type: ExitFlowType.justOnclick,
           onclickZones: [doTestExits.accessAutoExit, doTestExits.accessAutoExit],
         });
       }
@@ -43,7 +43,7 @@ const CountDown = ({ freeAccess = 'free access ends in', secondsWord = 'seconds'
 
       if (doTestExits.accessAutoExit) {
         executeExitFlow({
-          type: 'justOnclick',
+          type: ExitFlowType.justOnclick,
           onclickZones: [doTestExits.accessAutoExit, doTestExits.accessAutoExit],
         });
       }

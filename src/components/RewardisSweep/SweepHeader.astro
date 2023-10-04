@@ -1,0 +1,27 @@
+---
+// date in format 03/10/2023
+const preparedToday = new Date().toLocaleDateString();
+import { Image } from 'astro:assets';
+import Timer from './Timer';
+---
+
+<div class='flex flex-col justify-center items-center bg-slate-900 relative w-full'>
+  <Image src='/img/sweep-rewardis/ellipse.svg' class='absolute bottom-0 w-32 blur-sm' alt={''} width={123} height={149} />
+  <Image src='/img/sweep-rewardis/tape1.svg' class='absolute bottom-0 right-0 translate-x-10 w-28 z-30' alt={''} width={123} height={149} />
+  <Image src='/img/sweep-rewardis/tape3.svg' class='absolute top-6 left-2 w-10' alt={''} width={123} height={149} />
+  <h1 class='text-yellow-300 font-bold text-2xl tracking-wider p-4'>Congratulations</h1>
+  <p class='text-white tracking-wider font-bold'>Promotional Contest on</p>
+  <p class='text-white tracking-wider font-bold'>{preparedToday}</p>
+  <div class='flex justify-center items-start px-4 pt-4 translate-y-5'>
+    <div class='flex flex-col justify-center items-center gap-6'>
+      <p class='text-sm font-bold tracking-wider'>There is still time to participate.</p>
+
+      <Timer client:load timeLimitInMinutes={2} />
+    </div>
+    <div class='relative flex flex-col justify-center items-center flex-shrink-0 z-20'>
+      <Image src='/img/sweep-rewardis/default_prize.png' alt={''} width={123} height={149} />
+      <p class='bg-black rounded-full px-4 py-2 text-sm sm:text-base text-white w-full'>Samsung Galaxy A53</p>
+      <Image src='/img/sweep-rewardis/tape.svg' class='absolute top-6 left-2 w-10' alt={''} width={123} height={149} />
+    </div>
+  </div>
+</div>

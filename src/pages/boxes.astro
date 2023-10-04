@@ -1,0 +1,15 @@
+---
+import Modal from '@components/Modal/Modal';
+import BoxesSweep from '@components/RewardisSweep/BoxesSweep';
+import SweepLayoutBoxes from '@components/RewardisSweep/SweepLayoutBoxes.astro';
+import Layout from '@layouts/Layout.astro';
+---
+
+<Layout title='Best Survey in the world'>
+  <SweepLayoutBoxes>
+    <div class='grid grid-cols-3 gap-4 w-full items-center px-2 py-8'>
+      <BoxesSweep client:load />
+    </div>
+    <Modal client:idle />
+  </SweepLayoutBoxes>
+</Layout>

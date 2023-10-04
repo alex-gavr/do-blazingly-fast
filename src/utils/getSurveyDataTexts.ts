@@ -24,7 +24,7 @@ export const getSurveyDataTexts = (texts: TSurveyTexts, offerId: TValidOffer) =>
         const to =
           objectNumber === 2 && index === 0
             ? LeadsTo.teenExit
-            : objectNumber === length && offerId === 0
+            : (objectNumber === length && offerId === 0) || (objectNumber === length && offerId === 9560)
             ? LeadsTo.toAssessment
             : objectNumber === length && offerId === 10864
             ? LeadsTo.thankYouPage

@@ -1,11 +1,11 @@
 import { useEffect } from 'preact/hooks';
 import { getCookie } from 'typescript-cookie';
 
-import { financeExitsState } from '@context/state';
+import { financeExitsState, rewardisExitsState } from '@context/state';
 
 import { useClientSearchParams } from '@hooks/useClientSearchParams';
 
-import executeExitFlow from '@utils/executeExitFlow';
+import executeExitFlow, { ExitFlowType } from '@utils/executeExitFlow';
 import { getRandomZoneIfArray } from '@utils/simpleFunctions/getRandomZoneIfArray';
 import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
@@ -31,14 +31,16 @@ const NonUnique = ({ disabled, zone, zonePops, zoneTeen, zoneTeenPops }: NonUniq
   const nonUniqueCrossTeenDo = getCookie('lead-teenage-cross') ?? false;
 
   const initNonUniqueTeen = () => {
-    const financeExits = financeExitsState.get();
-    const nonUniqueTeenIpp = financeExits.ipp_not_unique_teen;
+    // const financeExits = financeExitsState.get();
+    // const nonUniqueTeenIpp = financeExits.ipp_not_unique_teen;
+    const rewardisExits = rewardisExitsState.get();
+    const nonUniqueTeenIpp = rewardisExits.nonUnique.teen.ipp.currentTab;
 
     if (zoneTeen !== undefined && zoneTeenPops !== undefined) {
       const zoneTeenFromProps = getRandomZoneIfArray(zoneTeen);
       const zoneTeenPopsFromProps = getRandomZoneIfArray(zoneTeenPops);
       executeExitFlow({
-        type: 'withRotationInMarker',
+        type: ExitFlowType.withRotationInMarker,
         ippZones: [nonUniqueTeenIpp || zoneTeenFromProps, nonUniqueTeenIpp || zoneTeenPopsFromProps],
       });
     }
@@ -46,13 +48,15 @@ const NonUnique = ({ disabled, zone, zonePops, zoneTeen, zoneTeenPops }: NonUniq
 
   const initNonUnique = () => {
     // We take zone from context
-    const financeExits = financeExitsState.get();
-    const nonUniqueIpp = getRandomZoneIfArray(financeExits.ipp_not_unique);
+    // const financeExits = financeExitsState.get();
+    // const nonUniqueIpp = getRandomZoneIfArray(financeExits.ipp_not_unique);
+    const rewardisExits = rewardisExitsState.get();
+    const nonUniqueIpp = rewardisExits.nonUnique.ipp.currentTab;
     if (zone !== undefined && zonePops !== undefined) {
       const zoneFromProps = getRandomZoneIfArray(zone);
       const zonePopsFromProps = getRandomZoneIfArray(zonePops);
       executeExitFlow({
-        type: 'withRotationInMarker',
+        type: ExitFlowType.withRotationInMarker,
         ippZones: [nonUniqueIpp || zoneFromProps, nonUniqueIpp || zonePopsFromProps],
       });
     }

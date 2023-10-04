@@ -19,17 +19,20 @@ const createExitUrl = (clickUrl: string): string | Error => {
 
   if (searchParams.has('userId')) {
     return updateUrlAndCreateExit(clickUrl, 'onclick');
-  } else if (searchParams.has('_z') && searchParams.has('b')) {
+  } else if (searchParams.has('_z')) {
     return updateUrlAndCreateExit(clickUrl, 'ipp');
   } else {
     return new Error('Unknown link');
   }
 };
 
+// https://localhost/clicks/szBlYQzE0jiF_xfPTZFFqPnMAj25q52BIC26p9teF23Smz0U6IdhJ-kvWbCvmgXSgPCetPg8lDVl9Yji31v3-Ymn9xqUYtu3r-A_876vXtdFXQvxzipl-WD1Iyixphldf1vEVmE82Tt2e8mYXblNJ2uJA09VEprK_AD9hycLSyQDzcp8wla2UWj452kTzBcBW77m8-jesC-waYjjfBb46bZk-u_Nd7HrE9IxDSwunlpc_TkacRGugggsdKJtJiL4MzyZxrSoocZVSvyUhji8tRPCPcF8O2ftmde-rlfHwIpekfqsIMp30Z-4xJjesqSesbZeaSyg2nYyRQsytcZFxiVUdXj5ck9rcjtD5n0dpEPrrZSdCAhO3KiuVf56Lj3X-MpTcnm8PX-TGM1yrzcZv5JK0UYLkUrqWDb_SlQ4iC_2Axpp6tIQfdw-xM6qQ2kGX_HepT9R_ZugwbYiACo3wi_U_RVT9fEfaum54iPbELNcDL_Yd5VkeqDe7KzBTyWK8g5Q-5gQsEy1fCC8rCEwSzDMaffGjTCBHRXMxQ==?var=5908107&ymid=&b=19004022&campaignid=&os_version=&click_id=&ab2r=&oaid=&_z=5866173
+
 const updateUrlAndCreateExit = (url: string, type: 'ipp' | 'onclick'): string => {
   const domain = type === 'ipp' ? import.meta.env.PUBLIC_IPP_DOMAIN : import.meta.env.PUBLIC_ONCLICK_DOMAIN;
   const code = type === 'ipp' ? '' : `/${import.meta.env.PUBLIC_ONCLICK_CODE}`;
-  const replacedUrl = url.replace(window.location.origin, `${domain}${code}`);
+  const urlFromBackend = new URL(url);
+  const replacedUrl = url.replace(urlFromBackend.origin, `${domain}${code}`);
 
   const urlType = type === 'ipp' ? UrlType.ipp : UrlType.onclick;
   return makeExitUrlFromUrl(new URL(replacedUrl).href, urlType);

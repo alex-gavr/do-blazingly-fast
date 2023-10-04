@@ -14,6 +14,7 @@ interface ImportMetaEnv {
   readonly PUBLIC_API_ROUTE_SECRET: string;
   readonly PUBLIC_SENTRY: string;
   readonly PUBLIC_CONVERSION_URL: string;
+  readonly PUBLIC_REWARDIS_URL: string;
 }
 
 interface ImportMeta {

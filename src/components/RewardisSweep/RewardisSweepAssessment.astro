@@ -1,0 +1,28 @@
+---
+import SweepLayoutBoxes from './SweepLayoutBoxes.astro';
+---
+
+<SweepLayoutBoxes>
+  <section class='z-20 px-2 py-4'>
+    <div class='flex flex-col items-start justify-center gap-6 rounded-md px-4 py-6'>
+      <h1 class='animate-fade-up text-center text-xl font-bold text-black'>Checking your answers...</h1>
+      <div class='flex flex-col gap-4'>
+        <div class='flex flex-row gap-2'>
+          <p class='animate-fade-up text-sm animate-delay-300 sm:text-base text-slate-700'>4 / 4 questions answered</p>
+          <img src='/img/tick.svg' alt='tick' class='h-5 w-5 animate-fade-left animate-delay-500' />
+        </div>
+        <div class='flex flex-row gap-2'>
+          <p class='animate-fade-up text-sm animate-delay-700 sm:text-base text-slate-700'>No previous surveys from your IP found</p>
+          <img src='/img/tick.svg' alt='tick' class='h-5 w-5 animate-fade-left animate-delay-1000' />
+        </div>
+        <div class='flex flex-row gap-2'>
+          <p class='animate-fade-up text-sm animate-delay-1000 sm:text-base text-slate-700'>There are still gifts available!</p>
+          <img src='/img/tick.svg' alt='tick' class='h-5 w-5 animate-fade-left animate-delay-[1.2s]' />
+        </div>
+      </div>
+      <div class='mb-4 h-2 w-full rounded-full bg-gray-200'>
+        <div class='h-2 animate-widthGrowth rounded-full bg-emerald-500 animate-duration-[3s] animate-ease-in-out'></div>
+      </div>
+    </div>
+  </section>
+</SweepLayoutBoxes>

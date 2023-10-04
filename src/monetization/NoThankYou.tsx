@@ -1,6 +1,6 @@
 import type { ComponentChildren } from 'preact';
 
-import executeExitFlow from '@utils/executeExitFlow';
+import executeExitFlow, { ExitFlowType } from '@utils/executeExitFlow';
 import justLog from '@utils/justLog';
 import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
@@ -23,7 +23,7 @@ const NoThankYou = ({ children, className, variant }: IProps) => {
       const noThankYouPopsOnclick = 5892041;
 
       await executeExitFlow({
-        type: 'noRotationInMarker',
+        type: ExitFlowType.noRotationInMarker,
         ippZones: [noThankYouIpp, noThankYouIpp],
         onclickZones: [noThankYouOnclick, noThankYouPopsOnclick],
       });

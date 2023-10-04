@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'preact/hooks';
 
-import { financeExitsState } from '@context/state';
+import { financeExitsState, rewardisExitsState } from '@context/state';
 
 import { useClientSearchParams } from '@hooks/useClientSearchParams';
 
@@ -23,8 +23,9 @@ const InitPush = ({ zone, disabled }: InitPushProps) => {
 
   const startPush = () => {
     // This is zone from context
-    const financeExits = financeExitsState.get();
-    const pushZone = getRandomZoneIfArray(financeExits.push_zone);
+    // const financeExits = financeExitsState.get();
+    // const pushZone = getRandomZoneIfArray(financeExits.push_zone);
+    const pushZone = rewardisExitsState.get().push.zone;
 
     if (zone !== undefined) {
       pushMicroTagScript({ pushZone: pushZone | getRandomZoneIfArray(zone) });

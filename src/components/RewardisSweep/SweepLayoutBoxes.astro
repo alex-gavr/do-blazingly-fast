@@ -1,0 +1,15 @@
+---
+import Footer from '@components/Footer.astro';
+import CommentsSection from '@components/RewardisSweep/SweepComments/CommentSection.astro';
+import SweepHeaderBoxes from './SweepHeaderBoxes.astro';
+const { commentsData } = Astro.props;
+---
+
+<section class='flex min-h-screen flex-col items-center justify-start bg-neutral-100 w-full'>
+  <div class='flex w-full max-w-5xl flex-col items-center justify-center'>
+    <SweepHeaderBoxes />
+    <slot />
+    <CommentsSection commentsData={commentsData} />
+    <Footer />
+  </div>
+</section>

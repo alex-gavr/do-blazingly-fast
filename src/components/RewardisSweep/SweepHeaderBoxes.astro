@@ -1,0 +1,19 @@
+---
+// date in format 03/10/2023
+import { Image } from 'astro:assets';
+---
+
+<div class='flex flex-col justify-center items-center bg-slate-900 relative w-full'>
+  <Image src='/img/sweep-rewardis/ellipse.svg' class='absolute bottom-0 w-32 blur-sm' alt={''} width={123} height={149} />
+  <Image src='/img/sweep-rewardis/tape1.svg' class='absolute bottom-0 right-0 translate-x-10 w-28 z-30' alt={''} width={123} height={149} />
+  <Image src='/img/sweep-rewardis/tape3.svg' class='absolute top-6 left-2 w-10' alt={''} width={123} height={149} />
+  <h1 class='text-white text-center font-bold text-xl tracking-wider p-4'>Now you have the opportunity to receive a gift</h1>
+  <h2 class='text-emerald-400 tracking-wider font-bold'>Try your luck!</h2>
+  <div class='flex justify-center items-start px-2 pt-2 translate-y-5'>
+    <div class='relative flex flex-col justify-center items-center flex-shrink-0 z-20'>
+      <Image src='/img/sweep-rewardis/default_prize.png' alt={''} width={123} height={149} loading={'eager'} class='w-24' />
+      <p class='bg-black rounded-full px-4 py-2 text-sm sm:text-base text-white w-full'>Samsung Galaxy A53</p>
+      <Image src='/img/sweep-rewardis/tape.svg' class='absolute top-6 left-2 w-10' alt={''} width={123} height={149} />
+    </div>
+  </div>
+</div>

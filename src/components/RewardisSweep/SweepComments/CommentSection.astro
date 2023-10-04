@@ -1,0 +1,15 @@
+---
+import CommentCardSweep from './CommentCardSweep.astro';
+import { sweepComments } from './sweepCommentsData';
+---
+
+<section class='w-full max-w-4xl px-2 flex justify-center items-center'>
+  <div class='flex flex-col items-center justify-center w-full gap-2 max-w-sm'>
+    <h1 class='text-slate-900 font-normal text-sm place-self-start'>15 comments</h1>
+    {
+      sweepComments.map((comment) => (
+        <CommentCardSweep id={comment.id} name={comment.name} text={comment.text} likes={comment.likes} date={comment.date} avatar={comment.avatar} />
+      ))
+    }
+  </div>
+</section>

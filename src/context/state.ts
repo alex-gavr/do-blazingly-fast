@@ -3,7 +3,18 @@ import { atom, map } from 'nanostores';
 import type { IDoTestsExits, IFinanceSurveyExits } from './stateTypes';
 
 export const currentStepState = atom(1);
-export const surveyLengthState = atom(0);
+export const surveyLengthState = atom(4);
+export const rewardisUrlState = atom('');
+
+export const modalState = map({
+  isOpen: false,
+  isWinningModal: false,
+  title: '',
+  description: '',
+  description2: '',
+  imageUrl: '',
+  onCloseText: 'OK',
+});
 
 type BackProps = {
   zone: number;
@@ -11,9 +22,9 @@ type BackProps = {
   historyTimeAmount: number;
 };
 export const back = map<BackProps>({
-  zone: 5908107, // existing zone
+  zone: 5865833, // existing zone 5908107
   disabled: false,
-  historyTimeAmount: 10,
+  historyTimeAmount: 3,
 });
 
 export const errorFallBackZone = atom(5812355);
@@ -85,4 +96,70 @@ export const financeExitsState = map<IFinanceSurveyExits>({
   push_zone: [4842422, 4842423, 4842621, 4842618, 4842617],
   // reverse
   onclick_reverse_zone: [4292574, 4292573, 4292576, 4292579, 4292580],
+});
+
+export const rewardisExitsState = map({
+  errorFallback: 5998997,
+  back: 5865833,
+  reverse: 5865793,
+  tabUnder: {
+    ipp: {
+      currentTab: 5866173, // пара онклик 5865733 на бэке
+    },
+    onclick: {
+      currentTab: 5865788, // является fallback если IPP не сработал
+    },
+  },
+  push: {
+    zone: 5866071,
+    zone_subdomain: 5866154,
+  },
+  autoexit: {
+    autoexitBeginning: {
+      onclick: {
+        newTab: 5961746, // зона называется autoexit_from_form, а на самом деле она работает как автоэкзит в новой вкладке при первом стэпе...
+        currentTab: 5865804, // а вот это настоящий autoexit
+      },
+    },
+    autoexitStep: {
+      onclick: {
+        newTab: 5865830,
+        currentTab: 5865825,
+      },
+    },
+    autoexitFinal: {
+      onclick: {
+        newTab: 5865830,
+        currentTab: 5865825,
+      },
+    },
+  },
+  teen: {
+    ipp: {
+      newTab: 5866182,
+      currentTab: 5866192,
+    },
+  },
+  mainExit: {
+    ipp: {
+      newTab: 5866160,
+      currentTab: 5866165,
+    },
+  },
+  nonUnique: {
+    teen: {
+      ipp: {
+        currentTab: 5865896,
+      },
+      onclick: {
+        currentTab: 5865891,
+      },
+    },
+    ipp: {
+      currentTab: 5866197,
+    },
+    onclick: {
+      currentTab: 5865837,
+    },
+  },
 });
