@@ -83,10 +83,10 @@ const Box = ({ attempt, setAttempt, index }: IBoxesProps) => {
           />
           {attempt === 2 && winnerBox && (
             <img
-              src={'img/sweep-rewardis/phone-full.png'}
+              src={'img/sweep-rewardis/samsung.webp'}
               alt=''
-              width={134}
-              height={276}
+              width={300}
+              height={643}
               className='absolute top-1 animate-fade-up transition-all duration-500 animate-delay-500 ease-in-out w-3/12'
             />
           )}

@@ -56,7 +56,7 @@ const SurveyWithProgressBar = ({}: ISurveyWithProgressBarProps) => {
       >
         <div className='flex justify-center items-center gap-2 px-2 mt-8'>
           <ProgressBar />
-          <img src='/img/sweep-rewardis/phone-full.png' alt='phone' className='w-1/12' width={134} height={276} />
+          <img src='/img/sweep-rewardis/samsung.webp' alt='phone' className='w-1/12' width={300} height={643} loading={'eager'} />
         </div>
 
         <SurveyContainer
