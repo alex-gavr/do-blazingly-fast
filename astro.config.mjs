@@ -6,9 +6,10 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
   integrations: [preact(), tailwind()],
-  output: 'hybrid',
+  output: 'server',
   adapter: vercel({
     imageService: true,
+    functionPerRoute: true,
   }),
   site: 'https://blazingly-fast-do.top/',
 });
