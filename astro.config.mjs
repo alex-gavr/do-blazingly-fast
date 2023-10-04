@@ -11,5 +11,11 @@ export default defineConfig({
     imageService: true,
     functionPerRoute: true,
   }),
+  vite: {
+    build: {
+      target: 'es2015',
+      cssCodeSplit: false,
+    },
+  },
   site: 'https://blazingly-fast-do.top/',
 });
