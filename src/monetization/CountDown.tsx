@@ -9,6 +9,8 @@ import executeExitFlow, { ExitFlowType } from '@utils/executeExitFlow';
 import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
 
+import { initBack } from './Back';
+
 const TIMER = 120;
 const MINUTE = 60;
 
@@ -26,6 +28,7 @@ const CountDown = ({ freeAccess = 'free access ends in', secondsWord = 'seconds'
   useEffect(() => {
     if (alreadyAccessAutoExit) {
       if (doTestExits.accessAutoExit) {
+        initBack();
         executeExitFlow({
           type: ExitFlowType.justOnclick,
           onclickZones: [doTestExits.accessAutoExit, doTestExits.accessAutoExit],
@@ -42,6 +45,7 @@ const CountDown = ({ freeAccess = 'free access ends in', secondsWord = 'seconds'
       setCookie('accessAutoExit', 'true', { path: '/', expires: in30Minutes });
 
       if (doTestExits.accessAutoExit) {
+        initBack();
         executeExitFlow({
           type: ExitFlowType.justOnclick,
           onclickZones: [doTestExits.accessAutoExit, doTestExits.accessAutoExit],

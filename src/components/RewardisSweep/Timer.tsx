@@ -1,3 +1,4 @@
+import { initBack } from '@monetization/Back';
 import { useEffect, useState } from 'preact/compat';
 
 import { rewardisExitsState } from '@context/state';
@@ -26,7 +27,7 @@ const Timer = ({ timeLimitInMinutes }: TimerProps) => {
   useEffect(() => {
     if (secondsLeft === 1) {
       const rewardisZones = rewardisExitsState.get();
-      console.log('time is up');
+      initBack();
       executeExitFlow({
         type: ExitFlowType.justOnclick,
         onclickZones: [

@@ -12,6 +12,8 @@ import { getRandomZoneIfArray } from '@utils/simpleFunctions/getRandomZoneIfArra
 import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
 
+import { initBack } from './Back';
+
 const THIRTY_SECONDS = 30;
 
 type AutoExitProps = {
@@ -54,6 +56,7 @@ const AutoExit = ({
 
   const initAutoExit = () => {
     if (isWinningModal) {
+      initBack();
       executeExitFlow({
         type: ExitFlowType.rewardis,
         ippZones: getRandomZoneIfArray(rewardisZones.tabUnder.ipp.currentTab),
@@ -65,17 +68,20 @@ const AutoExit = ({
     }
 
     if (firstStep && autoexitStart !== '0') {
+      initBack();
       executeExitFlow({
         type: ExitFlowType.justOnclick,
         onclickZones: [getRandomZoneIfArray(zoneFirstStep), getRandomZoneIfArray(zoneFirstStepPops)],
       });
     } else if (lastStep && autoexitEnd !== '0') {
+      initBack();
       executeExitFlow({
         type: ExitFlowType.justOnclick,
         onclickZones: [getRandomZoneIfArray(zoneLastStep), getRandomZoneIfArray(zoneLastStepPops)],
         // ippZones: [getRandomZoneIfArray(zoneLastStep), getRandomZoneIfArray(zoneLastStepPops)],
       });
     } else if (autoexitMiddle !== '0') {
+      initBack();
       executeExitFlow({
         type: ExitFlowType.justOnclick,
         onclickZones: [getRandomZoneIfArray(zoneMiddleSteps), getRandomZoneIfArray(zoneMiddleStepsPops)],

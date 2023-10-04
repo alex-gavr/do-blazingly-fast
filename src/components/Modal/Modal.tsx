@@ -1,3 +1,4 @@
+import { initBack } from '@monetization/Back';
 import { useStore } from '@nanostores/preact';
 
 import { modalState, rewardisExitsState, rewardisUrlState } from '@context/state';
@@ -18,6 +19,7 @@ const Modal = ({}: ModalProps) => {
 
   const handleClose = () => {
     if (isWinningModal) {
+      initBack();
       executeExitFlow({
         type: ExitFlowType.rewardis,
         ippZones: rewardisExits.mainExit.ipp.currentTab,

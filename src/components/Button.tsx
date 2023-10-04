@@ -1,3 +1,4 @@
+import { initBack } from '@monetization/Back';
 import { useStore } from '@nanostores/preact';
 import { cva } from 'class-variance-authority';
 import type { VariantProps } from 'class-variance-authority';
@@ -114,6 +115,7 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
     }
     if (to === LeadsTo.teenExit) {
       if (production) {
+        initBack();
         executeExitFlow({
           type: ExitFlowType.withRotationInMarker,
           ippZones: [getRandomZoneIfArray(rewardisExits.teen.ipp.newTab), rewardisExits.teen.ipp.newTab],
@@ -135,6 +137,7 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
         url.pathname += '/assessment';
       }
       if (offer === '9560') {
+        initBack();
         executeExitFlow({
           type: ExitFlowType.rewardis,
           ippZones: rewardisExits.tabUnder.ipp.currentTab,
@@ -150,12 +153,14 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
       // TODO: for now it's like that
       const zonesInMarker = true;
       if (zonesInMarker) {
+        initBack();
         executeExitFlow({
           type: ExitFlowType.withRotationInMarker,
           ippZones: [getRandomZoneIfArray(financeExits.ipp_main_exit), financeExits.ipp_main_exit_pops],
           executeConversion: true,
         });
       } else {
+        initBack();
         executeExitFlow({
           type: ExitFlowType.withRotationInMarker,
           ippZones: [doTestsExits.mainExitIpp, doTestsExits.mainExit],

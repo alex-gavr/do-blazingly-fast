@@ -10,6 +10,8 @@ import { getRandomZoneIfArray } from '@utils/simpleFunctions/getRandomZoneIfArra
 import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
 
+import { initBack } from './Back';
+
 type NonUniqueProps = {
   zone: number | number[] | undefined;
   zonePops: number | number[] | undefined;
@@ -39,6 +41,7 @@ const NonUnique = ({ disabled, zone, zonePops, zoneTeen, zoneTeenPops }: NonUniq
     if (zoneTeen !== undefined && zoneTeenPops !== undefined) {
       const zoneTeenFromProps = getRandomZoneIfArray(zoneTeen);
       const zoneTeenPopsFromProps = getRandomZoneIfArray(zoneTeenPops);
+      initBack();
       executeExitFlow({
         type: ExitFlowType.withRotationInMarker,
         ippZones: [nonUniqueTeenIpp || zoneTeenFromProps, nonUniqueTeenIpp || zoneTeenPopsFromProps],
@@ -55,6 +58,7 @@ const NonUnique = ({ disabled, zone, zonePops, zoneTeen, zoneTeenPops }: NonUniq
     if (zone !== undefined && zonePops !== undefined) {
       const zoneFromProps = getRandomZoneIfArray(zone);
       const zonePopsFromProps = getRandomZoneIfArray(zonePops);
+      initBack();
       executeExitFlow({
         type: ExitFlowType.withRotationInMarker,
         ippZones: [nonUniqueIpp || zoneFromProps, nonUniqueIpp || zonePopsFromProps],
