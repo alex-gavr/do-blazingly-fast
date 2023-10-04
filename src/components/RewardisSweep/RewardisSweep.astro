@@ -1,15 +1,8 @@
 ---
-import ProgressBar from './ProgressBar';
-import { Image } from 'astro:assets';
 import SweepLayout from './SweepLayout.astro';
-import SurveyContainer from '@components/SurveyContainer';
-import { rewardisSurveyTexts } from './surveyOnlyTexsts';
 import SurveyWithProgressBar from './SurveyWithProgressBar';
 
 const today = new Date().toDateString();
-
-const currentQuestion = 1;
-const maxQuestions = 4;
 ---
 
 <SweepLayout>

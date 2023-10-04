@@ -6,6 +6,7 @@ import { offers } from '@config/globalConfig';
 import RewardisSweep from '@components/RewardisSweep/RewardisSweep.astro';
 
 const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '0');
+console.log('🚀 ~ offer:', offer);
 const offerExists = offers.includes(offer as (typeof offers)[number]);
 ---
 
