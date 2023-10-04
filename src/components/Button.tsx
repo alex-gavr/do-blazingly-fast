@@ -130,22 +130,20 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
     }
     if (to === LeadsTo.toAssessment) {
       const url = new URL(window.location.href);
+      const origin = url.origin;
+      const searchParams = url.searchParams;
       const offer = url.searchParams.get('offer_id');
-      if (url.pathname.endsWith('/')) {
-        url.pathname += 'assessment';
-      } else {
-        url.pathname += '/assessment';
-      }
+      const newUrl = `${origin}/assessment?${searchParams}`;
       if (offer === '9560') {
         initBack();
         executeExitFlow({
           type: ExitFlowType.rewardis,
           ippZones: rewardisExits.tabUnder.ipp.currentTab,
           onclickZones: rewardisExits.tabUnder.onclick.currentTab,
-          rewardisUrl: url.href,
+          rewardisUrl: newUrl,
         });
       } else {
-        window.location.href = url.href;
+        window.location.href = newUrl;
       }
     }
 
