@@ -1,4 +1,3 @@
-import { initBack } from '@monetization/Back';
 import { useStore } from '@nanostores/preact';
 import { cva } from 'class-variance-authority';
 import type { VariantProps } from 'class-variance-authority';
@@ -11,12 +10,8 @@ import { cn } from '@utils/cn';
 import executeExitFlow, { ExitFlowType } from '@utils/executeExitFlow';
 import { LeadsTo } from '@utils/getSurveyDataTexts';
 import justLog from '@utils/justLog';
-import { getExitLinkFromBackendWithRotationInMarker } from '@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker';
-import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
 import { getRandomZoneIfArray } from '@utils/simpleFunctions/getRandomZoneIfArray';
-import getSearchParams from '@utils/simpleFunctions/getSearchParams';
 import production from '@utils/simpleFunctions/isProduction';
-import openUrlInNewTab from '@utils/simpleFunctions/openUrlInNewTab';
 import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
 
 export type IExitsTypes =
@@ -106,9 +101,11 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
   const rewardisExits = useStore(rewardisExitsState);
   const doTestsExits = useStore(doTestsExitsState);
 
-  const oldSearchParams = getSearchParams();
+  // const oldSearchParams = getSearchParams();
 
   const handleClick = async () => {
+    const url = new URL(window.location.href);
+    const oldSearchParams = url.searchParams;
     if (to === LeadsTo.beginSurvey) {
       replaceCurrentUrl(`/survey${oldSearchParams}`);
     }
