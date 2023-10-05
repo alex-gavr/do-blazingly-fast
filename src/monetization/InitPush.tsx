@@ -1,25 +1,20 @@
 import { useEffect, useState } from 'preact/hooks';
 
-import { financeExitsState, rewardisExitsState } from '@context/state';
+import { rewardisExitsState } from '@context/state';
 
 import { useClientSearchParams } from '@hooks/useClientSearchParams';
 
 import justLog from '@utils/justLog';
-import { getRandomZoneIfArray } from '@utils/simpleFunctions/getRandomZoneIfArray';
 import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
 
 import pushMicroTagScript from './pushMicroTagScript';
 
-type InitPushProps = {
-  zone: number | number[] | undefined;
-  disabled?: boolean;
-};
+type InitPushProps = {};
 
-const InitPush = ({ zone, disabled }: InitPushProps) => {
+const InitPush = ({}: InitPushProps) => {
   const [done, setDone] = useState<boolean>(false);
   const { push } = useClientSearchParams();
-  const pushDisabled = disabled || push === '0' || zone === undefined || !production || debug;
 
   const startPush = () => {
     // This is zone from context
@@ -27,15 +22,13 @@ const InitPush = ({ zone, disabled }: InitPushProps) => {
     // const pushZone = getRandomZoneIfArray(financeExits.push_zone);
     const pushZone = rewardisExitsState.get().push.zone;
 
-    if (zone !== undefined) {
-      pushMicroTagScript({ pushZone: pushZone | getRandomZoneIfArray(zone) });
-      setDone(true);
-    }
+    pushMicroTagScript({ pushZone: pushZone });
+    setDone(true);
   };
 
   useEffect(() => {
     if (!done && push !== '0') {
-      if (!pushDisabled) {
+      if (production && !debug) {
         startPush();
       } else {
         justLog({ somethingToLog: 'push is disabled in debug mode', type: 'info' });

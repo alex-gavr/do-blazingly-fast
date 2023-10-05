@@ -139,6 +139,10 @@ export const rewardisExitsState = map({
       newTab: 5866182,
       currentTab: 5866192,
     },
+    onclick: {
+      newTab: 5865910,
+      currentTab: 5865960,
+    },
   },
   mainExit: {
     ipp: {

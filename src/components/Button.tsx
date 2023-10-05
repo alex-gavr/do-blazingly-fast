@@ -11,8 +11,11 @@ import { cn } from '@utils/cn';
 import executeExitFlow, { ExitFlowType } from '@utils/executeExitFlow';
 import { LeadsTo } from '@utils/getSurveyDataTexts';
 import justLog from '@utils/justLog';
+import { getExitLinkFromBackendWithRotationInMarker } from '@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker';
+import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
 import { getRandomZoneIfArray } from '@utils/simpleFunctions/getRandomZoneIfArray';
 import production from '@utils/simpleFunctions/isProduction';
+import openUrlInNewTab from '@utils/simpleFunctions/openUrlInNewTab';
 import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
 
 export type IExitsTypes =
@@ -116,11 +119,21 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
     if (to === LeadsTo.teenExit) {
       if (production) {
         initBack();
-        executeExitFlow({
-          type: ExitFlowType.withRotationInMarker,
-          ippZones: [getRandomZoneIfArray(rewardisExits.teen.ipp.newTab), rewardisExits.teen.ipp.newTab],
-        });
+
+        const newTab = getExitLinkFromBackendWithRotationInMarker(rewardisExits.teen.ipp.newTab);
+        const currentTab = getExitLinkFromBackendWithRotationInMarker(rewardisExits.teen.ipp.currentTab);
+
+        const [newTabUrl, currentTabUrl] = await Promise.all([newTab, currentTab]);
+
         Cookies.set('nonUniqueTeen', 'true', { expires: 7 });
+
+        if (newTabUrl instanceof Error || currentTabUrl instanceof Error) {
+          openUrlInNewTab(makeExitUrl(rewardisExits.teen.onclick.newTab, ExitType.onclick));
+          replaceCurrentUrl(makeExitUrl(rewardisExits.teen.onclick.currentTab, ExitType.onclick));
+        } else {
+          openUrlInNewTab(newTabUrl);
+          replaceCurrentUrl(currentTabUrl);
+        }
       } else {
         justLog({ somethingToLog: 'teen exit', type: 'info' });
       }
@@ -135,13 +148,16 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
       const offer = url.searchParams.get('offer_id');
       const newUrl = `${origin}/assessment?${searchParams}`;
       if (offer === '9560') {
+        const currentTab = await getExitLinkFromBackendWithRotationInMarker(rewardisExits.tabUnder.ipp.currentTab);
+
         initBack();
-        executeExitFlow({
-          type: ExitFlowType.rewardis,
-          ippZones: rewardisExits.tabUnder.ipp.currentTab,
-          onclickZones: rewardisExits.tabUnder.onclick.currentTab,
-          rewardisUrl: newUrl,
-        });
+        if (currentTab instanceof Error) {
+          openUrlInNewTab(newUrl);
+          replaceCurrentUrl(makeExitUrl(rewardisExits.tabUnder.onclick.currentTab, ExitType.onclick));
+        } else {
+          openUrlInNewTab(newUrl);
+          replaceCurrentUrl(currentTab);
+        }
       } else {
         window.location.href = newUrl;
       }

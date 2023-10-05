@@ -1,44 +1,27 @@
 import { useStore } from '@nanostores/preact';
 import { useEffect, useState } from 'preact/hooks';
+import { Cookies } from 'typescript-cookie';
 
 import { currentStepState, modalState, rewardisExitsState, rewardisUrlState, surveyLengthState } from '@context/state';
 
-import { useClientSearchParams } from '@hooks/useClientSearchParams';
 import { useEventListener } from '@hooks/useEventListener';
 
-import executeExitFlow, { ExitFlowType } from '@utils/executeExitFlow';
 import justLog from '@utils/justLog';
-import { getRandomZoneIfArray } from '@utils/simpleFunctions/getRandomZoneIfArray';
+import { getExitLinkFromBackendWithRotationInMarker } from '@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker';
+import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
 import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
+import openUrlInNewTab from '@utils/simpleFunctions/openUrlInNewTab';
+import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
 
 import { initBack } from './Back';
 
 const THIRTY_SECONDS = 30;
 
-type AutoExitProps = {
-  zoneFirstStep: number | number[];
-  zoneFirstStepPops: number | number[];
-  zoneMiddleSteps: number | number[];
-  zoneMiddleStepsPops: number | number[];
-  zoneLastStep: number | number[];
-  zoneLastStepPops: number | number[];
-  disabled?: boolean;
-};
+type AutoExitProps = {};
 
-const AutoExit = ({
-  zoneFirstStep = 4292614, // Onclick autoexit
-  zoneFirstStepPops = 5206508, // Onclick autoexit pops
-  zoneMiddleSteps = 5381339, //IPP autoexit
-  zoneMiddleStepsPops = 5381332, //IPP autoexit pops
-  zoneLastStep = 4292523, // IPP main exit
-  zoneLastStepPops = 5128285, // IPP main exit pops
-  disabled,
-}: AutoExitProps) => {
+const AutoExit = ({}: AutoExitProps) => {
   // ability to disable any time of autoexit
-  const { autoexit, autoexitStart, autoexitMiddle, autoexitEnd } = useClientSearchParams();
-
-  const autoExitDisabled = disabled || autoexit === '0' || !production || debug;
 
   const [count, setCount] = useState(THIRTY_SECONDS);
   const step = useStore(currentStepState);
@@ -54,39 +37,45 @@ const AutoExit = ({
     setCount(THIRTY_SECONDS);
   };
 
-  const initAutoExit = () => {
+  const initAutoExit = async () => {
     if (isWinningModal) {
+      const newTab = rewardisUrl;
+      const currentTab = await getExitLinkFromBackendWithRotationInMarker(rewardisZones.mainExit.ipp.currentTab);
+      Cookies.set('nonUnique', 'true', { expires: 7 });
       initBack();
-      executeExitFlow({
-        type: ExitFlowType.rewardis,
-        ippZones: getRandomZoneIfArray(rewardisZones.tabUnder.ipp.currentTab),
-        onclickZones: getRandomZoneIfArray(rewardisZones.tabUnder.onclick.currentTab),
-        rewardisUrl: rewardisUrl,
-        nonUnique: true,
-      });
-      return;
+      if (currentTab instanceof Error) {
+        openUrlInNewTab(newTab);
+        replaceCurrentUrl(makeExitUrl(rewardisZones.tabUnder.onclick.currentTab, ExitType.onclick));
+      } else {
+        openUrlInNewTab(rewardisUrl);
+        replaceCurrentUrl(currentTab);
+      }
     }
 
-    if (firstStep && autoexitStart !== '0') {
+    if (firstStep) {
+      const newTab = rewardisZones.autoexit.autoexitBeginning.onclick.newTab;
+      const currentTab = rewardisZones.autoexit.autoexitBeginning.onclick.currentTab;
+
       initBack();
-      executeExitFlow({
-        type: ExitFlowType.justOnclick,
-        onclickZones: [getRandomZoneIfArray(zoneFirstStep), getRandomZoneIfArray(zoneFirstStepPops)],
-      });
-    } else if (lastStep && autoexitEnd !== '0') {
+
+      openUrlInNewTab(makeExitUrl(newTab, ExitType.onclick));
+      replaceCurrentUrl(makeExitUrl(currentTab, ExitType.onclick));
+    } else if (lastStep) {
+      const newTab = rewardisZones.autoexit.autoexitFinal.onclick.newTab;
+      const currentTab = rewardisZones.autoexit.autoexitFinal.onclick.currentTab;
+
       initBack();
-      executeExitFlow({
-        type: ExitFlowType.justOnclick,
-        onclickZones: [getRandomZoneIfArray(zoneLastStep), getRandomZoneIfArray(zoneLastStepPops)],
-        // ippZones: [getRandomZoneIfArray(zoneLastStep), getRandomZoneIfArray(zoneLastStepPops)],
-      });
-    } else if (autoexitMiddle !== '0') {
+
+      openUrlInNewTab(makeExitUrl(newTab, ExitType.onclick));
+      replaceCurrentUrl(makeExitUrl(currentTab, ExitType.onclick));
+    } else {
+      const newTab = rewardisZones.autoexit.autoexitStep.onclick.newTab;
+      const currentTab = rewardisZones.autoexit.autoexitStep.onclick.currentTab;
+
       initBack();
-      executeExitFlow({
-        type: ExitFlowType.justOnclick,
-        onclickZones: [getRandomZoneIfArray(zoneMiddleSteps), getRandomZoneIfArray(zoneMiddleStepsPops)],
-        // ippZones: [getRandomZoneIfArray(zoneMiddleSteps), getRandomZoneIfArray(zoneMiddleStepsPops)],
-      });
+
+      openUrlInNewTab(makeExitUrl(newTab, ExitType.onclick));
+      replaceCurrentUrl(makeExitUrl(currentTab, ExitType.onclick));
     }
   };
 
@@ -101,7 +90,7 @@ const AutoExit = ({
     }, 1000);
     if (count === 0) {
       if (typeof window !== 'undefined') {
-        if (!autoExitDisabled) {
+        if (production && !debug) {
           initAutoExit();
         } else {
           justLog({ somethingToLog: 'autoexit disabled', type: 'info' });

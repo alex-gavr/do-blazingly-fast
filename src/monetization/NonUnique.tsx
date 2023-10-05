@@ -3,28 +3,18 @@ import { getCookie } from 'typescript-cookie';
 
 import { financeExitsState, rewardisExitsState } from '@context/state';
 
-import { useClientSearchParams } from '@hooks/useClientSearchParams';
-
-import executeExitFlow, { ExitFlowType } from '@utils/executeExitFlow';
-import { getRandomZoneIfArray } from '@utils/simpleFunctions/getRandomZoneIfArray';
+import { getExitLinkFromBackendWithRotationInMarker } from '@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker';
+import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
 import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
+import openUrlInNewTab from '@utils/simpleFunctions/openUrlInNewTab';
+import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
 
 import { initBack } from './Back';
 
-type NonUniqueProps = {
-  zone: number | number[] | undefined;
-  zonePops: number | number[] | undefined;
-  zoneTeen: number | number[] | undefined;
-  zoneTeenPops: number | number[] | undefined;
-  disabled?: boolean;
-};
+type NonUniqueProps = {};
 
-const NonUnique = ({ disabled, zone, zonePops, zoneTeen, zoneTeenPops }: NonUniqueProps) => {
-  const { nonUnique: nonUniqueSearchParam } = useClientSearchParams();
-
-  const nonUniqueDisabled = disabled || nonUniqueSearchParam === '0' || !production || debug;
-
+const NonUnique = ({}: NonUniqueProps) => {
   const nonUnique = getCookie('nonUnique') ?? false;
   const nonUniqueTeen = getCookie('nonUniqueTeen') ?? false;
   const nonUniqueDo = getCookie('lead') ?? false;
@@ -32,42 +22,45 @@ const NonUnique = ({ disabled, zone, zonePops, zoneTeen, zoneTeenPops }: NonUniq
   const nonUniqueCrossDo = getCookie('lead-cross') ?? false;
   const nonUniqueCrossTeenDo = getCookie('lead-teenage-cross') ?? false;
 
-  const initNonUniqueTeen = () => {
-    // const financeExits = financeExitsState.get();
-    // const nonUniqueTeenIpp = financeExits.ipp_not_unique_teen;
+  const initNonUniqueTeen = async () => {
     const rewardisExits = rewardisExitsState.get();
     const nonUniqueTeenIpp = rewardisExits.nonUnique.teen.ipp.currentTab;
+    const nonUniqueTeenOnclick = rewardisExits.nonUnique.teen.onclick.currentTab;
 
-    if (zoneTeen !== undefined && zoneTeenPops !== undefined) {
-      const zoneTeenFromProps = getRandomZoneIfArray(zoneTeen);
-      const zoneTeenPopsFromProps = getRandomZoneIfArray(zoneTeenPops);
-      initBack();
-      executeExitFlow({
-        type: ExitFlowType.withRotationInMarker,
-        ippZones: [nonUniqueTeenIpp || zoneTeenFromProps, nonUniqueTeenIpp || zoneTeenPopsFromProps],
-      });
+    const currentTab = await getExitLinkFromBackendWithRotationInMarker(nonUniqueTeenIpp);
+    initBack();
+    if (currentTab instanceof Error) {
+      const ad = makeExitUrl(nonUniqueTeenOnclick, ExitType.onclick);
+      openUrlInNewTab(ad);
+      replaceCurrentUrl(ad);
+    } else {
+      openUrlInNewTab(currentTab);
+      replaceCurrentUrl(currentTab);
     }
   };
 
-  const initNonUnique = () => {
+  const initNonUnique = async () => {
     // We take zone from context
     // const financeExits = financeExitsState.get();
     // const nonUniqueIpp = getRandomZoneIfArray(financeExits.ipp_not_unique);
     const rewardisExits = rewardisExitsState.get();
     const nonUniqueIpp = rewardisExits.nonUnique.ipp.currentTab;
-    if (zone !== undefined && zonePops !== undefined) {
-      const zoneFromProps = getRandomZoneIfArray(zone);
-      const zonePopsFromProps = getRandomZoneIfArray(zonePops);
-      initBack();
-      executeExitFlow({
-        type: ExitFlowType.withRotationInMarker,
-        ippZones: [nonUniqueIpp || zoneFromProps, nonUniqueIpp || zonePopsFromProps],
-      });
+    const nonUniqueOnclick = rewardisExits.nonUnique.onclick.currentTab;
+
+    const currentTab = await getExitLinkFromBackendWithRotationInMarker(nonUniqueIpp);
+    initBack();
+    if (currentTab instanceof Error) {
+      const ad = makeExitUrl(nonUniqueOnclick, ExitType.onclick);
+      openUrlInNewTab(ad);
+      replaceCurrentUrl(ad);
+    } else {
+      openUrlInNewTab(currentTab);
+      replaceCurrentUrl(currentTab);
     }
   };
 
   useEffect(() => {
-    if (!nonUniqueDisabled) {
+    if (production && !debug) {
       if (nonUnique || nonUniqueTeen || nonUniqueDo || nonUniqueTeenDo || nonUniqueCrossDo || nonUniqueCrossTeenDo) {
         if (nonUniqueTeen || nonUniqueTeenDo || nonUniqueCrossTeenDo) {
           initNonUniqueTeen();

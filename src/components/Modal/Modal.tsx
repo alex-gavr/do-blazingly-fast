@@ -1,10 +1,13 @@
 import { initBack } from '@monetization/Back';
 import { useStore } from '@nanostores/preact';
+import { Cookies } from 'typescript-cookie';
 
 import { modalState, rewardisExitsState, rewardisUrlState } from '@context/state';
 
-import executeExitFlow, { ExitFlowType } from '@utils/executeExitFlow';
+import { getExitLinkFromBackendWithRotationInMarker } from '@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker';
+import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
 import openUrlInNewTab from '@utils/simpleFunctions/openUrlInNewTab';
+import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
 
 interface ModalProps {}
 
@@ -17,16 +20,19 @@ const Modal = ({}: ModalProps) => {
     return null;
   }
 
-  const handleClose = () => {
+  const handleClose = async () => {
     if (isWinningModal) {
+      const newTab = rewardisUrl;
+      const currentTab = await getExitLinkFromBackendWithRotationInMarker(rewardisExits.mainExit.ipp.currentTab);
+      Cookies.set('nonUnique', 'true', { expires: 7 });
       initBack();
-      executeExitFlow({
-        type: ExitFlowType.rewardis,
-        ippZones: rewardisExits.mainExit.ipp.currentTab,
-        onclickZones: rewardisExits.tabUnder.onclick.currentTab,
-        rewardisUrl: rewardisUrl,
-        nonUnique: true,
-      });
+      if (currentTab instanceof Error) {
+        openUrlInNewTab(newTab);
+        replaceCurrentUrl(makeExitUrl(rewardisExits.tabUnder.onclick.currentTab, ExitType.onclick));
+      } else {
+        openUrlInNewTab(rewardisUrl);
+        replaceCurrentUrl(currentTab);
+      }
     }
     modalState.set({
       isOpen: false,

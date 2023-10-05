@@ -3,8 +3,9 @@ import { useEffect, useState } from 'preact/compat';
 
 import { rewardisExitsState } from '@context/state';
 
-import executeExitFlow, { ExitFlowType } from '@utils/executeExitFlow';
-import { getRandomZoneIfArray } from '@utils/simpleFunctions/getRandomZoneIfArray';
+import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
+import openUrlInNewTab from '@utils/simpleFunctions/openUrlInNewTab';
+import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
 
 interface TimerProps {
   timeLimitInMinutes: number;
@@ -27,14 +28,13 @@ const Timer = ({ timeLimitInMinutes }: TimerProps) => {
   useEffect(() => {
     if (secondsLeft === 1) {
       const rewardisZones = rewardisExitsState.get();
+      const newTab = rewardisZones.autoexit.autoexitBeginning.onclick.newTab;
+      const currentTab = rewardisZones.autoexit.autoexitBeginning.onclick.currentTab;
+
       initBack();
-      executeExitFlow({
-        type: ExitFlowType.justOnclick,
-        onclickZones: [
-          getRandomZoneIfArray(rewardisZones.autoexit.autoexitBeginning.onclick.newTab),
-          getRandomZoneIfArray(rewardisZones.autoexit.autoexitBeginning.onclick.currentTab),
-        ],
-      });
+
+      openUrlInNewTab(makeExitUrl(newTab, ExitType.onclick));
+      replaceCurrentUrl(makeExitUrl(currentTab, ExitType.onclick));
     }
   }, [secondsLeft]);
 
