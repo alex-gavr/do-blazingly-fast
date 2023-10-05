@@ -40,7 +40,7 @@ const pushMicroTagScript = ({ pushZone, callback }: { pushZone: number; callback
   };
 
   if (pushZone) {
-    $pushScript.src = `/pfe/current/micro.tag.min.js?z=${pushZone}&sw=/sw/sw${pushZone}.js&var=${urlZ}&var_3=${urlS}&ymid=${urlVar}&ab2_ttl=${ab2TTL}`;
+    $pushScript.src = `/pfe/current/micro.tag.min.js?z=${pushZone}&sw=/sw/sw${pushZone}.js&var=${urlZ}&var_3=${urlS}&ymid=${urlVar}&ab2_ttl=${ab2TTL}&cdn=1&domain=laugoust.com`;
 
     if (abtest) {
       $pushScript.src += `&ab2=${abtest}`;
