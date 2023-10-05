@@ -47,7 +47,7 @@ function getAbtestTTL() {
   return null;
 }
 self.options = {
-  domain: 'eechicha.com',
+  domain: 'ouphouch.com',
   resubscribeOnInstall: true,
   zoneId: 5893057,
   ymid: getYmid(),
@@ -58,4 +58,4 @@ self.options = {
   ab2_ttl: getAbtestTTL(),
 };
 self.lary = '';
-self.importScripts('https://eechicha.com/pfe/current/sw.perm.check.min.js?r=sw');
+self.importScripts('https://ouphouch.com/pfe/current/sw.perm.check.min.js?r=sw');
