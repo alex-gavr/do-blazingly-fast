@@ -2,12 +2,12 @@ const pushMicroTagScript = ({ pushZone, callback }: { pushZone: number; callback
   const $pushScript = document.createElement('script');
   const url = new URL(window.location.href);
   const ab2TTL = 60 * 60 * 24 * 60 * 1000; // 60 days in ms
-  const urlS = url.searchParams.get('s') ?? ' ';
-  const urlZ = url.searchParams.get('z') ?? ' ';
-  const urlVar = url.searchParams.get('var') ?? ' ';
+  const urlS = url.searchParams.get('s');
+  const urlZ = url.searchParams.get('z');
+  const urlVar = url.searchParams.get('var');
   //   const urlVar4 = url.searchParams.get('var_4');
   // const disablePush = url.searchParams.get('push') ? url.searchParams.get('push') : false;
-  const abtest = url.searchParams.get('abtest') ?? ' ';
+  const abtest = url.searchParams.get('abtest') || url.searchParams.get('ab2r');
 
   $pushScript.onload = (result: any) => {
     switch (result) {
