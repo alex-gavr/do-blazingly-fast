@@ -32,6 +32,7 @@ const createExitUrl = (clickUrl: string): string | Error => {
 const updateUrlAndCreateExit = (url: string, type: 'ipp' | 'onclick'): string => {
   if (production) {
     const urlType = type === 'ipp' ? UrlType.ipp : UrlType.onclick;
+    console.log(url);
     return makeExitUrlFromUrl(url, urlType);
   } else {
     const domain = type === 'ipp' ? import.meta.env.PUBLIC_IPP_DOMAIN : import.meta.env.PUBLIC_ONCLICK_DOMAIN;
