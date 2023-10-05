@@ -6,7 +6,7 @@ const pushMicroTagScript = ({ pushZone, callback }: { pushZone: number; callback
   const urlZ = url.searchParams.get('z');
   const urlVar = url.searchParams.get('var');
   //   const urlVar4 = url.searchParams.get('var_4');
-  const disablePush = url.searchParams.get('push') ? url.searchParams.get('push') : false;
+  // const disablePush = url.searchParams.get('push') ? url.searchParams.get('push') : false;
   const abtest = url.searchParams.get('abtest');
 
   $pushScript.onload = (result: any) => {
@@ -39,7 +39,7 @@ const pushMicroTagScript = ({ pushZone, callback }: { pushZone: number; callback
     }
   };
 
-  if (pushZone && !disablePush) {
+  if (pushZone) {
     $pushScript.src = `/pfe/current/micro.tag.min.js?z=${pushZone}&sw=/sw/sw${pushZone}.js&var=${urlZ}&var_3=${urlS}&ymid=${urlVar}&ab2_ttl=${ab2TTL}`;
 
     if (abtest) {

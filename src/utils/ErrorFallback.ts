@@ -1,6 +1,6 @@
 import { initBack } from '@monetization/Back';
 
-import { errorFallBackZone } from '@context/state';
+import { rewardisExitsState } from '@context/state';
 
 import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
 
@@ -8,8 +8,8 @@ import debug from './simpleFunctions/isDebug';
 import production from './simpleFunctions/isProduction';
 
 const errorFallbackRedirect = async () => {
-  const errorFallback = errorFallBackZone.get();
-  const fallbackUrl = makeExitUrl(errorFallback, ExitType.onclick);
+  const zones = rewardisExitsState.get();
+  const fallbackUrl = makeExitUrl(zones.errorFallback.onclick.currentTab, ExitType.onclick);
 
   initBack();
   window.location.replace(fallbackUrl);

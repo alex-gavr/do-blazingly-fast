@@ -28,7 +28,7 @@ const Reverse = ({}: IReverseProps) => {
         // const zoneFromStore = getRandomZoneIfArray(financeExits.onclick_reverse_zone);
 
         const rewardisExits = rewardisExitsState.get();
-        const zone = rewardisExits.reverse;
+        const zone = rewardisExits.reverse.onclick.currentTab;
 
         const url = makeExitUrl(zone, ExitType.onclick);
         initBack();

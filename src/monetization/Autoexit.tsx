@@ -39,6 +39,7 @@ const AutoExit = ({}: AutoExitProps) => {
 
   const initAutoExit = async () => {
     if (isWinningModal) {
+      // WINNING MODAL
       const newTab = rewardisUrl;
       const currentTab = await getExitLinkFromBackendWithRotationInMarker(rewardisZones.mainExit.ipp.currentTab);
       Cookies.set('nonUnique', 'true', { expires: 7 });
@@ -53,6 +54,7 @@ const AutoExit = ({}: AutoExitProps) => {
     }
 
     if (firstStep) {
+      // FIRST STEP
       const newTab = rewardisZones.autoexit.autoexitBeginning.onclick.newTab;
       const currentTab = rewardisZones.autoexit.autoexitBeginning.onclick.currentTab;
 
@@ -61,21 +63,41 @@ const AutoExit = ({}: AutoExitProps) => {
       openUrlInNewTab(makeExitUrl(newTab, ExitType.onclick));
       replaceCurrentUrl(makeExitUrl(currentTab, ExitType.onclick));
     } else if (lastStep) {
-      const newTab = rewardisZones.autoexit.autoexitFinal.onclick.newTab;
-      const currentTab = rewardisZones.autoexit.autoexitFinal.onclick.currentTab;
+      // LAST STEP
+      const newTabZone = rewardisZones.autoexit.autoexitFinal.ipp.newTab;
+      const currentTabZone = rewardisZones.autoexit.autoexitFinal.ipp.currentTab;
+
+      const newTabUrl = getExitLinkFromBackendWithRotationInMarker(newTabZone);
+      const currentTabUrl = getExitLinkFromBackendWithRotationInMarker(currentTabZone);
+
+      const [newTab, currentTab] = await Promise.all([newTabUrl, currentTabUrl]);
 
       initBack();
-
-      openUrlInNewTab(makeExitUrl(newTab, ExitType.onclick));
-      replaceCurrentUrl(makeExitUrl(currentTab, ExitType.onclick));
+      if (newTab instanceof Error || currentTab instanceof Error) {
+        openUrlInNewTab(makeExitUrl(rewardisZones.autoexit.autoexitFinal.onclick.newTab, ExitType.onclick));
+        replaceCurrentUrl(makeExitUrl(rewardisZones.autoexit.autoexitFinal.onclick.currentTab, ExitType.onclick));
+      } else {
+        openUrlInNewTab(rewardisUrl);
+        replaceCurrentUrl(currentTab);
+      }
     } else {
-      const newTab = rewardisZones.autoexit.autoexitStep.onclick.newTab;
-      const currentTab = rewardisZones.autoexit.autoexitStep.onclick.currentTab;
+      // MID STEP
+      const newTabZone = rewardisZones.autoexit.autoexitStep.ipp.newTab;
+      const currentTabZone = rewardisZones.autoexit.autoexitStep.ipp.currentTab;
+
+      const newTabUrl = getExitLinkFromBackendWithRotationInMarker(newTabZone);
+      const currentTabUrl = getExitLinkFromBackendWithRotationInMarker(currentTabZone);
+
+      const [newTab, currentTab] = await Promise.all([newTabUrl, currentTabUrl]);
 
       initBack();
-
-      openUrlInNewTab(makeExitUrl(newTab, ExitType.onclick));
-      replaceCurrentUrl(makeExitUrl(currentTab, ExitType.onclick));
+      if (newTab instanceof Error || currentTab instanceof Error) {
+        openUrlInNewTab(makeExitUrl(rewardisZones.autoexit.autoexitStep.onclick.newTab, ExitType.onclick));
+        replaceCurrentUrl(makeExitUrl(rewardisZones.autoexit.autoexitStep.onclick.currentTab, ExitType.onclick));
+      } else {
+        openUrlInNewTab(rewardisUrl);
+        replaceCurrentUrl(currentTab);
+      }
     }
   };
 

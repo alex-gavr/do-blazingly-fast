@@ -125,8 +125,6 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
         const currentTab = getExitLinkFromBackendWithRotationInMarker(rewardisExits.teen.ipp.currentTab);
 
         const [newTabUrl, currentTabUrl] = await Promise.all([newTab, currentTab]);
-        console.log('🚀 ~ currentTabUrl:', currentTabUrl);
-        console.log('🚀 ~ newTabUrl:', newTabUrl);
 
         !debug && Cookies.set('nonUniqueTeen', 'true', { expires: 7 });
 

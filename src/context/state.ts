@@ -99,19 +99,36 @@ export const financeExitsState = map<IFinanceSurveyExits>({
 });
 
 export const rewardisExitsState = map({
-  errorFallback: 5998997,
-  back: 5865833,
-  reverse: 5865793,
+  errorFallback: {
+    onclick: {
+      currentTab: 5998997,
+    },
+  },
+  back: {
+    onclick: {
+      currentTab: 5865833,
+    },
+  },
+  reverse: {
+    onclick: {
+      currentTab: 5865793,
+    },
+  },
+  mainExit: {
+    ipp: {
+      currentTab: 5866165, // rewardis_sweepstake_leadgen_v3_main_exit_ipp
+    },
+  },
   tabUnder: {
     ipp: {
-      currentTab: 5866173, // пара онклик 5865733 на бэке
+      currentTab: 5866173, // пара онклик 5865733 на бэке. rewardis_sweepstake_leadgen_v3_main_exit_pops_ipp
     },
     onclick: {
-      currentTab: 5865788, // является fallback если IPP не сработал
+      currentTab: 5865788, // является fallback если IPP не сработал. rewardis_sweepstake_leadgen_v3_first_pops
     },
   },
   push: {
-    zone: 5866071,
+    zone: 6429429, // 5866071 current in Rewardis
     zone_subdomain: 5866154,
   },
   autoexit: {
@@ -122,48 +139,50 @@ export const rewardisExitsState = map({
       },
     },
     autoexitStep: {
+      ipp: {
+        newTab: 6429440,
+        currentTab: 6429441,
+      },
       onclick: {
-        newTab: 5865830,
-        currentTab: 5865825,
+        newTab: 5865830, // as fallback
+        currentTab: 5865825, // // as fallback
       },
     },
     autoexitFinal: {
+      ipp: {
+        newTab: 6429448,
+        currentTab: 6429447,
+      },
       onclick: {
-        newTab: 5865830,
-        currentTab: 5865825,
+        newTab: 5865830, // as fallback
+        currentTab: 5865825, // as fallback
       },
     },
   },
   teen: {
     ipp: {
-      newTab: 5866182,
-      currentTab: 5866192,
+      newTab: 5866182, // rewardis_sweepstake_leadgen_v3_teenage_ipp
+      currentTab: 5866192, // rewardis_sweepstake_leadgen_v3_teenage_pops_ipp
     },
     onclick: {
-      newTab: 5865910,
-      currentTab: 5865960,
-    },
-  },
-  mainExit: {
-    ipp: {
-      newTab: 5866160,
-      currentTab: 5866165,
+      newTab: 5865910, // rewardis_sweepstake_leadgen_v3_teenage
+      currentTab: 5865960, // rewardis_sweepstake_leadgen_v3_teenage_pops
     },
   },
   nonUnique: {
     teen: {
       ipp: {
-        currentTab: 5865896,
+        currentTab: 5866204, // rewardis_sweepstake_leadgen_v3_non_unique_teenage_ipp
       },
       onclick: {
-        currentTab: 5865891,
+        currentTab: 5865891, // rewardis_sweepstake_leadgen_v3_non_unique_teenage
       },
     },
     ipp: {
-      currentTab: 5866197,
+      currentTab: 5866197, // rewardis_sweepstake_leadgen_v3_non_unique_ipp
     },
     onclick: {
-      currentTab: 5865837,
+      currentTab: 5865837, // rewardis_sweepstake_leadgen_v3_non_unique
     },
   },
 });
