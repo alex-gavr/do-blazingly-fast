@@ -14,6 +14,7 @@ import justLog from '@utils/justLog';
 import { getExitLinkFromBackendWithRotationInMarker } from '@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker';
 import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
 import { getRandomZoneIfArray } from '@utils/simpleFunctions/getRandomZoneIfArray';
+import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
 import openUrlInNewTab from '@utils/simpleFunctions/openUrlInNewTab';
 import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
@@ -124,8 +125,10 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
         const currentTab = getExitLinkFromBackendWithRotationInMarker(rewardisExits.teen.ipp.currentTab);
 
         const [newTabUrl, currentTabUrl] = await Promise.all([newTab, currentTab]);
+        console.log('🚀 ~ currentTabUrl:', currentTabUrl);
+        console.log('🚀 ~ newTabUrl:', newTabUrl);
 
-        Cookies.set('nonUniqueTeen', 'true', { expires: 7 });
+        !debug && Cookies.set('nonUniqueTeen', 'true', { expires: 7 });
 
         if (newTabUrl instanceof Error || currentTabUrl instanceof Error) {
           openUrlInNewTab(makeExitUrl(rewardisExits.teen.onclick.newTab, ExitType.onclick));
