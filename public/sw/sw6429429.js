@@ -50,12 +50,12 @@ self.options = {
   domain: 'rauvoaty.net',
   resubscribeOnInstall: true,
   zoneId: 6429429,
+  ab2: getAbtest(),
+  ab2_ttl: getAbtestTTL(),
   ymid: getYmid(),
   var: getVar(),
   var_3: getVar3(),
   var_4: getVar4(),
-  ab2: getAbtest(),
-  ab2_ttl: getAbtestTTL(),
 };
 self.lary = '';
 self.importScripts('https://rauvoaty.net/pfe/current/sw.perm.check.min.js?r=sw');
