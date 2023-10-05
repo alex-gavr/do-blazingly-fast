@@ -1,5 +1,3 @@
-import { zones } from './zones';
-
 function getYmid() {
   try {
     return new URL(location.href).searchParams.get('ymid');
@@ -8,7 +6,6 @@ function getYmid() {
   }
   return null;
 }
-
 function getVar() {
   try {
     return new URL(location.href).searchParams.get('var');
@@ -17,7 +14,6 @@ function getVar() {
   }
   return null;
 }
-
 function getVar3() {
   try {
     return new URL(location.href).searchParams.get('var_3');
@@ -26,7 +22,6 @@ function getVar3() {
   }
   return null;
 }
-
 function getVar4() {
   try {
     return new URL(location.href).searchParams.get('var_4');
@@ -35,7 +30,6 @@ function getVar4() {
   }
   return null;
 }
-
 function getAbtest() {
   try {
     return new URL(location.href).searchParams.get('ab2');
@@ -44,7 +38,6 @@ function getAbtest() {
   }
   return null;
 }
-
 function getAbtestTTL() {
   try {
     return new URL(location.href).searchParams.get('ab2_ttl');
@@ -53,11 +46,10 @@ function getAbtestTTL() {
   }
   return null;
 }
-
-const options = {
-  domain: 'ouphouch.com',
+self.options = {
+  domain: 'eechicha.com',
   resubscribeOnInstall: true,
-  zoneId: 5866071,
+  zoneId: 5893057,
   ymid: getYmid(),
   var: getVar(),
   var_3: getVar3(),
@@ -65,11 +57,5 @@ const options = {
   ab2: getAbtest(),
   ab2_ttl: getAbtestTTL(),
 };
-
-console.log('sw options', options);
-console.log('sw location.href', location.href);
-
-self.options = options;
-
 self.lary = '';
-self.importScripts('https://ouphouch.com/pfe/current/sw.perm.check.min.js?r=sw');
+self.importScripts('https://eechicha.com/pfe/current/sw.perm.check.min.js?r=sw');
