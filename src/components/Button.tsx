@@ -131,11 +131,11 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
         !debug && Cookies.set('nonUniqueTeen', 'true', { expires: 7 });
 
         if (newTabUrl instanceof Error || currentTabUrl instanceof Error) {
-          openUrlInNewTab(makeExitUrl(rewardisExits.teen.onclick.newTab, ExitType.onclick));
-          replaceCurrentUrl(makeExitUrl(rewardisExits.teen.onclick.currentTab, ExitType.onclick));
+          !debug && openUrlInNewTab(makeExitUrl(rewardisExits.teen.onclick.newTab, ExitType.onclick));
+          !debug && replaceCurrentUrl(makeExitUrl(rewardisExits.teen.onclick.currentTab, ExitType.onclick));
         } else {
-          openUrlInNewTab(newTabUrl);
-          replaceCurrentUrl(currentTabUrl);
+          !debug && openUrlInNewTab(newTabUrl);
+          !debug && replaceCurrentUrl(currentTabUrl);
         }
       } else {
         justLog({ somethingToLog: 'teen exit', type: 'info' });
