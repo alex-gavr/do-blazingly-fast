@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import SweepLayout from './SweepLayout.astro';
 import SurveyWithProgressBar from './SurveyWithProgressBar';
 
@@ -7,7 +8,9 @@ const today = new Date().toDateString();
 
 <SweepLayout>
   <section class='p-4 flex flex-col gap-8 relative'>
-    <SurveyWithProgressBar client:load />
+    <SurveyWithProgressBar client:load>
+      <Image src='/img/sweep-rewardis/samsung_smaller.webp' alt='phone' class='w-1/12' width={179} height={384} loading={'eager'} />
+    </SurveyWithProgressBar>
     <div class='flex flex-col justify-start items-start gap-4 w-full max-w-sm'>
       <h1 class='text-black text-2xl font-bold'>Dear User</h1>
       <div class='grid grid-cols-2 gap-1'>

@@ -7,9 +7,11 @@ import SurveyContainer from '@components/SurveyContainer';
 import ProgressBar from './ProgressBar';
 import { rewardisSurveyTexts } from './surveyOnlyTexsts';
 
-interface ISurveyWithProgressBarProps {}
+interface ISurveyWithProgressBarProps {
+  children: Element;
+}
 
-const SurveyWithProgressBar = ({}: ISurveyWithProgressBarProps) => {
+const SurveyWithProgressBar = ({ children }: ISurveyWithProgressBarProps) => {
   const elementRef = useRef<HTMLDivElement | null>(null);
   const [isSticky, setSticky] = useState(false);
 
@@ -54,9 +56,9 @@ const SurveyWithProgressBar = ({}: ISurveyWithProgressBarProps) => {
           'z-10 w-full flex flex-col justify-center items-center gap-2 transition-all duration-200',
         )}
       >
-        <div className='flex justify-center items-center gap-2 px-2 mt-8'>
+        <div className='flex justify-center items-center gap-2 px-2 mt-8 w-full'>
           <ProgressBar />
-          <img src='/img/sweep-rewardis/samsung.webp' alt='phone' className='w-1/12' width={300} height={643} loading={'eager'} />
+          {children}
         </div>
 
         <SurveyContainer
