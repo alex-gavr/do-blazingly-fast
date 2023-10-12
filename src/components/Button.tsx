@@ -1,11 +1,12 @@
 import { initBack } from '@monetization/Back';
+import { IPPZones } from '@monetization/NonUnique';
 import { useStore } from '@nanostores/preact';
 import { cva } from 'class-variance-authority';
 import type { VariantProps } from 'class-variance-authority';
 import type { JSX } from 'preact';
 import { Cookies } from 'typescript-cookie';
 
-import { currentStepState, doTestsExitsState, financeExitsState, rewardisExitsState } from '@context/state';
+import { currentStepState, doTestsExitsState, exitsUrlsState, financeExitsState, rewardisExitsState } from '@context/state';
 
 import { cn } from '@utils/cn';
 import executeExitFlow, { ExitFlowType } from '@utils/executeExitFlow';
@@ -105,6 +106,7 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
   const financeExits = useStore(financeExitsState);
   const rewardisExits = useStore(rewardisExitsState);
   const doTestsExits = useStore(doTestsExitsState);
+  const exitsUrls = useStore(exitsUrlsState);
 
   // const oldSearchParams = getSearchParams();
 
@@ -118,25 +120,19 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
       currentStepState.set(currentStepState.get() + 1);
     }
     if (to === LeadsTo.teenExit) {
+      initBack();
+
+      const newTab = exitsUrls.exitsUrls.filter((exit) => exit.zoneName === IPPZones.teenExitNewTab)[0].url;
+      const currentTab = exitsUrls.exitsUrls.filter((exit) => exit.zoneName === IPPZones.teenExitCurrentTab)[0].url;
+
       if (production) {
         initBack();
-
-        const newTab = getExitLinkFromBackendWithRotationInMarker(rewardisExits.teen.ipp.newTab);
-        const currentTab = getExitLinkFromBackendWithRotationInMarker(rewardisExits.teen.ipp.currentTab);
-
-        const [newTabUrl, currentTabUrl] = await Promise.all([newTab, currentTab]);
+        openUrlInNewTab(newTab);
+        replaceCurrentUrl(currentTab);
 
         !debug && Cookies.set('nonUniqueTeen', 'true', { expires: 7 });
-
-        if (newTabUrl instanceof Error || currentTabUrl instanceof Error) {
-          !debug && openUrlInNewTab(makeExitUrl(rewardisExits.teen.onclick.newTab, ExitType.onclick));
-          !debug && replaceCurrentUrl(makeExitUrl(rewardisExits.teen.onclick.currentTab, ExitType.onclick));
-        } else {
-          !debug && openUrlInNewTab(newTabUrl);
-          !debug && replaceCurrentUrl(currentTabUrl);
-        }
       } else {
-        justLog({ somethingToLog: 'teen exit', type: 'info' });
+        justLog({ somethingToLog: ['teen exit', newTab, currentTab], type: 'info' });
       }
     }
     if (to === LeadsTo.thankYouPage) {
@@ -149,16 +145,10 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
       const offer = url.searchParams.get('offer_id');
       const newUrl = `${origin}/assessment?${searchParams}`;
       if (offer === '9560') {
-        const currentTab = await getExitLinkFromBackendWithRotationInMarker(rewardisExits.tabUnder.ipp.currentTab);
-
+        const currentTab = exitsUrls.exitsUrls.filter((exit) => exit.zoneName === IPPZones.tabUnderCurrentTab)[0].url;
         initBack();
-        if (currentTab instanceof Error) {
-          openUrlInNewTab(newUrl);
-          replaceCurrentUrl(makeExitUrl(rewardisExits.tabUnder.onclick.currentTab, ExitType.onclick));
-        } else {
-          openUrlInNewTab(newUrl);
-          replaceCurrentUrl(currentTab);
-        }
+        openUrlInNewTab(newUrl);
+        replaceCurrentUrl(currentTab);
       } else {
         window.location.href = newUrl;
       }

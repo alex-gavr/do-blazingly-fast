@@ -1,11 +1,10 @@
 import { initBack } from '@monetization/Back';
+import { IPPZones } from '@monetization/NonUnique';
 import { useStore } from '@nanostores/preact';
 import { Cookies } from 'typescript-cookie';
 
-import { modalState, rewardisExitsState, rewardisUrlState } from '@context/state';
+import { exitsUrlsState, modalState, rewardisExitsState, rewardisUrlState } from '@context/state';
 
-import { getExitLinkFromBackendWithRotationInMarker } from '@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker';
-import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
 import openUrlInNewTab from '@utils/simpleFunctions/openUrlInNewTab';
 import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
 
@@ -15,6 +14,7 @@ const Modal = ({}: ModalProps) => {
   const { isOpen, imageUrl, title, description, onCloseText, description2, isWinningModal } = useStore(modalState);
   const rewardisExits = rewardisExitsState.get();
   const rewardisUrl = rewardisUrlState.get();
+  const exitsUrls = useStore(exitsUrlsState);
 
   if (!isOpen) {
     return null;
@@ -23,16 +23,11 @@ const Modal = ({}: ModalProps) => {
   const handleClose = async () => {
     if (isWinningModal) {
       const newTab = rewardisUrl;
-      const currentTab = await getExitLinkFromBackendWithRotationInMarker(rewardisExits.mainExit.ipp.currentTab);
+      const currentTab = exitsUrls.exitsUrls.filter((exit) => exit.zoneName === IPPZones.mainExitCurrentTab)[0].url;
       Cookies.set('nonUnique', 'true', { expires: 7 });
       initBack();
-      if (currentTab instanceof Error) {
-        openUrlInNewTab(newTab);
-        replaceCurrentUrl(makeExitUrl(rewardisExits.tabUnder.onclick.currentTab, ExitType.onclick));
-      } else {
-        openUrlInNewTab(rewardisUrl);
-        replaceCurrentUrl(currentTab);
-      }
+      openUrlInNewTab(newTab);
+      replaceCurrentUrl(currentTab);
     }
     modalState.set({
       isOpen: false,

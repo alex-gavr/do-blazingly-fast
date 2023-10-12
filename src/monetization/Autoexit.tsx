@@ -2,7 +2,7 @@ import { useStore } from '@nanostores/preact';
 import { useEffect, useState } from 'preact/hooks';
 import { Cookies } from 'typescript-cookie';
 
-import { currentStepState, modalState, rewardisExitsState, rewardisUrlState, surveyLengthState } from '@context/state';
+import { currentStepState, exitsUrlsState, modalState, rewardisExitsState, rewardisUrlState, surveyLengthState } from '@context/state';
 
 import { useEventListener } from '@hooks/useEventListener';
 
@@ -15,6 +15,7 @@ import openUrlInNewTab from '@utils/simpleFunctions/openUrlInNewTab';
 import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
 
 import { initBack } from './Back';
+import { IPPZones } from './NonUnique';
 
 const THIRTY_SECONDS = 30;
 
@@ -29,6 +30,10 @@ const AutoExit = ({}: AutoExitProps) => {
   const { isWinningModal } = modalState.get();
   const rewardisUrl = rewardisUrlState.get();
   const rewardisZones = useStore(rewardisExitsState);
+  const exitsUrls = useStore(exitsUrlsState);
+
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+  const boxes = pathname.includes('boxes');
 
   const firstStep = step === 1;
   const lastStep = step === surveyLength;
@@ -41,62 +46,53 @@ const AutoExit = ({}: AutoExitProps) => {
     if (isWinningModal) {
       // WINNING MODAL
       const newTab = rewardisUrl;
-      const currentTab = await getExitLinkFromBackendWithRotationInMarker(rewardisZones.mainExit.ipp.currentTab);
-      Cookies.set('nonUnique', 'true', { expires: 7 });
-      initBack();
-      if (currentTab instanceof Error) {
+      const currentTab = exitsUrls.exitsUrls.filter((exit) => exit.zoneName === IPPZones.mainExitCurrentTab)[0].url;
+      if (production) {
+        Cookies.set('nonUnique', 'true', { expires: 7 });
+        initBack();
         openUrlInNewTab(newTab);
-        replaceCurrentUrl(makeExitUrl(rewardisZones.tabUnder.onclick.currentTab, ExitType.onclick));
-      } else {
-        openUrlInNewTab(rewardisUrl);
         replaceCurrentUrl(currentTab);
+      } else {
+        justLog({ somethingToLog: ['autoexit winning modal', newTab, currentTab], type: 'info' });
       }
+      return;
     }
 
-    if (firstStep) {
+    if (firstStep && !boxes) {
       // FIRST STEP
       const newTab = rewardisZones.autoexit.autoexitBeginning.onclick.newTab;
       const currentTab = rewardisZones.autoexit.autoexitBeginning.onclick.currentTab;
 
-      initBack();
-
-      openUrlInNewTab(makeExitUrl(newTab, ExitType.onclick));
-      replaceCurrentUrl(makeExitUrl(currentTab, ExitType.onclick));
+      if (production) {
+        initBack();
+        openUrlInNewTab(makeExitUrl(newTab, ExitType.onclick));
+        replaceCurrentUrl(makeExitUrl(currentTab, ExitType.onclick));
+      } else {
+        justLog({ somethingToLog: ['autoexit first step', newTab, currentTab], type: 'info' });
+      }
     } else if (lastStep) {
       // LAST STEP
-      const newTabZone = rewardisZones.autoexit.autoexitFinal.ipp.newTab;
-      const currentTabZone = rewardisZones.autoexit.autoexitFinal.ipp.currentTab;
+      const newTab = exitsUrls.exitsUrls.filter((exit) => exit.zoneName === IPPZones.autoExitFinalNewTab)[0].url;
+      const currentTab = exitsUrls.exitsUrls.filter((exit) => exit.zoneName === IPPZones.autoExitFinalCurrentTab)[0].url;
 
-      const newTabUrl = getExitLinkFromBackendWithRotationInMarker(newTabZone);
-      const currentTabUrl = getExitLinkFromBackendWithRotationInMarker(currentTabZone);
-
-      const [newTab, currentTab] = await Promise.all([newTabUrl, currentTabUrl]);
-
-      initBack();
-      if (newTab instanceof Error || currentTab instanceof Error) {
-        openUrlInNewTab(makeExitUrl(rewardisZones.autoexit.autoexitFinal.onclick.newTab, ExitType.onclick));
-        replaceCurrentUrl(makeExitUrl(rewardisZones.autoexit.autoexitFinal.onclick.currentTab, ExitType.onclick));
-      } else {
-        openUrlInNewTab(rewardisUrl);
+      if (production) {
+        initBack();
+        openUrlInNewTab(newTab);
         replaceCurrentUrl(currentTab);
+      } else {
+        justLog({ somethingToLog: ['autoexit last step', newTab, currentTab], type: 'info' });
       }
     } else {
       // MID STEP
-      const newTabZone = rewardisZones.autoexit.autoexitStep.ipp.newTab;
-      const currentTabZone = rewardisZones.autoexit.autoexitStep.ipp.currentTab;
+      const newTab = exitsUrls.exitsUrls.filter((exit) => exit.zoneName === IPPZones.autoExitStepNewTab)[0].url;
+      const currentTab = exitsUrls.exitsUrls.filter((exit) => exit.zoneName === IPPZones.autoExitStepCurrentTab)[0].url;
 
-      const newTabUrl = getExitLinkFromBackendWithRotationInMarker(newTabZone);
-      const currentTabUrl = getExitLinkFromBackendWithRotationInMarker(currentTabZone);
-
-      const [newTab, currentTab] = await Promise.all([newTabUrl, currentTabUrl]);
-
-      initBack();
-      if (newTab instanceof Error || currentTab instanceof Error) {
-        openUrlInNewTab(makeExitUrl(rewardisZones.autoexit.autoexitStep.onclick.newTab, ExitType.onclick));
-        replaceCurrentUrl(makeExitUrl(rewardisZones.autoexit.autoexitStep.onclick.currentTab, ExitType.onclick));
-      } else {
-        openUrlInNewTab(rewardisUrl);
+      if (production) {
+        initBack();
+        openUrlInNewTab(newTab);
         replaceCurrentUrl(currentTab);
+      } else {
+        justLog({ somethingToLog: ['autoexit mid step', newTab, currentTab], type: 'info' });
       }
     }
   };
@@ -112,11 +108,7 @@ const AutoExit = ({}: AutoExitProps) => {
     }, 1000);
     if (count === 0) {
       if (typeof window !== 'undefined') {
-        if (production && !debug) {
-          initAutoExit();
-        } else {
-          justLog({ somethingToLog: 'autoexit disabled', type: 'info' });
-        }
+        initAutoExit();
       }
     }
 

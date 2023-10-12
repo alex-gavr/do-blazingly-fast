@@ -140,8 +140,8 @@ export const rewardisExitsState = map({
     },
     autoexitStep: {
       ipp: {
-        newTab: 6429440,
-        currentTab: 6429441,
+        newTab: 6429440, // 5865830
+        currentTab: 6429441, // 5865825
       },
       onclick: {
         newTab: 5865830, // as fallback
@@ -150,8 +150,8 @@ export const rewardisExitsState = map({
     },
     autoexitFinal: {
       ipp: {
-        newTab: 6429448,
-        currentTab: 6429447,
+        newTab: 6429448, // 5865830.
+        currentTab: 6429447, // 5865825
       },
       onclick: {
         newTab: 5865830, // as fallback
@@ -185,4 +185,13 @@ export const rewardisExitsState = map({
       currentTab: 5865837, // rewardis_sweepstake_leadgen_v3_non_unique
     },
   },
+});
+
+type ExitUrls = {
+  zoneName: string;
+  url: string;
+}[];
+
+export const exitsUrlsState = map({
+  exitsUrls: [] as ExitUrls,
 });

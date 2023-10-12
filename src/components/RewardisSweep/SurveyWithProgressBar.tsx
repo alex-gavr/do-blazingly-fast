@@ -66,7 +66,7 @@ const SurveyWithProgressBar = ({}: ISurveyWithProgressBarProps) => {
           classNameAnswersContainer='grid-cols-2'
           buttonVariant={'rewardisSweep'}
           rounded={'xl'}
-          fontSize={'2xl'}
+          fontSize={'base'}
           padding={'bigger'}
           className='uppercase tracking-wider'
         />
