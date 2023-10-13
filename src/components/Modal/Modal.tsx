@@ -5,6 +5,7 @@ import { Cookies } from 'typescript-cookie';
 
 import { exitsUrlsState, modalState, rewardisExitsState, rewardisUrlState } from '@context/state';
 
+import getUrlFromContextBasedOnZone from '@utils/getUrlFromContext';
 import openUrlInNewTab from '@utils/simpleFunctions/openUrlInNewTab';
 import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
 
@@ -23,7 +24,7 @@ const Modal = ({}: ModalProps) => {
   const handleClose = async () => {
     if (isWinningModal) {
       const newTab = rewardisUrl;
-      const currentTab = exitsUrls.exitsUrls.filter((exit) => exit.zoneName === IPPZones.mainExitCurrentTab)[0].url;
+      const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.mainExitCurrentTab });
       Cookies.set('nonUnique', 'true', { expires: 7 });
       initBack();
       openUrlInNewTab(newTab);

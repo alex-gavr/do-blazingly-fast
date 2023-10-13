@@ -104,6 +104,11 @@ export const rewardisExitsState = map({
       currentTab: 5998997,
     },
   },
+  noZoneFallback: {
+    onclick: {
+      currentTab: 6455458,
+    },
+  },
   back: {
     onclick: {
       currentTab: 5865833,

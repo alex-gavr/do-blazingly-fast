@@ -6,10 +6,9 @@ import { currentStepState, exitsUrlsState, modalState, rewardisExitsState, rewar
 
 import { useEventListener } from '@hooks/useEventListener';
 
+import getUrlFromContextBasedOnZone from '@utils/getUrlFromContext';
 import justLog from '@utils/justLog';
-import { getExitLinkFromBackendWithRotationInMarker } from '@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker';
 import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
-import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
 import openUrlInNewTab from '@utils/simpleFunctions/openUrlInNewTab';
 import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
@@ -46,7 +45,7 @@ const AutoExit = ({}: AutoExitProps) => {
     if (isWinningModal) {
       // WINNING MODAL
       const newTab = rewardisUrl;
-      const currentTab = exitsUrls.exitsUrls.filter((exit) => exit.zoneName === IPPZones.mainExitCurrentTab)[0].url;
+      const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.mainExitCurrentTab });
       if (production) {
         Cookies.set('nonUnique', 'true', { expires: 7 });
         initBack();
@@ -67,25 +66,28 @@ const AutoExit = ({}: AutoExitProps) => {
         initBack();
         openUrlInNewTab(makeExitUrl(newTab, ExitType.onclick));
         replaceCurrentUrl(makeExitUrl(currentTab, ExitType.onclick));
+        return;
       } else {
         justLog({ somethingToLog: ['autoexit first step', newTab, currentTab], type: 'info' });
       }
     } else if (lastStep) {
       // LAST STEP
-      const newTab = exitsUrls.exitsUrls.filter((exit) => exit.zoneName === IPPZones.autoExitFinalNewTab)[0].url;
-      const currentTab = exitsUrls.exitsUrls.filter((exit) => exit.zoneName === IPPZones.autoExitFinalCurrentTab)[0].url;
+
+      const newTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitFinalNewTab });
+      const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitFinalCurrentTab });
 
       if (production) {
         initBack();
         openUrlInNewTab(newTab);
         replaceCurrentUrl(currentTab);
+        return;
       } else {
         justLog({ somethingToLog: ['autoexit last step', newTab, currentTab], type: 'info' });
       }
     } else {
       // MID STEP
-      const newTab = exitsUrls.exitsUrls.filter((exit) => exit.zoneName === IPPZones.autoExitStepNewTab)[0].url;
-      const currentTab = exitsUrls.exitsUrls.filter((exit) => exit.zoneName === IPPZones.autoExitStepCurrentTab)[0].url;
+      const newTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitStepNewTab });
+      const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitStepCurrentTab });
 
       if (production) {
         initBack();
