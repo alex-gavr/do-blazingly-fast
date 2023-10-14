@@ -1,0 +1,20 @@
+---
+import Footer from '@components/Footer.astro';
+import CommentsSection from '@components/RewardisOldSweep/SweepComments/CommentSection.astro';
+import HeaderOldSweep from './HeaderOldSweep.astro';
+import type { TOldSweepDictionary } from '@i18n/9569/en';
+
+interface Props {
+  commentsData: TOldSweepDictionary['CommentsSection'];
+}
+const { commentsData } = Astro.props;
+---
+
+<section class='flex min-h-screen flex-col items-center justify-start bg-neutral-100 w-full'>
+  <div class='flex w-full max-w-5xl flex-col items-center justify-center gap-2'>
+    <HeaderOldSweep />
+    <slot />
+    <CommentsSection commentsData={commentsData} />
+    <Footer />
+  </div>
+</section>

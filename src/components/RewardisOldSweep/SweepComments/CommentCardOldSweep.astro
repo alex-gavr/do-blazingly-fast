@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+interface Props {
+  name: string;
+  text: string;
+  likes: number;
+  avatar: string;
+  relativeTime: string;
+}
+const { name, text, likes, avatar, relativeTime } = Astro.props;
+---
+
+<div class='bg-zinc-200 px-2 py-2 rounded-sm w-full max-w-sm relative flex flex-row gap-2'>
+  <Image src={avatar} width='40' height='40' alt='person' class='h-10 w-10 shrink-0 rounded-sm' loading='lazy' />
+  <div class='flex flex-col justify-start items-start gap-1'>
+    <h1 class='text-black text-sm font-bold tracking-wider'>{name}</h1>
+    <p class='text-slate-800 text-xs tracking-wider'>{text}</p>
+    <div class='flex flex-row justify-center items-center gap-2 mt-1'>
+      <div class='flex flex-row items-start justify-start gap-1'>
+        <p class='text-[0.6rem] tracking-wider sm:text-xs text-slate-700'>{likes}</p>
+        <p class='text-[0.6rem] tracking-wider sm:text-xs text-slate-700'>Likes</p>
+      </div>
+      <p class='text-[0.6rem] tracking-wider sm:text-xs text-slate-700'>Reply</p>
+      <p class='text-[0.6rem] tracking-wider sm:text-xs text-slate-700'>{relativeTime}</p>
+    </div>
+  </div>
+</div>

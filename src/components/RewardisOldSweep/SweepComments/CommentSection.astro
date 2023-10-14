@@ -1,0 +1,54 @@
+---
+import type { TOldSweepDictionary } from '@i18n/9569/en';
+import CommentCardOldSweep from './CommentCardOldSweep.astro';
+
+interface Props {
+  commentsData: TOldSweepDictionary['CommentsSection'];
+}
+const { commentsData } = Astro.props;
+
+type TFullComment = {
+  name: string;
+  text: string;
+  likes: number;
+  avatar: string;
+  relativeTime: string;
+};
+
+const createFullComments = (comments: any): TFullComment[] => {
+  const fullComments = comments.map((comment: any, index: number) => {
+    const number = index + 1;
+    const likes = Math.floor(Math.random() * 100);
+    const avatar = `/img/sweep-rewardis/users/person-sweep-${number}.webp`;
+    const fullComment = {
+      ...comment,
+      avatar,
+      likes,
+    };
+    return fullComment;
+  });
+  return fullComments;
+};
+
+const sweepComments = createFullComments(commentsData.Comments);
+---
+
+<section class='w-full max-w-4xl px-2 flex justify-center items-center z-10'>
+  <div class='flex flex-col items-center justify-center w-full gap-2 max-w-sm'>
+    <div class='bg-zinc-200 flex flex-row items-center justify-between w-full p-2'>
+      <p class='text-slate-900 font-normal text-sm'>16 {commentsData.commentsWord}</p>
+      <p class='text-slate-900 font-normal text-xs'>{commentsData.sort}</p>
+    </div>
+    {
+      sweepComments.map((comment) => (
+        <CommentCardOldSweep
+          name={comment.name}
+          text={comment.text}
+          likes={comment.likes}
+          avatar={comment.avatar}
+          relativeTime={comment.relativeTime}
+        />
+      ))
+    }
+  </div>
+</section>

@@ -1,6 +1,6 @@
 import langParser from 'accept-language-parser';
 
-import { type TValidLocale, defaultLocale, locales } from '@config/globalConfig';
+import { type TValidLocale, defaultLocale, uniqueLanguages } from '@config/globalConfig';
 
 type TLocaleSource = {
   locale: TValidLocale;
@@ -22,7 +22,7 @@ export const findBestMatchingLocale = (acceptLangHeader: string) => {
     return { locale: lang.code };
   });
 
-  const matchedLanguage = locales.find((locale) => {
+  const matchedLanguage = uniqueLanguages.find((locale) => {
     const { lang } = getLocalePartsFrom({ locale });
     return filteredLangs.find((filteredLang) => filteredLang.locale === lang);
   });

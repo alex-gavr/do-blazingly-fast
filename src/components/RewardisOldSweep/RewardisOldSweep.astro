@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import OldSweepLayout from './OldSweepLayout.astro';
+import Counter from './TimerOld';
+import SurveyContainer from '@components/SurveyContainer';
+import Confetti from './Confetti';
+import { findBestMatchingLocale } from '@utils/languageDetection/languageDetection';
+import { defaultLocale, type TValidLocale } from '@config/globalConfig';
+import { getDictionary } from '@i18n/getDictionary';
+import type { TOldSweepDictionary } from '@i18n/9569/en';
+
+const today = new Date().toDateString();
+
+let locale: TValidLocale;
+const getLocale = () => {
+  const matchedLocale = findBestMatchingLocale(Astro.request.headers.get('Accept-Language') || defaultLocale);
+  return matchedLocale;
+};
+
+const suitableLocale = getLocale();
+
+locale = suitableLocale;
+
+const t = (await getDictionary(9569, locale)) as TOldSweepDictionary;
+---
+
+<OldSweepLayout commentsData={t.CommentsSection}>
+  <section class='p-3 flex flex-col gap-8 relative z-10'>
+    <div class='flex flex-col justify-start items-start gap-4 w-full max-w-sm'>
+      <h1 class='text-black text-2xl font-bold'>{t.Main.dearUser}</h1>
+      <div class='flex flex-col gap-2'>
+        <div class='flex flex-col gap-2'>
+          <p class='text-xs tracking-wider text-slate-800'>
+            {t.Main.today}, {today}, {t.Main.p1}{' '}
+            <b>{t.Main.prize}</b>
+          </p>
+          <p class='text-xs tracking-wider text-slate-800'>
+            {t.Main.p2}{' '}
+            <b>{t.Main.prize}</b>. {t.Main.p3}
+          </p>
+          <Counter client:load t={t.Counter} />
+        </div>
+        <Image
+          src='/img/sweep-old/samsung.png'
+          alt='phone'
+          class={'w-40 place-self-center'}
+          width={377}
+          height={252}
+          loading={'eager'}
+          fetchpriority='high'
+        />
+        <SurveyContainer
+          client:load
+          texts={t.SurveyTexts}
+          offerId={9569}
+          classNameText='text-black'
+          classNameAnswersContainer='grid-cols-2'
+          buttonVariant={'sweepOld'}
+          rounded={'default'}
+          fontSize={'base'}
+          padding={'md'}
+          className='uppercase tracking-wider'
+        />
+      </div>
+    </div>
+  </section>
+  <Confetti client:load />
+</OldSweepLayout>

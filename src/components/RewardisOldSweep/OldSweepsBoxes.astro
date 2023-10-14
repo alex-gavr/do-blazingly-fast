@@ -1,0 +1,28 @@
+---
+import OldSweepLayout from './OldSweepLayout.astro';
+import Modal from '@components/Modal/Modal';
+import BoxesOldSweep from './BoxesOldSweep';
+import { defaultLocale, type TValidLocale } from '@config/globalConfig';
+import { findBestMatchingLocale } from '@utils/languageDetection/languageDetection';
+import { getDictionary } from '@i18n/getDictionary';
+import type { TOldSweepDictionary } from '@i18n/9569/en';
+
+let locale: TValidLocale;
+const getLocale = () => {
+  const matchedLocale = findBestMatchingLocale(Astro.request.headers.get('Accept-Language') || defaultLocale);
+  return matchedLocale;
+};
+
+const suitableLocale = getLocale();
+
+locale = suitableLocale;
+
+const t = (await getDictionary(9569, locale)) as TOldSweepDictionary;
+---
+
+<OldSweepLayout commentsData={t.CommentsSection}>
+  <div class='grid grid-cols-3 gap-4 w-full items-center px-2 py-8'>
+    <BoxesOldSweep client:load t={t.Modal} />
+  </div>
+  <Modal client:idle />
+</OldSweepLayout>

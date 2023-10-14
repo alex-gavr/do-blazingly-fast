@@ -31,6 +31,18 @@ p {
   @apply text-slate-300;
 }
 
+.raiConfetti {
+  background-image: url('/img/rain/confetti-1.png'), url('/img/rain/confetti-2.png'), url('/img/rain/confetti-3.png');
+  z-index: 1;
+  animation: snow 13s linear infinite;
+  transition: opacity 0.4s ease;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
 .rain {
   background-image: url('/img/rain/dollars-1.png'), url('/img/rain/dollars-2.png'), url('/img/rain/dollars-3.png');
   z-index: 1;

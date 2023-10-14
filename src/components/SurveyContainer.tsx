@@ -40,7 +40,7 @@ const SurveyContainer = ({
 
   return (
     <>
-      <h1 className={cn('text-center text-2xl font-bold', classNameText)}>{filteredQuestion.question}</h1>
+      <h1 className={cn('text-center text-xl font-bold tracking-wide', classNameText)}>{filteredQuestion.question}</h1>
       <div className={cn('grid w-full grid-cols-1 gap-2 sm:grid-cols-2 mt-2 md:mt-4', classNameAnswersContainer)}>
         {filteredQuestion.answers.map((answer) => (
           <Button

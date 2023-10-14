@@ -1,15 +1,14 @@
 ---
-import Modal from '@components/Modal/Modal';
-import BoxesSweep from '@components/RewardisSweep/BoxesSweep';
-import SweepLayoutBoxes from '@components/RewardisSweep/SweepLayoutBoxes.astro';
+import OldSweepsBoxes from '@components/RewardisOldSweep/OldSweepsBoxes.astro';
+import RewardisBoxes from '@components/RewardisSweep/RewardisBoxes.astro';
+import { offers } from '@config/globalConfig';
 import Layout from '@layouts/Layout.astro';
+
+const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '0');
+const offerExists = offers.includes(offer as (typeof offers)[number]);
 ---
 
 <Layout title='Best Survey in the world'>
-  <SweepLayoutBoxes>
-    <div class='grid grid-cols-3 gap-4 w-full items-center px-2 py-8'>
-      <BoxesSweep client:load />
-    </div>
-    <Modal client:idle />
-  </SweepLayoutBoxes>
+  {offer === 9560 ? <RewardisBoxes /> : null}
+  {offer === 9569 ? <OldSweepsBoxes /> : null}
 </Layout>

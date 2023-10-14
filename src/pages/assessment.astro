@@ -3,14 +3,16 @@ import FinanceAssessment from '@components/FinanceSurvey/FinanceAssessment.astro
 import Layout from '@layouts/Layout.astro';
 import { offers } from '@config/globalConfig';
 import RewardisSweepAssessment from '@components/RewardisSweep/RewardisSweepAssessment.astro';
+import OldSweepAssessment from '@components/RewardisOldSweep/OldSweepAssessment.astro';
 
-const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '0');
+const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '2025');
 const offerExists = offers.includes(offer as (typeof offers)[number]);
 ---
 
 <Layout title='Finance Survey'>
-  {offer === 0 || offer === 2025 || !offer || !offerExists ? <FinanceAssessment /> : null}
+  {offer === 2025 || !offer || !offerExists ? <FinanceAssessment /> : null}
   {offer === 9560 ? <RewardisSweepAssessment /> : null}
+  {offer === 9569 ? <OldSweepAssessment /> : null}
 </Layout>
 
 <script>
@@ -18,7 +20,7 @@ const offerExists = offers.includes(offer as (typeof offers)[number]);
     const url = new URL(window.location.href);
     const offer = url.searchParams.get('offer_id');
     let redirectUrl = '';
-    if (offer === '9560') {
+    if (offer === '9560' || offer === '9569') {
       redirectUrl = url.href.replace('/assessment', '/boxes');
     } else {
       redirectUrl = url.href.replace('/assessment', '/thank-you');

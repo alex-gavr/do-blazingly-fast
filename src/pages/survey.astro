@@ -17,7 +17,7 @@ const suitableLocale = getLocale();
 locale = suitableLocale;
 
 const d = (await getDictionary(10864, locale)) as TShoppingSurveyDictionary;
-const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '0');
+const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '2025');
 ---
 
 <Layout title='Finance Survey'>

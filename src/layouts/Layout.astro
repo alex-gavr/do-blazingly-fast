@@ -4,52 +4,13 @@ import AutoExit from '@monetization/Autoexit';
 import InitPush from '@monetization/InitPush';
 import Reverse from '@monetization/Reverse';
 import NonUnique from '@monetization/NonUnique';
-import { getDictionary } from '@i18n/getDictionary';
-import makeCommentsForFinanceSurvey from '@config/FinanceComments';
-import type { TFinanceDictionary } from '@i18n/2025/en';
-import { financeSurveyFullConfig } from '@i18n/FinanceSurveyFullConfig';
-import { rewardisExitsState } from '@context/state';
 import UpdateRewardisUrl from '@components/UpdateRewardisUrl';
-// import { getSurveyDataTexts } from '@utils/getSurveyDataTexts';
-// import fs from 'fs';
-// import path, { dirname, join } from 'path';
-// import { fileURLToPath } from 'url';
-// import { financeZones } from '@i18n/FinanceSurveyZones';
 
 export interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
-
-const d = (await getDictionary(0, 'en')) as TFinanceDictionary;
-
-// const zones = financeSurveyFullConfig.zones;
-const zonesRewardis = rewardisExitsState.get();
-
-// const surveyData = getSurveyDataTexts(d.MainSection.SurveyTexts, 0);
-
-// const mainSection = d.MainSection;
-
-// const fullConfig = {
-//   Zones: financeZones,
-//   MainSection: {
-//     ...d.MainSection,
-//     SurveyTexts: surveyData,
-//   },
-//   CommentSection: {
-//     ...d.CommentSection,
-//     Comments: makeCommentsForFinanceSurvey(d.CommentSection.Comments),
-//   },
-//   Assessment: d.Assessment,
-//   Offer: d.Offer,
-// };
-
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = dirname(__filename);
-
-// const filePath = join(__dirname, '..', 'i18n', 'FinanceSurveyFullConfig.ts');
-// fs.writeFileSync(filePath, `export const financeSurveyFullConfig = ${JSON.stringify(fullConfig)}`);
 ---
 
 <!doctype html>

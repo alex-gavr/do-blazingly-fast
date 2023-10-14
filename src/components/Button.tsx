@@ -54,10 +54,12 @@ const buttonVariants = cva(
         lazada: 'bg-gradient-to-r from-red-600 to-amber-500 text-neutral-100 border border-neutral-400',
         lazadaSecondary: 'border bg-gradient-to-r from-sky-200 to-indigo-200 border-slate-500 text-neutral-900 uppercase',
         rewardisSweep: 'bg-emerald-500 text-white',
+        sweepOld: 'bg-blue-600 shadow-inner shadow-blue-800 text-white',
       },
       padding: {
         default: 'px-4 py-2',
         sm: 'p-2',
+        md: 'p-3',
         wider: 'px-6 py-2',
         widest: 'px-8 py-2',
         bigger: 'px-6 py-4',
@@ -103,7 +105,6 @@ interface IButtonProps extends JSX.HTMLAttributes<HTMLButtonElement>, VariantPro
 
 const Button = ({ type, children, onClick, disabled, className, variant, padding, rounded, back, loading, fontSize, to, ...props }: IButtonProps) => {
   const financeExits = useStore(financeExitsState);
-  const rewardisExits = useStore(rewardisExitsState);
   const doTestsExits = useStore(doTestsExitsState);
   const exitsUrls = useStore(exitsUrlsState);
 
@@ -141,7 +142,7 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
       const searchParams = url.searchParams;
       const offer = url.searchParams.get('offer_id');
       const newUrl = `${origin}/assessment?${searchParams}`;
-      if (offer === '9560') {
+      if (offer === '9560' || offer === '9569') {
         const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.tabUnderCurrentTab });
         initBack();
         openUrlInNewTab(newUrl);
