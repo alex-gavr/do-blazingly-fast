@@ -14,7 +14,6 @@ type InitPushProps = {};
 
 const InitPush = ({}: InitPushProps) => {
   const [done, setDone] = useState<boolean>(false);
-  const { push } = useClientSearchParams();
 
   const startPush = () => {
     // This is zone from context
@@ -27,6 +26,7 @@ const InitPush = ({}: InitPushProps) => {
   };
 
   useEffect(() => {
+    const { push } = useClientSearchParams();
     if (!done && push !== '0') {
       if (production && !debug) {
         startPush();

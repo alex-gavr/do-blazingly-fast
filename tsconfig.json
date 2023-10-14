@@ -16,7 +16,8 @@
       "@context/*": ["src/context/*"],
       "@hooks/*": ["src/hooks/*"],
       "@monetization/*": ["src/monetization/*"],
-      "@fraudPrevention/*": ["src/fraudPrevention/*"]
+      "@fraudPrevention/*": ["src/fraudPrevention/*"],
+      "@features/*": ["src/features/*"]
     }
   }
 }
