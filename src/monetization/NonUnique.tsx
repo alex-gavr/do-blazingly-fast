@@ -2,14 +2,12 @@ import { useStore } from '@nanostores/preact';
 import { useEffect } from 'preact/hooks';
 import { getCookie } from 'typescript-cookie';
 
-import { exitsUrlsState, financeExitsState, rewardisExitsState } from '@context/state';
+import { exitsUrlsState, rewardisExitsState } from '@context/state';
 
 import generateUrlBasedOnType from '@utils/generateUrlBasedOnType';
 import isIPP from '@utils/isIPP';
 import { getExitLinkFromBackendWithRotationInMarker } from '@utils/linksHelpers/getExitLinkFromBackendWithRotationInMarker';
 import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
-import debug from '@utils/simpleFunctions/isDebug';
-import production from '@utils/simpleFunctions/isProduction';
 import openUrlInNewTab from '@utils/simpleFunctions/openUrlInNewTab';
 import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
 

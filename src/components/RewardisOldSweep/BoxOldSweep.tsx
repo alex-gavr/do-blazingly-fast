@@ -55,7 +55,7 @@ const BoxOldSweep = ({ attempt, setAttempt, index, t }: IBoxesProps) => {
   };
 
   return (
-    <div className='flex flex-col justify-center items-center rounded-md overflow-hidden relative' onClick={handleOpen}>
+    <div className='flex flex-col justify-center items-center h-20 md:h-32 rounded-md overflow-hidden relative' onClick={handleOpen}>
       {!isOpen && (
         <img
           src={'img/sweep-old/box_c.png'}
@@ -84,7 +84,7 @@ const BoxOldSweep = ({ attempt, setAttempt, index, t }: IBoxesProps) => {
             alt=''
             width={241}
             height={79}
-            className='animate-fade-up transition-all w-24 md:w-40 animate-duration-1000 absolute top-1 sm:top-0 z-10'
+            className='animate-fade w-24 md:w-40 animate-duration-1000 absolute top-1 sm:top-0 z-10'
           />
           {attempt === 2 && winnerBox && (
             <img
@@ -92,7 +92,7 @@ const BoxOldSweep = ({ attempt, setAttempt, index, t }: IBoxesProps) => {
               alt=''
               width={377}
               height={252}
-              className='absolute top-0 animate-fade-up animate-duration-700 animate-ease-in-out transition-all animate-delay-500 ease-in-out w-14 z-20'
+              className='absolute top-0 animate-fade-up animate-duration-700 animate-ease-in-out animate-delay-500 ease-in-out w-14 md:w-20 z-20'
             />
           )}
           <img
@@ -100,7 +100,7 @@ const BoxOldSweep = ({ attempt, setAttempt, index, t }: IBoxesProps) => {
             alt=''
             width={101}
             height={92}
-            className='animate-fade-up transition-all w-24 md:w-40 animate-duration-1000 pt-[18px] z-30'
+            className='animate-fade w-24 md:w-40 animate-duration-1000 pt-[16px] md:pt-[10px] z-30'
           />
         </>
       )}
