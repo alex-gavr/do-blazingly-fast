@@ -133,7 +133,7 @@ export const rewardisExitsState = map({
     },
   },
   push: {
-    zone: 5866071, // 5866071 current in Rewardis. Custom zones 6429429
+    zone: 6429429, // 5866071 current in Rewardis. Custom zones 6429429
     zone_subdomain: 5866154,
   },
   autoexit: {
