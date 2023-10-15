@@ -6,7 +6,8 @@ import Reverse from '@monetization/Reverse';
 import NonUnique from '@monetization/NonUnique';
 import UpdateRewardisUrl from '@components/UpdateRewardisUrl';
 import InApp from '@features/inApp/inApp';
-import SubDomainRotation from '@features/SubDomainRotation';
+import { UAParser } from 'ua-parser-js';
+import InAppOverlay from '@features/inApp/InAppOverlay';
 
 export interface Props {
   title: string;
@@ -19,17 +20,13 @@ export type InAppResult = {
 
 const { title } = Astro.props;
 
-const ua = Astro.request.headers.get('user-agent');
-const result: InAppResult = new InApp(ua!);
+const UA = Astro.request.headers.get('user-agent') ?? '';
+const parser = UAParser(UA);
+const result: InAppResult = new InApp(UA);
 const isInApp = result.isInApp;
-const browser = result.browser;
-console.log('🚀 ~ isInApp:', isInApp);
-console.log('🚀 ~ browser:', browser);
-const url = Astro.request.url;
 
-if (isInApp) {
-  return Astro.redirect(`googlechrome://navigate?url=${url}`);
-}
+// const browserName = parser.browser.name?.toLocaleLowerCase();
+const osName = parser.os.name?.toLocaleLowerCase();
 ---
 
 <!doctype html>
@@ -45,8 +42,8 @@ if (isInApp) {
     <script src='@fraudPrevention/areCookiesEnabled.ts'></script>
   </head>
   <body id='body'>
+    {isInApp && <InAppOverlay client:only osName={osName} />}
     <NonUnique client:only='preact' />
-    <SubDomainRotation client:only='preact' />
     <main class='flex flex-col justify-center items-center min-h-screen overflow-hidden'>
       <slot />
     </main>
