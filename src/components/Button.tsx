@@ -140,6 +140,7 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
       const url = new URL(window.location.href);
       const origin = url.origin;
       const searchParams = url.searchParams;
+      searchParams.delete('rotated');
       const offer = url.searchParams.get('offer_id');
       const newUrl = `${origin}/assessment?${searchParams}`;
       if (offer === '9560' || offer === '9569') {

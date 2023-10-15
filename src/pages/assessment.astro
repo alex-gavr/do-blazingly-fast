@@ -19,6 +19,7 @@ const offerExists = offers.includes(offer as (typeof offers)[number]);
   setTimeout(() => {
     const url = new URL(window.location.href);
     const offer = url.searchParams.get('offer_id');
+    url.searchParams.delete('rotated');
     let redirectUrl = '';
     if (offer === '9560' || offer === '9569') {
       redirectUrl = url.href.replace('/assessment', '/boxes');

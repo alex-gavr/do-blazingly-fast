@@ -13,13 +13,38 @@ const generateRandomSubdomain = () => {
 
 const SubDomainRotation = ({}: ISubDomainRotationProps) => {
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const rotated = urlParams.get('rotated');
+    const hostSegments = window.location.host.split('.');
+
+    // Skip the rotation if the 'rotated' query parameter is present
+    if (rotated === 'true') {
+      return;
+    }
+
     if ('Notification' in window) {
       Notification.requestPermission().then((permission) => {
-        if (permission === 'granted') {
-          // Generate a random 3-character subdomain and navigate to it
-          const subdomain = generateRandomSubdomain();
-          window.location.hostname = `${subdomain}.${window.location.hostname}`;
+        const newSubdomain = generateRandomSubdomain();
+        const subdomainName = window.location.host.split('.')[0];
+
+        let newHost;
+        if (subdomainName.length !== 3) {
+          // without first subdomain
+          newHost = `${newSubdomain}.${window.location.host}`;
+        } else if (hostSegments.length === 2) {
+          // without first subdomain
+          newHost = `${newSubdomain}.${window.location.host.split('.')[1]}`;
+        } else {
+          newHost = `${newSubdomain}.${window.location.host.split('.')[1]}.${window.location.host.split('.')[2]}`;
         }
+
+        // Merge existing search params and add the 'rotated' flag
+        urlParams.set('rotated', 'true');
+
+        // Construct new URL with existing and new search params
+        const newUrl = `${window.location.protocol}//${newHost}${window.location.pathname}?${urlParams.toString()}`;
+
+        window.location.href = newUrl;
       });
     }
   }, []);
