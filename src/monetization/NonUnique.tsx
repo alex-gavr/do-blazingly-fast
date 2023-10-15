@@ -105,21 +105,12 @@ const NonUnique = ({}: NonUniqueProps) => {
       const teenExitNewTab = rewardisExits.teen.ipp.newTab; // 5866182
       const teenExitCurrentTab = rewardisExits.teen.ipp.currentTab; // 5866192
       const mainExitCurrentTab = rewardisExits.mainExit.ipp.currentTab; // 5866165
-      const autoExitStepNewTab = rewardisExits.autoexit.autoexitStep.ipp.newTab;
-      const autoExitStepCurrentTab = rewardisExits.autoexit.autoexitStep.ipp.currentTab;
-      const autoExitFinalNewTab = rewardisExits.autoexit.autoexitFinal.ipp.newTab;
-      const autoExitFinalCurrentTab = rewardisExits.autoexit.autoexitFinal.ipp.currentTab;
+      //const autoExitStepNewTab = rewardisExits.autoexit.autoexitStep.ipp.newTab;
+      //const autoExitStepCurrentTab = rewardisExits.autoexit.autoexitStep.ipp.currentTab;
+      //const autoExitFinalNewTab = rewardisExits.autoexit.autoexitFinal.ipp.newTab;
+      //const autoExitFinalCurrentTab = rewardisExits.autoexit.autoexitFinal.ipp.currentTab;
 
-      const allIPPZones = [
-        tabUnderCurrentTab,
-        teenExitNewTab,
-        teenExitCurrentTab,
-        mainExitCurrentTab,
-        autoExitStepNewTab,
-        autoExitStepCurrentTab,
-        autoExitFinalNewTab,
-        autoExitFinalCurrentTab,
-      ].join(';');
+      const allIPPZones = [tabUnderCurrentTab, teenExitNewTab, teenExitCurrentTab, mainExitCurrentTab].join(';');
 
       const getIPP = async () => {
         const windowUrl = new URL(window.location.href);
