@@ -106,7 +106,7 @@ const AutoExit = ({}: AutoExitProps) => {
   useEventListener('mousemove', updateCount);
   useEventListener('click', updateCount);
   useEventListener('scroll', updateCount);
-  useEventListener('touchmove', updateCount);
+  // useEventListener('touchmove', updateCount);
 
   useEffect(() => {
     const interval = setInterval(() => {
