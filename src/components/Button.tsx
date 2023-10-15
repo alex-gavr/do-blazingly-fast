@@ -108,7 +108,6 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
   const doTestsExits = useStore(doTestsExitsState);
   const exitsUrls = useStore(exitsUrlsState);
   const prefetchedShit = useStore(prefetchUrlsState);
-  console.log('🚀 ~ prefetchedShit:', prefetchedShit);
 
   // const oldSearchParams = getSearchParams();
 
