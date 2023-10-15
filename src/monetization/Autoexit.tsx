@@ -29,7 +29,6 @@ const AutoExit = ({}: AutoExitProps) => {
   const { isWinningModal } = modalState.get();
   const rewardisUrl = rewardisUrlState.get();
   const rewardisZones = useStore(rewardisExitsState);
-  const exitsUrls = useStore(exitsUrlsState);
 
   const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
   const boxes = pathname.includes('boxes');
