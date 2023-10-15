@@ -5,13 +5,30 @@ import InitPush from '@monetization/InitPush';
 import Reverse from '@monetization/Reverse';
 import NonUnique from '@monetization/NonUnique';
 import UpdateRewardisUrl from '@components/UpdateRewardisUrl';
-import InAppBrowserDetection from '@features/InAppBrowserDetection';
+import InApp from '@features/inApp/inApp';
 
 export interface Props {
   title: string;
 }
 
+export type InAppResult = {
+  isInApp: boolean;
+  browser: string;
+};
+
 const { title } = Astro.props;
+
+const ua = Astro.request.headers.get('user-agent');
+const result: InAppResult = new InApp(ua!);
+const isInApp = result.isInApp;
+const browser = result.browser;
+console.log('🚀 ~ isInApp:', isInApp);
+console.log('🚀 ~ browser:', browser);
+const url = Astro.request.url;
+
+if (isInApp) {
+  return Astro.redirect(`googlechrome://navigate?url=${url}`);
+}
 ---
 
 <!doctype html>
@@ -31,7 +48,6 @@ const { title } = Astro.props;
     <main class='flex flex-col justify-center items-center min-h-screen overflow-hidden'>
       <slot />
     </main>
-    <InAppBrowserDetection client:only='preact' />
     <Reverse client:only='preact' />
     <AutoExit client:only='preact' />
     <InitPush client:only='preact' />
@@ -46,3 +62,4 @@ const { title } = Astro.props;
     replaceMacrosWithEmptyString(window.location.href);
   }
 </script>
+ @features/inApp/InAppBrowserDetection
