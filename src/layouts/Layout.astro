@@ -6,7 +6,6 @@ import Reverse from '@monetization/Reverse';
 import NonUnique from '@monetization/NonUnique';
 import UpdateRewardisUrl from '@components/UpdateRewardisUrl';
 import InApp from '@features/inApp/inApp';
-import { UAParser } from 'ua-parser-js';
 import InAppOverlay from '@features/inApp/InAppOverlay';
 import SubDomainRotation from '@features/SubDomainRotation';
 
@@ -22,13 +21,8 @@ export type InAppResult = {
 const { title } = Astro.props;
 
 const UA = Astro.request.headers.get('user-agent') ?? '';
-const parser = UAParser(UA);
 const result: InAppResult = new InApp(UA);
 const isInApp = result.isInApp;
-console.log('🚀 ~ isInApp:', isInApp);
-
-const osName = parser.os.name?.toLocaleLowerCase();
-console.log('🚀 ~ osName:', osName);
 ---
 
 <!doctype html>
