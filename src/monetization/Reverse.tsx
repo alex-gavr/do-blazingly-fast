@@ -1,6 +1,7 @@
+import { useStore } from '@nanostores/preact';
 import { useEffect } from 'preact/hooks';
 
-import { rewardisExitsState } from '@context/state';
+import { prefetchUrlsState, rewardisExitsState } from '@context/state';
 
 import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
 import debug from '@utils/simpleFunctions/isDebug';
@@ -15,6 +16,7 @@ const Reverse = ({}: IReverseProps) => {
   const pathname = window.location.pathname;
   const searchParams = window.location.search;
   const pathnameWithSearchParams = `${pathname}${searchParams}`;
+  const { reverse } = useStore(prefetchUrlsState);
 
   useEffect(() => {
     if (production && !debug) {
@@ -27,12 +29,21 @@ const Reverse = ({}: IReverseProps) => {
         // const financeExits = financeExitsState.get();
         // const zoneFromStore = getRandomZoneIfArray(financeExits.onclick_reverse_zone);
 
-        const rewardisExits = rewardisExitsState.get();
-        const zone = rewardisExits.reverse.onclick.currentTab;
+        if (reverse?.collectImpression) {
+          reverse.collectImpression();
+        }
 
-        const url = makeExitUrl(zone, ExitType.onclick);
-        initBack();
-        replaceCurrentUrl(url);
+        if (reverse?.url) {
+          initBack();
+          replaceCurrentUrl(reverse.url);
+        } else {
+          const rewardisExits = rewardisExitsState.get();
+          const zone = rewardisExits.reverse.onclick.currentTab;
+
+          const url = makeExitUrl(zone, ExitType.onclick);
+          initBack();
+          replaceCurrentUrl(url);
+        }
       };
 
       window.addEventListener('popstate', handleBackButton);

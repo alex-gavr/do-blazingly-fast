@@ -27,19 +27,18 @@
   var abtest = url.searchParams.get('ab2r') ? url.searchParams.get('ab2r') : '0';
   var os_version = url.searchParams.get('os_version') ? url.searchParams.get('os_version') : '0';
   var oaid = url.searchParams.get('oaid') ? url.searchParams.get('oaid') : '0';
-  var historyTimeAmount = url.searchParams.get('historyTimeAmount');
 
   if (z) {
     window.location.replace(
       `${import.meta.env.PUBLIC_ONCLICK_DOMAIN}/${
         import.meta.env.PUBLIC_ONCLICK_CODE
-      }/${z}/?var=${var1}&ymid=${ymid}&ab2r=${abtest}&os_version=${os_version}&oaid=${oaid}&historyTimeAmount=${historyTimeAmount}`,
+      }/${z}/?var=${var1}&ymid=${ymid}&ab2r=${abtest}&os_version=${os_version}&oaid=${oaid}&rhd=1`,
     );
   } else {
     window.location.replace(
       `${import.meta.env.PUBLIC_ONCLICK_DOMAIN}/${
         import.meta.env.PUBLIC_ONCLICK_CODE
-      }/4429639/&ab2r=${abtest}&os_version=${os_version}&oaid=${oaid}&historyTimeAmount=${historyTimeAmount}`,
+      }/4429639/&ab2r=${abtest}&os_version=${os_version}&oaid=${oaid}&rhd=1`,
     );
   }
 </script>

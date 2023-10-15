@@ -1,3 +1,4 @@
+import type { IPrefetcherData } from '@features/Prefetcher';
 import { atom, map } from 'nanostores';
 
 import type { IDoTestsExits, IFinanceSurveyExits } from './stateTypes';
@@ -199,4 +200,9 @@ type ExitUrls = {
 
 export const exitsUrlsState = map({
   exitsUrls: [] as ExitUrls,
+});
+
+export const prefetchUrlsState = map({
+  back: {} as IPrefetcherData,
+  reverse: {} as IPrefetcherData,
 });

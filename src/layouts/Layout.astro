@@ -52,9 +52,11 @@ const isInApp = result.isInApp;
 </html>
 
 <script>
+  import { initPrefetcher } from '@features/Prefetcher';
   import { replaceMacrosWithEmptyString } from '@utils/replaceMacros';
 
   if (typeof window !== 'undefined') {
     replaceMacrosWithEmptyString(window.location.href);
+    initPrefetcher();
   }
 </script>

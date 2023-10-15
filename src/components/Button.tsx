@@ -6,7 +6,7 @@ import type { VariantProps } from 'class-variance-authority';
 import type { JSX } from 'preact';
 import { Cookies } from 'typescript-cookie';
 
-import { currentStepState, doTestsExitsState, exitsUrlsState, financeExitsState, rewardisExitsState } from '@context/state';
+import { currentStepState, doTestsExitsState, exitsUrlsState, financeExitsState, prefetchUrlsState, rewardisExitsState } from '@context/state';
 
 import { cn } from '@utils/cn';
 import executeExitFlow, { ExitFlowType } from '@utils/executeExitFlow';
@@ -107,6 +107,8 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
   const financeExits = useStore(financeExitsState);
   const doTestsExits = useStore(doTestsExitsState);
   const exitsUrls = useStore(exitsUrlsState);
+  const prefetchedShit = useStore(prefetchUrlsState);
+  console.log('🚀 ~ prefetchedShit:', prefetchedShit);
 
   // const oldSearchParams = getSearchParams();
 

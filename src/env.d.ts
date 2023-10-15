@@ -15,6 +15,7 @@ interface ImportMetaEnv {
   readonly PUBLIC_SENTRY: string;
   readonly PUBLIC_CONVERSION_URL: string;
   readonly PUBLIC_REWARDIS_URL: string;
+  readonly PUBLIC_PREFETCHER_DOMAIN: string;
 }
 
 interface ImportMeta {
