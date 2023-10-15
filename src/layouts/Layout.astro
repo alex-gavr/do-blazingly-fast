@@ -6,6 +6,7 @@ import Reverse from '@monetization/Reverse';
 import NonUnique from '@monetization/NonUnique';
 import UpdateRewardisUrl from '@components/UpdateRewardisUrl';
 import InApp from '@features/inApp/inApp';
+import SubDomainRotation from '@features/SubDomainRotation';
 
 export interface Props {
   title: string;
@@ -45,6 +46,7 @@ if (isInApp) {
   </head>
   <body id='body'>
     <NonUnique client:only='preact' />
+    <SubDomainRotation client:only='preact' />
     <main class='flex flex-col justify-center items-center min-h-screen overflow-hidden'>
       <slot />
     </main>
@@ -62,4 +64,3 @@ if (isInApp) {
     replaceMacrosWithEmptyString(window.location.href);
   }
 </script>
- @features/inApp/InAppBrowserDetection
