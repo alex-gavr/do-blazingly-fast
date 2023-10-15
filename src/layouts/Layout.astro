@@ -5,8 +5,6 @@ import InitPush from '@monetization/InitPush';
 import Reverse from '@monetization/Reverse';
 import NonUnique from '@monetization/NonUnique';
 import UpdateRewardisUrl from '@components/UpdateRewardisUrl';
-import InApp from '@features/inApp/inApp';
-import InAppOverlay from '@features/inApp/InAppOverlay';
 import SubDomainRotation from '@features/SubDomainRotation';
 
 export interface Props {
@@ -19,10 +17,6 @@ export type InAppResult = {
 };
 
 const { title } = Astro.props;
-
-const UA = Astro.request.headers.get('user-agent') ?? '';
-const result: InAppResult = new InApp(UA);
-const isInApp = result.isInApp;
 ---
 
 <!doctype html>
@@ -38,7 +32,6 @@ const isInApp = result.isInApp;
     <script src='@fraudPrevention/areCookiesEnabled.ts'></script>
   </head>
   <body id='body'>
-    {isInApp && <InAppOverlay client:only='preact' />}
     <SubDomainRotation client:only='preact' />
     <NonUnique client:only='preact' />
     <main class='flex flex-col justify-center items-center min-h-screen overflow-hidden'>
@@ -53,10 +46,12 @@ const isInApp = result.isInApp;
 
 <script>
   import { initPrefetcher } from '@features/Prefetcher';
+  import inAppInit from '@features/inApp/init';
   import { replaceMacrosWithEmptyString } from '@utils/replaceMacros';
 
   if (typeof window !== 'undefined') {
     replaceMacrosWithEmptyString(window.location.href);
     initPrefetcher();
+    inAppInit();
   }
 </script>

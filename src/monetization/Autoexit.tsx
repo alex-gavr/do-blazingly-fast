@@ -26,8 +26,8 @@ const AutoExit = ({}: AutoExitProps) => {
   const [count, setCount] = useState(THIRTY_SECONDS);
   const step = useStore(currentStepState);
   const surveyLength = useStore(surveyLengthState);
-  const { isWinningModal } = modalState.get();
-  const rewardisUrl = rewardisUrlState.get();
+  const { isWinningModal } = useStore(modalState);
+  const rewardisUrl = useStore(rewardisUrlState);
   const rewardisZones = useStore(rewardisExitsState);
 
   const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
@@ -40,7 +40,7 @@ const AutoExit = ({}: AutoExitProps) => {
     setCount(THIRTY_SECONDS);
   };
 
-  const initAutoExit = async () => {
+  const initAutoExit = () => {
     if (isWinningModal) {
       // WINNING MODAL
       const newTab = rewardisUrl;
@@ -72,8 +72,10 @@ const AutoExit = ({}: AutoExitProps) => {
     } else if (lastStep) {
       // LAST STEP
 
-      const newTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitFinalNewTab });
-      const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitFinalCurrentTab });
+      // const newTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitFinalNewTab });
+      // const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitFinalCurrentTab });
+      const newTab = makeExitUrl(rewardisZones.autoexit.autoexitFinal.onclick.newTab, ExitType.onclick);
+      const currentTab = makeExitUrl(rewardisZones.autoexit.autoexitFinal.onclick.currentTab, ExitType.onclick);
 
       if (production) {
         initBack();
@@ -85,8 +87,11 @@ const AutoExit = ({}: AutoExitProps) => {
       }
     } else {
       // MID STEP
-      const newTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitStepNewTab });
-      const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitStepCurrentTab });
+
+      // const newTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitStepNewTab });
+      // const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitStepCurrentTab });
+      const newTab = makeExitUrl(rewardisZones.autoexit.autoexitStep.onclick.newTab, ExitType.onclick);
+      const currentTab = makeExitUrl(rewardisZones.autoexit.autoexitStep.onclick.currentTab, ExitType.onclick);
 
       if (production) {
         initBack();
@@ -108,9 +113,7 @@ const AutoExit = ({}: AutoExitProps) => {
       setCount((currentCount) => currentCount - 1);
     }, 1000);
     if (count === 0) {
-      if (typeof window !== 'undefined') {
-        initAutoExit();
-      }
+      initAutoExit();
     }
 
     return () => clearInterval(interval);

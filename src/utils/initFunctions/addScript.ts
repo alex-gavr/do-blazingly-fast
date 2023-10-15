@@ -7,7 +7,7 @@ const addScript = (scriptSrc: string, cb?: () => void) => {
       scr.type = 'text/javascript';
       scr.async = true;
       scr.onload = () => {
-        console.log(`script ${scriptSrc} loaded`);
+        // console.log(`script ${scriptSrc} loaded`);
         if (cb) {
           cb();
         }
