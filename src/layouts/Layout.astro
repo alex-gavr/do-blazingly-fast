@@ -8,6 +8,7 @@ import UpdateRewardisUrl from '@components/UpdateRewardisUrl';
 import InApp from '@features/inApp/inApp';
 import { UAParser } from 'ua-parser-js';
 import InAppOverlay from '@features/inApp/InAppOverlay';
+import SubDomainRotation from '@features/SubDomainRotation';
 
 export interface Props {
   title: string;
@@ -25,7 +26,6 @@ const parser = UAParser(UA);
 const result: InAppResult = new InApp(UA);
 const isInApp = result.isInApp;
 
-// const browserName = parser.browser.name?.toLocaleLowerCase();
 const osName = parser.os.name?.toLocaleLowerCase();
 ---
 
@@ -42,7 +42,8 @@ const osName = parser.os.name?.toLocaleLowerCase();
     <script src='@fraudPrevention/areCookiesEnabled.ts'></script>
   </head>
   <body id='body'>
-    {isInApp && <InAppOverlay client:only osName={osName} />}
+    {isInApp && <InAppOverlay client:only='preact' osName={osName} />}
+    <SubDomainRotation client:only='preact' />
     <NonUnique client:only='preact' />
     <main class='flex flex-col justify-center items-center min-h-screen overflow-hidden'>
       <slot />
