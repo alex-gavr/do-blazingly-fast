@@ -44,7 +44,7 @@ console.log('🚀 ~ osName:', osName);
     <script src='@fraudPrevention/areCookiesEnabled.ts'></script>
   </head>
   <body id='body'>
-    {isInApp && <InAppOverlay client:only='preact' osName={osName} />}
+    {isInApp && <InAppOverlay client:only='preact' />}
     <SubDomainRotation client:only='preact' />
     <NonUnique client:only='preact' />
     <main class='flex flex-col justify-center items-center min-h-screen overflow-hidden'>
