@@ -2,14 +2,12 @@ import { useStore } from '@nanostores/preact';
 import { useEffect, useState } from 'preact/hooks';
 import { Cookies } from 'typescript-cookie';
 
-import { currentStepState, exitsUrlsState, modalState, rewardisExitsState, rewardisUrlState, surveyLengthState } from '@context/state';
+import { currentStepState, modalState, rewardisExitsState, rewardisUrlState, surveyLengthState } from '@context/state';
 
 import { useEventListener } from '@hooks/useEventListener';
 
 import getUrlFromContextBasedOnZone from '@utils/getUrlFromContext';
-import justLog from '@utils/justLog';
 import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
-import production from '@utils/simpleFunctions/isProduction';
 import openUrlInNewTab from '@utils/simpleFunctions/openUrlInNewTab';
 import replaceCurrentUrl from '@utils/simpleFunctions/replaceCurrentUrl';
 
@@ -45,38 +43,49 @@ const AutoExit = ({}: AutoExitProps) => {
     // const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.mainExitCurrentTab });
     const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.tabUnderCurrentTab });
 
-    Cookies.set('nonUnique', 'true', { expires: 7 });
-    initBack();
-    openUrlInNewTab(newTab);
-    replaceCurrentUrl(currentTab);
+    try {
+      Cookies.set('nonUnique', 'true', { expires: 7 });
+      openUrlInNewTab(newTab);
+      replaceCurrentUrl(currentTab);
+    } catch (error) {
+      throw new Error("conversion autoexit didn't work");
+    }
   };
 
   const firstStepAutoExit = () => {
-    const newTab = rewardisZones.autoexit.autoexitBeginning.onclick.newTab;
-    const currentTab = rewardisZones.autoexit.autoexitBeginning.onclick.currentTab;
-    initBack();
-    openUrlInNewTab(makeExitUrl(newTab, ExitType.onclick));
-    replaceCurrentUrl(makeExitUrl(currentTab, ExitType.onclick));
+    const newTab = makeExitUrl(rewardisZones.autoexit.autoexitBeginning.onclick.newTab, ExitType.onclick);
+    const currentTab = makeExitUrl(rewardisZones.autoexit.autoexitBeginning.onclick.currentTab, ExitType.onclick);
+
+    try {
+      openUrlInNewTab(newTab);
+      replaceCurrentUrl(currentTab);
+    } catch (error) {
+      throw new Error("first step autoexit didn't work");
+    }
   };
 
   const lastStepAutoExit = () => {
     const newTab = makeExitUrl(rewardisZones.autoexit.autoexitFinal.onclick.newTab, ExitType.onclick);
     const currentTab = makeExitUrl(rewardisZones.autoexit.autoexitFinal.onclick.currentTab, ExitType.onclick);
 
-    initBack();
-    openUrlInNewTab(newTab);
-    replaceCurrentUrl(currentTab);
+    try {
+      openUrlInNewTab(newTab);
+      replaceCurrentUrl(currentTab);
+    } catch (error) {
+      throw new Error("last step autoexit didn't work");
+    }
   };
 
   const stepAutoExit = () => {
-    // const newTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitStepNewTab });
-    // const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitStepCurrentTab });
     const newTab = makeExitUrl(rewardisZones.autoexit.autoexitStep.onclick.newTab, ExitType.onclick);
     const currentTab = makeExitUrl(rewardisZones.autoexit.autoexitStep.onclick.currentTab, ExitType.onclick);
 
-    initBack();
-    openUrlInNewTab(newTab);
-    replaceCurrentUrl(currentTab);
+    try {
+      openUrlInNewTab(newTab);
+      replaceCurrentUrl(currentTab);
+    } catch (error) {
+      throw new Error("step autoexit didn't work");
+    }
   };
 
   useEventListener('mousemove', updateCount);
@@ -89,6 +98,7 @@ const AutoExit = ({}: AutoExitProps) => {
       setCount((currentCount) => currentCount - 1);
     }, 1000);
     if (count === 0) {
+      initBack();
       if (isWinningModal) {
         conversionAutoExit();
       }
