@@ -21,7 +21,8 @@ const Modal = ({}) => {
   const handleClose = () => {
     if (isWinningModal) {
       const newTab = rewardisUrl;
-      const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.mainExitCurrentTab });
+      // const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.mainExitCurrentTab });
+      const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.tabUnderCurrentTab });
       Cookies.set('nonUnique', 'true', { expires: 7 });
       initBack();
       openUrlInNewTab(newTab);

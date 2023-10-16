@@ -30,8 +30,8 @@ const AutoExit = ({}: AutoExitProps) => {
   const rewardisUrl = useStore(rewardisUrlState);
   const rewardisZones = useStore(rewardisExitsState);
 
-  // const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-  // const boxes = pathname.includes('boxes');
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+  const boxes = pathname.includes('boxes');
 
   const firstStep = step === 1;
   const lastStep = step === surveyLength;
@@ -40,67 +40,43 @@ const AutoExit = ({}: AutoExitProps) => {
     setCount(THIRTY_SECONDS);
   };
 
-  const initAutoExit = () => {
-    if (isWinningModal) {
-      // WINNING MODAL
-      const newTab = rewardisUrl;
-      const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.mainExitCurrentTab });
-      if (production) {
-        Cookies.set('nonUnique', 'true', { expires: 7 });
-        initBack();
-        openUrlInNewTab(newTab);
-        replaceCurrentUrl(currentTab);
-      } else {
-        justLog({ somethingToLog: ['autoexit winning modal', newTab, currentTab], type: 'info' });
-      }
-      return;
-    }
+  const conversionAutoExit = () => {
+    const newTab = rewardisUrl;
+    // const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.mainExitCurrentTab });
+    const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.tabUnderCurrentTab });
 
-    if (firstStep) {
-      // FIRST STEP
-      const newTab = rewardisZones.autoexit.autoexitBeginning.onclick.newTab;
-      const currentTab = rewardisZones.autoexit.autoexitBeginning.onclick.currentTab;
+    Cookies.set('nonUnique', 'true', { expires: 7 });
+    initBack();
+    openUrlInNewTab(newTab);
+    replaceCurrentUrl(currentTab);
+  };
 
-      if (production) {
-        initBack();
-        openUrlInNewTab(makeExitUrl(newTab, ExitType.onclick));
-        replaceCurrentUrl(makeExitUrl(currentTab, ExitType.onclick));
-        return;
-      } else {
-        justLog({ somethingToLog: ['autoexit first step', newTab, currentTab], type: 'info' });
-      }
-    } else if (lastStep) {
-      // LAST STEP
+  const firstStepAutoExit = () => {
+    const newTab = rewardisZones.autoexit.autoexitBeginning.onclick.newTab;
+    const currentTab = rewardisZones.autoexit.autoexitBeginning.onclick.currentTab;
+    initBack();
+    openUrlInNewTab(makeExitUrl(newTab, ExitType.onclick));
+    replaceCurrentUrl(makeExitUrl(currentTab, ExitType.onclick));
+  };
 
-      // const newTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitFinalNewTab });
-      // const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitFinalCurrentTab });
-      const newTab = makeExitUrl(rewardisZones.autoexit.autoexitFinal.onclick.newTab, ExitType.onclick);
-      const currentTab = makeExitUrl(rewardisZones.autoexit.autoexitFinal.onclick.currentTab, ExitType.onclick);
+  const lastStepAutoExit = () => {
+    const newTab = makeExitUrl(rewardisZones.autoexit.autoexitFinal.onclick.newTab, ExitType.onclick);
+    const currentTab = makeExitUrl(rewardisZones.autoexit.autoexitFinal.onclick.currentTab, ExitType.onclick);
 
-      if (production) {
-        initBack();
-        openUrlInNewTab(newTab);
-        replaceCurrentUrl(currentTab);
-        return;
-      } else {
-        justLog({ somethingToLog: ['autoexit last step', newTab, currentTab], type: 'info' });
-      }
-    } else {
-      // MID STEP
+    initBack();
+    openUrlInNewTab(newTab);
+    replaceCurrentUrl(currentTab);
+  };
 
-      // const newTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitStepNewTab });
-      // const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitStepCurrentTab });
-      const newTab = makeExitUrl(rewardisZones.autoexit.autoexitStep.onclick.newTab, ExitType.onclick);
-      const currentTab = makeExitUrl(rewardisZones.autoexit.autoexitStep.onclick.currentTab, ExitType.onclick);
+  const stepAutoExit = () => {
+    // const newTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitStepNewTab });
+    // const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.autoExitStepCurrentTab });
+    const newTab = makeExitUrl(rewardisZones.autoexit.autoexitStep.onclick.newTab, ExitType.onclick);
+    const currentTab = makeExitUrl(rewardisZones.autoexit.autoexitStep.onclick.currentTab, ExitType.onclick);
 
-      if (production) {
-        initBack();
-        openUrlInNewTab(newTab);
-        replaceCurrentUrl(currentTab);
-      } else {
-        justLog({ somethingToLog: ['autoexit mid step', newTab, currentTab], type: 'info' });
-      }
-    }
+    initBack();
+    openUrlInNewTab(newTab);
+    replaceCurrentUrl(currentTab);
   };
 
   useEventListener('mousemove', updateCount);
@@ -113,11 +89,22 @@ const AutoExit = ({}: AutoExitProps) => {
       setCount((currentCount) => currentCount - 1);
     }, 1000);
     if (count === 0) {
-      initAutoExit();
+      if (isWinningModal) {
+        conversionAutoExit();
+      }
+      if (firstStep && !boxes) {
+        firstStepAutoExit();
+      }
+      if (lastStep) {
+        lastStepAutoExit();
+      }
+      if ((boxes && !isWinningModal) || (!boxes && !lastStep && !firstStep)) {
+        stepAutoExit();
+      }
     }
 
     return () => clearInterval(interval);
-  }, [count]);
+  }, [count, step, surveyLength, isWinningModal, rewardisUrl, rewardisZones]);
 
   return null;
 };
