@@ -6,6 +6,7 @@ import Reverse from '@monetization/Reverse';
 import NonUnique from '@monetization/NonUnique';
 import UpdateRewardisUrl from '@components/UpdateRewardisUrl';
 import SubDomainRotation from '@features/SubDomainRotation';
+import InApp from '@features/inApp/inApp';
 
 export interface Props {
   title: string;
@@ -17,6 +18,10 @@ export type InAppResult = {
 };
 
 const { title } = Astro.props;
+const ua = Astro.request.headers.get('user-agent') ?? '';
+const { isInApp, browser } = new InApp(ua);
+console.log('isInApp', isInApp);
+console.log('browser', browser);
 ---
 
 <!doctype html>

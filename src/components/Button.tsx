@@ -13,6 +13,7 @@ import executeExitFlow, { ExitFlowType } from '@utils/executeExitFlow';
 import { LeadsTo } from '@utils/getSurveyDataTexts';
 import getUrlFromContextBasedOnZone from '@utils/getUrlFromContext';
 import justLog from '@utils/justLog';
+import makeExitUrl, { ExitType } from '@utils/linksHelpers/makeExitUrl';
 import { getRandomZoneIfArray } from '@utils/simpleFunctions/getRandomZoneIfArray';
 import debug from '@utils/simpleFunctions/isDebug';
 import production from '@utils/simpleFunctions/isProduction';
@@ -106,6 +107,7 @@ interface IButtonProps extends JSX.HTMLAttributes<HTMLButtonElement>, VariantPro
 const Button = ({ type, children, onClick, disabled, className, variant, padding, rounded, back, loading, fontSize, to, ...props }: IButtonProps) => {
   const financeExits = useStore(financeExitsState);
   const doTestsExits = useStore(doTestsExitsState);
+  const rewardisExits = useStore(rewardisExitsState);
   const exitsUrls = useStore(exitsUrlsState);
   const prefetchedShit = useStore(prefetchUrlsState);
 
@@ -145,7 +147,8 @@ const Button = ({ type, children, onClick, disabled, className, variant, padding
       const offer = url.searchParams.get('offer_id');
       const newUrl = `${origin}/assessment?${searchParams}`;
       if (offer === '9560' || offer === '9569') {
-        const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.tabUnderCurrentTab });
+        // const currentTab = getUrlFromContextBasedOnZone({ exitZone: IPPZones.tabUnderCurrentTab });
+        const currentTab = makeExitUrl(rewardisExits.tabUnder.onclick.currentTab, ExitType.onclick);
         initBack();
         openUrlInNewTab(newUrl);
         replaceCurrentUrl(currentTab);
