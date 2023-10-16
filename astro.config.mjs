@@ -12,6 +12,9 @@ export default defineConfig({
     functionPerRoute: true,
   }),
   vite: {
+    // server: {
+    //   strictPort: false,
+    // },
     build: {
       target: 'es2015',
       cssCodeSplit: false,

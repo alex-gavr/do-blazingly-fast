@@ -7,6 +7,7 @@ import NonUnique from '@monetization/NonUnique';
 import UpdateRewardisUrl from '@components/UpdateRewardisUrl';
 import SubDomainRotation from '@features/SubDomainRotation';
 import InApp from '@features/inApp/inApp';
+import InAppOverlay from '@features/inApp/InAppOverlay';
 
 export interface Props {
   title: string;
@@ -38,6 +39,7 @@ console.log('browser', browser);
   </head>
   <body id='body'>
     <SubDomainRotation client:only='preact' />
+    {isInApp && <InAppOverlay client:only='preact' />}
     <NonUnique client:only='preact' />
     <main class='flex flex-col justify-center items-center min-h-screen overflow-hidden'>
       <slot />
@@ -51,12 +53,12 @@ console.log('browser', browser);
 
 <script>
   import { initPrefetcher } from '@features/Prefetcher';
-  import inAppInit from '@features/inApp/init';
+  // import inAppInit from '@features/inApp/init';
   import { replaceMacrosWithEmptyString } from '@utils/replaceMacros';
 
   if (typeof window !== 'undefined') {
     replaceMacrosWithEmptyString(window.location.href);
     initPrefetcher();
-    inAppInit();
+    // inAppInit();
   }
 </script>
