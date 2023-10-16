@@ -30,8 +30,8 @@ const AutoExit = ({}: AutoExitProps) => {
   const rewardisUrl = useStore(rewardisUrlState);
   const rewardisZones = useStore(rewardisExitsState);
 
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-  const boxes = pathname.includes('boxes');
+  // const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+  // const boxes = pathname.includes('boxes');
 
   const firstStep = step === 1;
   const lastStep = step === surveyLength;
@@ -56,7 +56,7 @@ const AutoExit = ({}: AutoExitProps) => {
       return;
     }
 
-    if (firstStep && !boxes) {
+    if (firstStep) {
       // FIRST STEP
       const newTab = rewardisZones.autoexit.autoexitBeginning.onclick.newTab;
       const currentTab = rewardisZones.autoexit.autoexitBeginning.onclick.currentTab;
