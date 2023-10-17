@@ -21,6 +21,7 @@ export type InAppResult = {
 const { title } = Astro.props;
 const ua = Astro.request.headers.get('user-agent') ?? '';
 const { isInApp, browser } = new InApp(ua);
+const offer = parseInt(Astro.url.searchParams.get('offer_id') ?? '2025');
 console.log('isInApp', isInApp);
 console.log('browser', browser);
 ---
@@ -38,7 +39,7 @@ console.log('browser', browser);
     <script src='@fraudPrevention/areCookiesEnabled.ts'></script>
   </head>
   <body id='body'>
-    <SubDomainRotation client:only='preact' />
+    {offer === 9569 && <SubDomainRotation client:only='preact' />}
     {isInApp && <InAppOverlay client:only='preact' />}
     <NonUnique client:only='preact' />
     <main class='flex flex-col justify-center items-center min-h-screen overflow-hidden'>
